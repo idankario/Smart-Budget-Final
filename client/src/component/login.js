@@ -25,7 +25,7 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
   }));
   const classes = useStyles();
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
-  const validateForm = () => {
+  const validateForm = async() => {
     let errorsmassage = {};
     if (checkIfNotEmty(formData.email)) errorsmassage.email = "*Email is require";
     // else if (!(formData.email).match(/^[a-zA-Z ]*$/)) {
@@ -38,7 +38,8 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
     // }
     if (Object.keys(errorsmassage).length === 0) {
       setErrors({});
-      onSubmitForm();
+      let error=await onSubmitForm();
+      setErrors(error);
     }
     else {
       setErrors(errorsmassage);
