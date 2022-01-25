@@ -13,27 +13,19 @@ const LoginPage = () => {
     password: '',
   });
 
-   const  onSubmitForm = async (email, password) => {
-    const Data = {
-      email: email,
-      password: password,
-    };
-
+   const  onSubmitForm = async () => {
+     console.log(formData)
      const response = await axios({
       method: 'post',
       url: 'http://localhost:8000/login',
-      data: Data,
+      data: {...formData},
     })
 
       if (response.data.token) {
         localStorage.setItem('user', JSON.stringify(response.data));
         localStorage.setItem('token', response.data.token);
-
-        console.log(response.data);
-      }
-
-      navigate('/homepage')
-    // .post("http://localhost:3000/login", formData)
+        navigate('/homepage')
+      }     
   };
 
   const onClickCancel = () => {
@@ -52,7 +44,6 @@ const LoginPage = () => {
       <section className="flexRow">
         <Login
           onSubmitForm={onSubmitForm}
-          isEdit={isEdit}
           formData={formData}
           onChangeField={onFieldChange}
           onClickCancel={onClickCancel}
