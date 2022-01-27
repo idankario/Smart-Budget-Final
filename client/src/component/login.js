@@ -2,28 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import ButtonOrange from './util/buttonOrange';
-const Login = ({ onSubmitForm,formData, onChangeField }) => {
+import '../routes/login/loginPage.css';
+const Login = ({ onSubmitForm, formData, onChangeField }) => {
   const [errors, setErrors] = useState({});
-  const useStyles = makeStyles(() => ({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '13px 40px',
-      background: '#fff',
-      borderRadius: '25px',
-      marginTop: '90px',
-      backgroundPosition: 'bottom center',
-      backgroundRepeat: 'no-repeat',
-      justifyContent: 'space-around',
-      '& .MuiTextField-root': {
-        width: '540px',
-      },
-      '& .MuiInputBase-input ': {
-        background: '#F6F7FB',
-      },
-    },
-  }));
-  const classes = useStyles();
+
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
   const validateForm = () => {
     let errorsmassage = {};
@@ -50,8 +32,9 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
   }
   return (
     <>
-      <form className={classes.root} onSubmit={onSubmit}>
-        <h2 style={{ textAlign: 'center' }}>"Login Smart Budget" </h2>
+      <h1 className='neaonLabel'><span>Login</span><span>Smart Budget!</span></h1>
+      <form className='root' onSubmit={onSubmit}>
+        <div className='familyForm'></div>
         <label>User Name</label>
         <TextField
           name="userName"
@@ -78,6 +61,7 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
         <h5 style={{ color: "red", margin: "0px" }}>{errors.email}</h5>
         <label>Password</label>
         <TextField
+          className='text'
           name="password"
           label="Password"
           type="password"

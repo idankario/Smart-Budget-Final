@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const LoginPage = () => {
   let navigate = useNavigate();
-  const [isEdit, setEdit] = useState(-1);
+  
   const [formData, setForm] = useState({
     userName: '',
     email: '',
@@ -28,9 +28,7 @@ const LoginPage = () => {
       }     
   };
 
-  const onClickCancel = () => {
-    setEdit(-1);
-  };
+
 
   const onFieldChange = (key, value) => {
     setForm({
@@ -46,7 +44,7 @@ const LoginPage = () => {
           onSubmitForm={onSubmitForm}
           formData={formData}
           onChangeField={onFieldChange}
-          onClickCancel={onClickCancel}
+
         />
       </section>
     </>
