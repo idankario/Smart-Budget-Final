@@ -19,9 +19,9 @@ const LoginPage = () => {
         url: 'http://localhost:8000/api/users/login',
         data: { ...formData },
       })
+      
       if (res.data.token) {
-        localStorage.setItem('user', JSON.stringify(response.data));
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data));
         navigate('/homepage')
       }
     } catch (error) {

@@ -1,12 +1,31 @@
-import { Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
-const ButtonOrange = withStyles({
-  root: {
-    background: '#F86549',
-    width: '102px',
-    height: '52px',
-    fontSize: '20px',
-    color: '#fff'
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+export const ButtonOrange = styled(Button)({
+  background: '#F86549',
+  fontSize: '10px',
+  marginBottom: "40px",
+  boxShadow: "0 0 6px hsl(210 14% 90%)",
+  padding:"10px",
+  color: '#fff',  
+  ':hover': {
+    backgroundColor: '#F0B36A',
   },
-})(Button);
-export default ButtonOrange;
+});
+export const Form =  styled('form')({
+ 
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '13px 40px',
+    background: 'orange',
+    opacity:0.9,
+    borderRadius: '25px',
+    marginTop: '90px',
+    justifyContent: 'space-around',
+    '& .MuiTextField-root': {
+      width: '540px',
+    },
+    '& .MuiInputBase-input ': {
+      background: '#F6F7FB',
+    },
+  },
+);
