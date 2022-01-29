@@ -5,7 +5,6 @@ const ButtonOrange = withStyles({
     background: '#F86549',
     width: '102px',
     height: '52px',
-  
     fontSize: '20px',
     color: '#fff'
   },

@@ -1,33 +1,11 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import {  FaTimes } from 'react-icons/fa';
 import ButtonOrange from './util/buttonOrange';
-
-const Login = ({ onSubmitForm, isEdit, formData, onChangeField, onClickCancel }) => {
+import '../routes/login/loginPage.css';
+const Login = ({ onSubmitForm, formData, onChangeField }) => {
   const [errors, setErrors] = useState({});
-  const useStyles = makeStyles(() => ({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '13px 40px',
-      maxHeight: '552px',
-      background: '#fff',
-      borderRadius: '25px',
-      marginTop: '90px',
-      backgroundImage: isEdit === -1 ? `` : "",
-      backgroundPosition: 'bottom center',
-      backgroundRepeat: 'no-repeat',
-      justifyContent: 'space-around',
-      '& .MuiTextField-root': {
-        width: '540px',
-      },
-      '& .MuiInputBase-input ': {
-        background: '#F6F7FB',
-      },
-    },
-  }));
-  const classes = useStyles();
+
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
   const validateForm = () => {
     let errorsmassage = {};
@@ -42,7 +20,7 @@ const Login = ({ onSubmitForm, isEdit, formData, onChangeField, onClickCancel })
     // }
     if (Object.keys(errorsmassage).length === 0) {
       setErrors({});
-      onSubmitForm(formData.email,formData.password);
+      onSubmitForm();
     }
     else {
       setErrors(errorsmassage);
@@ -54,8 +32,9 @@ const Login = ({ onSubmitForm, isEdit, formData, onChangeField, onClickCancel })
   }
   return (
     <>
-      <form className={classes.root} onSubmit={onSubmit}>
-        <h2 style={{ textAlign: 'center' }}>{isEdit === -1 ? "Login Smart Budget" : "Register Smart Budget"}</h2>
+      <h1 className='neaonLabel'><span>Login</span><span>Smart Budget!</span></h1>
+      <form className='root' onSubmit={onSubmit}>
+        <div className='familyForm'></div>
         <label>User Name</label>
         <TextField
           name="userName"
@@ -82,6 +61,7 @@ const Login = ({ onSubmitForm, isEdit, formData, onChangeField, onClickCancel })
         <h5 style={{ color: "red", margin: "0px" }}>{errors.email}</h5>
         <label>Password</label>
         <TextField
+          className='text'
           name="password"
           label="Password"
           type="password"
@@ -96,24 +76,8 @@ const Login = ({ onSubmitForm, isEdit, formData, onChangeField, onClickCancel })
           <ButtonOrange
             type="submit"
             variant="contained"
-            style={{ display: isEdit === -1 ? "inline-flex" : "none" }}
           >
             Login
-          </ButtonOrange>
-
-          <ButtonOrange
-            style={{ marginRight: '20px', display: isEdit === -1 ? "none" : "inline-flex" }}
-            variant="contained"
-            onClick={onClickCancel}
-          >
-            <FaTimes />
-          </ButtonOrange>
-          <ButtonOrange
-            type="submit"
-            style={{ display: isEdit === -1 ? "none" : "inline-flex" }}
-            variant="contained"
-          >
-           
           </ButtonOrange>
         </div>
       </form>
