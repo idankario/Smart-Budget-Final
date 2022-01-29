@@ -2,13 +2,9 @@ const Users = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 exports.UsersController = {
-  // Login
   async loginUser(req, res) {
-    // our login logic goes here
     try {
-      // Get user input
       const { email, password, userName } = req.body;
-      // Validate user input
       if (!(email && password && userName)) {
         res.status(400).send('All input is required');
       }
@@ -27,7 +23,7 @@ exports.UsersController = {
         );
 
         // remove password and _id
-        const userDetails = (({ Password, _id, ...o }) => o)(user.toObject())
+        const userDetails = (({ Password, _id, ...o }) => o)(user);
         return res.status(200).json({ ...userDetails, token });
       }
 

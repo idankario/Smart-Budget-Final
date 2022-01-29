@@ -1,29 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import ButtonOrange from './util/buttonOrange';
+import { TextField } from '@mui/material';
+import {ButtonOrange,Form} from './util/buttonOrange';
 const Login = ({ onSubmitForm,formData, onChangeField }) => {
   const [errors, setErrors] = useState({});
-  const useStyles = makeStyles(() => ({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '13px 40px',
-      background: '#fff',
-      borderRadius: '25px',
-      marginTop: '90px',
-      backgroundPosition: 'bottom center',
-      backgroundRepeat: 'no-repeat',
-      justifyContent: 'space-around',
-      '& .MuiTextField-root': {
-        width: '540px',
-      },
-      '& .MuiInputBase-input ': {
-        background: '#F6F7FB',
-      },
-    },
-  }));
-  const classes = useStyles();
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
   const validateForm = async() => {
     let errorsmassage = {};
@@ -51,7 +30,7 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
   }
   return (
     <>
-      <form className={classes.root} onSubmit={onSubmit}>
+      <Form  onSubmit={onSubmit}>
         <h2 style={{ textAlign: 'center' }}>"Login Smart Budget" </h2>
         <label>User Name</label>
         <TextField
@@ -93,11 +72,12 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
           <ButtonOrange
             type="submit"
             variant="contained"
+            sx={{width: '150px'}}
           >
             Login
           </ButtonOrange>
         </div>
-      </form>
+      </Form>
     </>
   );
 };
