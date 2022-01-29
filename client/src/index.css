@@ -7,6 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;  
   background-color: #385a8d;
   /* background-image: url("./images/background.gif"); */
+  -moz-osx-font-smoothing: grayscale;
+background-image:url("./routes/image/backgroundlogin.jpeg");
+background-size: 100%;
 }
 
 code {

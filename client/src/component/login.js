@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
 import {ButtonOrange,Form} from './util/buttonOrange';
+import '../routes/login/loginPage.css';
+
 const Login = ({ onSubmitForm,formData, onChangeField }) => {
   const [errors, setErrors] = useState({});
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
@@ -30,8 +32,9 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
   }
   return (
     <>
-      <Form  onSubmit={onSubmit}>
-        <h2 style={{ textAlign: 'center' }}>"Login Smart Budget" </h2>
+      <h1 className='neaonLabel'><span>Login</span><span>Smart Budget!</span></h1>
+      <form className='root' onSubmit={onSubmit}>
+        <div className='familyForm'></div>
         <label>User Name</label>
         <TextField
           name="userName"
@@ -58,6 +61,7 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
         <h5 style={{ color: "red", margin: "0px" }}>{errors.email}</h5>
         <label>Password</label>
         <TextField
+          className='text'
           name="password"
           label="Password"
           type="password"
@@ -77,7 +81,7 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
             Login
           </ButtonOrange>
         </div>
-      </Form>
+      </form>
     </>
   );
 };
