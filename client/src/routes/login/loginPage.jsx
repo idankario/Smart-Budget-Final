@@ -6,29 +6,28 @@ import axios from 'axios';
 
 const LoginPage = () => {
   let navigate = useNavigate();
-  
   const [formData, setForm] = useState({
     userName: '',
     email: '',
     password: '',
   });
 
-   const  onSubmitForm = async () => {
-     console.log(formData)
-     const response = await axios({
-      method: 'post',
-      url: 'http://localhost:8000/login',
-      data: {...formData},
-    })
-
-      if (response.data.token) {
-        localStorage.setItem('user', JSON.stringify(response.data));
-        localStorage.setItem('token', response.data.token);
+  const onSubmitForm = async () => {
+    try {
+      let res = await axios({
+        method: 'post',
+        url: 'http://localhost:8000/api/users/login',
+        data: { ...formData },
+      })
+      
+      if (res.data.token) {
+        localStorage.setItem('user', JSON.stringify(res.data));
         navigate('/homepage')
-      }     
+      }
+    } catch (error) {
+      return error.response.data;
+    }
   };
-
-
 
   const onFieldChange = (key, value) => {
     setForm({
@@ -44,7 +43,6 @@ const LoginPage = () => {
           onSubmitForm={onSubmitForm}
           formData={formData}
           onChangeField={onFieldChange}
-
         />
       </section>
     </>
