@@ -4,22 +4,22 @@ const styleIcon = {fontSize:"40px"};
 export const sidebarConfig = [
   {
     title: 'Home',
-    path: '/dashboard/app',
+    path: "../",
     icon: <Home sx={styleIcon}/>
   },
   {
     title: 'Statistic',
-    path: '/dashboard/user',
+    path: "ft",
     icon: <PieChart sx={styleIcon}/>
   },
   {
     title: 'Family',
-    path: '/dashboard/blog',
+    path: "/homepageft",
     icon:<FamilyRestroom sx={styleIcon}/>
   },
   {
     title: 'Add Expenses',
-    path: '/login',
+    path: "/homepagefff",
     icon:<AddBusiness sx={styleIcon}/>
   }
 ];

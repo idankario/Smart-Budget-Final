@@ -5,7 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;  
-  background-image: url("./images/background.gif");
+  background-color: #385a8d;
+  /* background-image: url("./images/background.gif"); */
 }
 
 code {
