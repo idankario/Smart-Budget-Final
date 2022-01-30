@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './routes/login/loginPage';
 import HomePage from './routes/home/homePage';
+import RegisterPage from './routes/register/registerPage';
 import { PrivateRoute } from './component/routing';
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route exact path="" element={<LoginPage />} />
+        <Route exact path="/register" element={<RegisterPage />} />
         <Route
           exact
           path="/homepage"

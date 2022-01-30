@@ -8,11 +8,12 @@ exports.UsersController = {
       if (!(email && password && userName)) {
         res.status(400).send('All input is required');
       }
+     
       // Validate if user exist in our database
-      const user = await Users.findOne({ Email: email, fullName: userName });
-      if(!user)
-        return res.status(400).send({email:'Incorrect email address or userName',userName:'Incorrect email address or userName'});
-      if (user && (await bcrypt.compare(password, user.Password))) {
+      const user = await Users.findOne({ email: email, fullName: userName });
+      if (!user)
+        return res.status(400).send({ email: 'Incorrect email address or userName', userName: 'Incorrect email address or userName' });
+      if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
         const token = jwt.sign(
           { user_id: user._id, email },
@@ -21,17 +22,61 @@ exports.UsersController = {
             expiresIn: '2h',
           }
         );
-
         // remove password and _id
-        const userDetails = (({ Password, _id, ...o }) => o)(user);
+        const userDetails = (({ password, _id, ...o }) => o)(user);
         return res.status(200).json({ ...userDetails, token });
       }
-
-      return res.status(400).send({password:'Incorrect Password'});
+      return res.status(400).send({ password: 'Incorrect Password' });
     } catch (err) {
       console.log(err);
     }
   },
+  async registerUser(req, res) {
+    try {
+      const { userName, role, budgetLimit, income, email, password } = req.body;
+      // Validate user input
+      if (!(userName && role && budgetLimit && income && email && password)) {
+        res.status(400).send('All input are required');
+      }
+      const oldUser = await Users.findOne({ email: email });
+      if (oldUser) {
+        return res.status(409).send({ email: 'Email Already Exist. Please Login' });
+      }
+      const user = await Users.findOne().sort('-id');
+      const family = await Users.findOne().sort('-idFamily');
+      //Encrypt user password
+      encryptedPassword = await bcrypt.hash(password, 10);
+
+      // Create user in our database
+      const newuser = await Users.create({
+        id: user.id + 1,
+        fullName: userName,
+        password: encryptedPassword,
+        budgetLimit: budgetLimit,
+        email: email.toLowerCase(), // sanitize: convert email to lowercase
+        role: role,
+        income: income,
+        idFamily: family.idFamily + 1,
+        idExpenses:0 ,
+      });
+      // Create token
+      const token = jwt.sign(
+        { user_id: newuser._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: '2h',
+        }
+      );
+
+      // return new user
+      res.status(201).json({ ...newuser.toObject(), token });
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  },
+
   getUsers(req, res) {
     Users.find({})
       .then((Users) => {
@@ -39,8 +84,9 @@ exports.UsersController = {
       })
       .catch((err) => res.send(`Error Getting user from db:${err}`));
   },
+
   deleteUser(req, res) {
-    Users.deleteOne({ Id: req.params.id })
+    Users.deleteOne({ id: req.params.id })
       .then((result) => {
         if (result.deletedCount > 0) {
           res.status(200).res.send(`user--${req.params.id}--deleted`);
@@ -52,8 +98,9 @@ exports.UsersController = {
         res.status(400).send(`Error user ${req.params.id} not deleted`)
       );
   },
+
   getUser(req, res) {
-    Users.findOne({ Id: req.params.id })
+    Users.findOne({ id: req.params.id })
       .then((user) => {
         if (user) {
           res.json(user);
@@ -82,35 +129,6 @@ exports.UsersController = {
         }
       })
       .catch((err) => res.status(400).json(err));
-  },
-
-  postUser(req, res) {
-    //register
-    const { FullName, Password, Email, Role, BudgetLimit, Income } = req.body;
-    Users.findOne()
-      .sort('-Id')
-      .exec((err, user) => {
-        Users.findOne()
-          .sort('-IdFamily')
-          .exec((err, family) => {
-            const newuser = new Users({
-              Id: user.Id + 1,
-              FullName: FullName,
-              Password: Password,
-              BudgetLimit: BudgetLimit,
-              Email: Email,
-              Role: Role,
-              Income: Income,
-              IdFamily: family.IdFamily + 1,
-            });
-            const result = newuser.save();
-            if (result) {
-              res.json(newuser.IdFamily);
-            } else {
-              res.status(404).send('error saving a user');
-            }
-          });
-      });
   },
 
   addfamily(req, res) {
