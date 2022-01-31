@@ -10,4 +10,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+body img{
+  max-width: 100%;
+}
 

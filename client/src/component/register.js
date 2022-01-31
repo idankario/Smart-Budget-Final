@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { TextField, Select, MenuItem } from '@mui/material';
+
+import {  Modal    ,   Button ,TextField, Select, MenuItem,Typography } from '@mui/material';
 import { ButtonOrange, Form, StyledLink } from './util/buttonOrange';
 import '../routes/login/loginPage.css';
-
+import DialogProvider from './dialogbox';
 const Register = ({ onSubmitForm, registerData, onChangeField }) => {
     const [errors, setErrors] = useState({});
+    const [open, setopen] = useState('');
+    
     const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
-    const validateForm =async () => {
+    const validateForm = async () => {
         let errorsmassage = {};
         if (checkIfNotEmty(registerData.userName)) errorsmassage.userName = "*User name is require";
         if (checkIfNotEmty(registerData.role)) errorsmassage.role = "*Role is require";
@@ -18,7 +21,7 @@ const Register = ({ onSubmitForm, registerData, onChangeField }) => {
         //   errorsmassage.userName = "*Please enter alphabet characters only.";
         // }
         if (Object.keys(errorsmassage).length === 0) {
-            setErrors({});       
+            setErrors({});
             let error = await onSubmitForm();
             setErrors(error);
         }
@@ -35,6 +38,13 @@ const Register = ({ onSubmitForm, registerData, onChangeField }) => {
             <h1 className='neaonLabel'><span>Register To</span><span>Smart Budget!</span></h1>
             <Form onSubmit={onSubmit}>
                 <div className='familyForm'></div>
+                {/* </DialogProvider> */}
+     
+                <StyledLink
+          to="/"
+        >
+           Already have an account? &nbsp;
+        </StyledLink>
                 <label>User Name</label>
                 <TextField
                     name="userName"
@@ -106,8 +116,9 @@ const Register = ({ onSubmitForm, registerData, onChangeField }) => {
                     <MenuItem value="pairant">pairant</MenuItem>
                     <MenuItem value="child">child</MenuItem>
                 </Select>
-
                 <h5 style={{ color: "red", margin: "0px" }}>{errors.role}</h5>
+
+                <DialogProvider/>
                 <div style={{ position: 'relative', textAlign: 'center', bottom: '-50px' }}>
                     <ButtonOrange
                         type="submit"
