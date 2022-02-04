@@ -1,10 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Paper, Grid, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { sidebarConfig } from './sidebarConfig';
+import { ButtonOrange } from '../../component/util/buttonOrange';
+import imageFamily from '../../images/family.svg';
+import { Link } from 'react-router-dom';
+
 const HomePage = () => {
+  const [value, setValue] = React.useState(0);
   return (
     <>
-      <section className="flexRow">
-      I'am Protected
+      <section style={{ maxWidth: "400px", padding: "20px", margin: "auto", backgroundColor: 'rgba(0, 0, 0, 0.5)' }}  >
+        <img src={imageFamily} alt="imageFamily" />
+        {sidebarConfig.map((navigation) => (
+          <ButtonOrange key={navigation.title} sx={{ width: '100%' }}>
+            <Grid item sm={1}>
+              {navigation.icon}
+            </Grid>
+            <Grid item sm={8}>
+              <h2>{navigation.title} </h2>
+            </Grid>
+          </ButtonOrange>
+        ))}
       </section>
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} >
+        <BottomNavigation
+          sx={{ backgroundColor: '#331A3F' }}
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        >
+          {sidebarConfig.map((navigation) => (
+            <BottomNavigationAction
+              component={Link}
+              to={navigation.path}
+              key={navigation.title}
+              sx={{ color: "#fff" }}
+              icon={navigation.icon}
+              label={navigation.title} >
+            </BottomNavigationAction>
+          ))}
+        </BottomNavigation>
+      </Paper>
     </>
   );
 };

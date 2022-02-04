@@ -1,6 +1,37 @@
 const Users = require('../models/users');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 exports.UsersController = {
+  async loginUser(req, res) {
+    try {
+      const { email, password, userName } = req.body;
+      if (!(email && password && userName)) {
+        res.status(400).send('All input is required');
+      }
+      // Validate if user exist in our database
+      const user = await Users.findOne({ Email: email, fullName: userName });
+      if(!user)
+        return res.status(400).send({email:'Incorrect email address or userName',userName:'Incorrect email address or userName'});
+      if (user && (await bcrypt.compare(password, user.Password))) {
+        // Create token
+        const token = jwt.sign(
+          { user_id: user._id, email },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: '2h',
+          }
+        );
+
+        // remove password and _id
+        const userDetails = (({ Password, _id, ...o }) => o)(user);
+        return res.status(200).json({ ...userDetails, token });
+      }
+
+      return res.status(400).send({password:'Incorrect Password'});
+    } catch (err) {
+      console.log(err);
+    }
+  },
   getUsers(req, res) {
     Users.find({})
       .then((Users) => {

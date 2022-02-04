@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import ButtonOrange from './util/buttonOrange';
+import { TextField } from '@mui/material';
+import {ButtonOrange,Form} from './util/buttonOrange';
 import '../routes/login/loginPage.css';
-const Login = ({ onSubmitForm, formData, onChangeField }) => {
-  const [errors, setErrors] = useState({});
 
+const Login = ({ onSubmitForm,formData, onChangeField }) => {
+  const [errors, setErrors] = useState({});
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
-  const validateForm = () => {
+  const validateForm = async() => {
     let errorsmassage = {};
     if (checkIfNotEmty(formData.email)) errorsmassage.email = "*Email is require";
     // else if (!(formData.email).match(/^[a-zA-Z ]*$/)) {
@@ -20,7 +19,8 @@ const Login = ({ onSubmitForm, formData, onChangeField }) => {
     // }
     if (Object.keys(errorsmassage).length === 0) {
       setErrors({});
-      onSubmitForm();
+      let error=await onSubmitForm();
+      setErrors(error);
     }
     else {
       setErrors(errorsmassage);
@@ -76,6 +76,7 @@ const Login = ({ onSubmitForm, formData, onChangeField }) => {
           <ButtonOrange
             type="submit"
             variant="contained"
+            sx={{width: '150px'}}
           >
             Login
           </ButtonOrange>

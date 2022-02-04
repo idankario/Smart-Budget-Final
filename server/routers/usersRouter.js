@@ -3,8 +3,8 @@ const { UsersController } = require('../controllers/UsersController');
 const auth = require('../middleware/auth');
 
 const UsersRouter = new Router();
-
-UsersRouter.get('/',  UsersController.getUsers);
+UsersRouter.post('/login', UsersController.loginUser);
+UsersRouter.get('/',auth,   UsersController.getUsers);
 UsersRouter.get('/:id', auth, UsersController.getUser);
 UsersRouter.get('/family/:id', auth, UsersController.getFamily);
 UsersRouter.post('/', auth, UsersController.postUser);
