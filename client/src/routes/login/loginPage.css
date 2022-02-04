@@ -39,22 +39,3 @@ span:last-child {
     infinite alternate;
 }
 
-@keyframes bop {
-  0% {
-    transform: scale(0.9);
-  }
-  50%,
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes bopB {
-  0% {
-    transform: scale(0.9);
-  }
-  80%,
-  100% {
-    transform: scale(1) rotateZ(-3deg);
-  }
-}

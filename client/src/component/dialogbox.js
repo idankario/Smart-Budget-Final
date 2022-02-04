@@ -24,12 +24,12 @@ export default function DialogProvider() {
     const [open, setOpen] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState(``);
-    const handleClickOpen = (title,isPrivecy) => {
-        const privcy=`We automatically collect certain information to help us understand how our users use the Services (which we will refer to in this Privacy Policy collectively as "Usage Data").`
-        const termOfService=`By being a member and using Budget limit, you agree to everything on this page. We have to do this to protect both you and us and make running this business possible. If you break these terms, you can’t use  Budget limit, anymore.`
+    const handleClickOpen = (title, isPrivecy) => {
+        const privcy = `We automatically collect certain information to help us understand how our users use the Services (which we will refer to in this Privacy Policy collectively as "Usage Data").`
+        const termOfService = `By being a member and using Budget limit, you agree to everything on this page. We have to do this to protect both you and us and make running this business possible. If you break these terms, you can’t use  Budget limit, anymore.`
         setOpen(true);
         setTitle(title);
-        if(isPrivecy)
+        if (isPrivecy)
             setDescription(privcy)
         else
             setDescription(termOfService)
@@ -43,11 +43,11 @@ export default function DialogProvider() {
         <>
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
                 By registering, I agree to &nbsp;
-                <Link to onClick={() => handleClickOpen("Terms of Service",0)} underline="always" sx={{ color: 'text.primary' }}>
+                <Link to onClick={() => handleClickOpen("Terms of Service", 0)} underline="always" sx={{ color: 'text.primary' }}>
                     Terms of Service
                 </Link>
                 &nbsp;and&nbsp;
-                <Link to onClick={() => handleClickOpen("Privacy Policy",1)} underline="always" sx={{ color: 'text.primary' }}>
+                <Link to onClick={() => handleClickOpen("Privacy Policy", 1)} underline="always" sx={{ color: 'text.primary' }}>
                     Privacy Policy
                 </Link>
                 .

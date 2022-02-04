@@ -28,7 +28,7 @@ exports.UsersController = {
       }
       return res.status(400).send({ password: 'Incorrect Password' });
     } catch (err) {
-      console.log(err);
+      return res.status(400).send('Problem with server');
     }
   },
   async registerUser(req, res) {

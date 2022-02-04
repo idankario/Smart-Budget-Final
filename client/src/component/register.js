@@ -6,8 +6,6 @@ import '../routes/login/loginPage.css';
 import DialogProvider from './dialogbox';
 const Register = ({ onSubmitForm, registerData, onChangeField }) => {
     const [errors, setErrors] = useState({});
-    const [open, setopen] = useState('');
-    
     const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
     const validateForm = async () => {
         let errorsmassage = {};

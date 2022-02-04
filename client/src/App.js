@@ -5,6 +5,9 @@ import HomePage from './routes/home/homePage';
 import RegisterPage from './routes/register/registerPage';
 import { PrivateRoute } from './component/routing';
 import NotFoundPage from './routes/page404'
+import StatisticPage from './routes/statistic/statisticPage'
+import ConvertCurency from './component/convertCurency'
+
 const App = () => {
   return (
     <Router>
@@ -20,8 +23,12 @@ const App = () => {
             </PrivateRoute>
           }
         />
+       
+       ConvertCurency
+       <Route path="*" element={<ConvertCurency />} />
+       {/* <Route path="*" element={<StatisticPage />} />  */}
        {/* 404 rounte */}
-       <Route path="*" element={<NotFoundPage />} />
+       {/* <Route path="*" element={<NotFoundPage />} /> */}
       </Routes>
     </Router>
   );
