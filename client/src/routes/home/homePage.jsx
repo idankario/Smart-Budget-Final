@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Paper, Grid, BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { sidebarConfig } from './SidebarConfig';
+import { sidebarConfig } from './sidebarConfig';
 import { ButtonOrange } from '../../component/util/buttonOrange';
 import imageFamily from '../../images/family.svg';
 import { Link } from 'react-router-dom';
