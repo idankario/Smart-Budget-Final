@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/users');
 
 const config = process.env;
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   const token =
     req.body.token || req.query.token || req.headers['x-access-token'];
 
@@ -11,7 +12,9 @@ const verifyToken = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, config.TOKEN_KEY);
-    req.user = decoded;
+    const user = await User.findOne({ email: decoded.email }).lean();
+
+    req.user = user;
   } catch (err) {
     return res.status(401).send('Invalid Token');
   }
