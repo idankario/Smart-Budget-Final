@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Paper, Grid, BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { sidebarConfig } from './SidebarConfig';
+import { sidebarConfig } from './sidebarConfig';
 import { ButtonOrange } from '../../component/util/buttonOrange';
 import imageFamily from '../../images/family.svg';
 import { Link } from 'react-router-dom';
 
+
 const HomePage = () => {
-  const [value, setValue] = useState(0);
+   const [value, setValue] = useState(0);
+
+
+   useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = axios.get('http://localhost:8000/api/users', { headers: {'x-access-token': localStorage.getItem('token')}})
+
+        console.log(data)
+      } catch (error) {
+       console.log(error)
+      }
+    }
+    fetchData();
+  }, []);
+
+
+
   return (
     <>
       <section style={{ maxWidth: "400px", padding: "20px", margin: "auto", backgroundColor: 'rgba(0, 0, 0, 0.5)' }}  >
