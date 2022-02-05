@@ -9,7 +9,7 @@ export const sidebarConfig = [
   },
   {
     title: 'Statistic',
-    path: "ft",
+    path: "/statistic",
     icon: <PieChart sx={styleIcon}/>
   },
   {

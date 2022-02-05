@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
 import { TextField } from '@mui/material';
-import {ButtonOrange,Form} from './util/buttonOrange';
+import { ButtonOrange, Form, StyledLink } from './util/buttonOrange';
 import '../routes/login/loginPage.css';
 
-const Login = ({ onSubmitForm,formData, onChangeField }) => {
+const Login = ({ onSubmitForm, formData, onChangeField }) => {
   const [errors, setErrors] = useState({});
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
-  const validateForm = async() => {
+  const validateForm = async () => {
     let errorsmassage = {};
     if (checkIfNotEmty(formData.email)) errorsmassage.email = "*Email is require";
-    // else if (!(formData.email).match(/^[a-zA-Z ]*$/)) {
-    //   errorsmassage.email = "*Please enter alphabet characters only.";
-    // }
     if (checkIfNotEmty(formData.password)) errorsmassage.password = "*Password is require";
-    if (checkIfNotEmty(formData.userName)) errorsmassage.userName = "*UserName is require";
-    // else if (!(formData.userName).match(/^[a-zA-Z ]*$/)) {
-    //   errorsmassage.userName = "*Please enter alphabet characters only.";
-    // }
+    if (checkIfNotEmty(formData.userName)) errorsmassage.userName = "*User name is require";
     if (Object.keys(errorsmassage).length === 0) {
       setErrors({});
-      let error=await onSubmitForm();
+      let error = await onSubmitForm();
       setErrors(error);
     }
     else {
@@ -33,7 +27,7 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
   return (
     <>
       <h1 className='neaonLabel'><span>Login</span><span>Smart Budget!</span></h1>
-      <form className='root' onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         <div className='familyForm'></div>
         <label>User Name</label>
         <TextField
@@ -72,16 +66,22 @@ const Login = ({ onSubmitForm,formData, onChangeField }) => {
           }}
         />
         <h5 style={{ color: "red", margin: "0px" }}>{errors.password}</h5>
+        <StyledLink
+          to="/register"
+        >
+          New user? Register Now
+        </StyledLink>
         <div style={{ position: 'relative', textAlign: 'center', bottom: '-50px' }}>
+
           <ButtonOrange
             type="submit"
             variant="contained"
-            sx={{width: '150px'}}
+            sx={{ width: '100px' }}
           >
             Login
           </ButtonOrange>
         </div>
-      </form>
+      </Form>
     </>
   );
 };

@@ -1,15 +1,15 @@
 const { Schema, model } = require('mongoose');
 const usersSchema = new Schema(
   {
-    FullName: { type: String },
-    Password: { type: String },
-    Role: { type: String },
-    BudgetLimit: { type: Number },
-    Email: { type: String },
-    IdFamily: { type: Number },
-    Id: { type: Number },
-    Income: { type: Number },
-    IdExpenses: { type: Object },
+    fullName: { type: String },
+    password: { type: String },
+    role: { type: String },
+    budgetLimit: { type: Number },
+    email: { type: String },
+    idFamily: { type: Number },
+    id: { type: Number },
+    income: { type: Number },
+    idExpenses: { type: Number },
   },
   { versionKey: false },
   { collection: 'users' }

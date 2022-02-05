@@ -6,7 +6,7 @@ import imageFamily from '../../images/family.svg';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   return (
     <>
       <section style={{ maxWidth: "400px", padding: "20px", margin: "auto", backgroundColor: 'rgba(0, 0, 0, 0.5)' }}  >
