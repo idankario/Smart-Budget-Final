@@ -8,17 +8,17 @@ import { Link } from 'react-router-dom';
 
 
 const HomePage = () => {
-   const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0);
 
 
-   useEffect(() => {
+  useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = axios.get('http://localhost:8000/api/users', { headers: {'x-access-token': localStorage.getItem('token')}})
+        const { data } = axios.get('http://localhost:8000/api/users', { headers: { 'x-access-token': localStorage.getItem('token') } })
 
         console.log(data)
       } catch (error) {
-       console.log(error)
+        console.log(error)
       }
     }
     fetchData();

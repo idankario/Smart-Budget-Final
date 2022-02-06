@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import {  Modal    ,   Button ,TextField, Select, MenuItem,Typography } from '@mui/material';
+import { Modal, Button, TextField, Select, MenuItem, Typography } from '@mui/material';
 import { ButtonOrange, Form, StyledLink } from './util/buttonOrange';
 import '../routes/login/loginPage.css';
 import DialogProvider from './dialogbox';
@@ -37,12 +37,12 @@ const Register = ({ onSubmitForm, registerData, onChangeField }) => {
             <Form onSubmit={onSubmit}>
                 <div className='familyForm'></div>
                 {/* </DialogProvider> */}
-     
+
                 <StyledLink
-          to="/"
-        >
-           Already have an account? &nbsp;
-        </StyledLink>
+                    to="/"
+                >
+                    Already have an account? &nbsp;
+                </StyledLink>
                 <label>User Name</label>
                 <TextField
                     name="userName"
@@ -116,7 +116,7 @@ const Register = ({ onSubmitForm, registerData, onChangeField }) => {
                 </Select>
                 <h5 style={{ color: "red", margin: "0px" }}>{errors.role}</h5>
 
-                <DialogProvider/>
+                <DialogProvider />
                 <div style={{ position: 'relative', textAlign: 'center', bottom: '-50px' }}>
                     <ButtonOrange
                         type="submit"

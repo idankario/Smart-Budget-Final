@@ -26,11 +26,11 @@ const ConvertCurency = () => {
     Axios.get(
       `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${from}.json`
     ).then((res) => {
-     
-      const options = Object.entries(res.data[from]).map(([k, v]) =>  [{value: v,label: k}]);
-  
 
-      console.log( options)
+      const options = Object.entries(res.data[from]).map(([k, v]) => [{ value: v, label: k }]);
+
+
+      console.log(options)
       setOptions(options)
       setInfo(res.data[from]);
     });
