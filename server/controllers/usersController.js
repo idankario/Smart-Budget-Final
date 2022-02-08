@@ -9,13 +9,11 @@ exports.UsersController = {
       if (!(email && password && userName)) {
         res.status(400).send('All input is required');
       }
-
       // Validate if user exist in our database
       const user = await Users.findOne({
         email: email,
         fullName: userName,
       }).lean();
-
       if (!user)
         return res.status(400).send({
           email: 'Incorrect email address or userName',
@@ -33,8 +31,6 @@ exports.UsersController = {
         );
         // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)(user);
-        console.log(userDetails);
-
         return res.status(200).json({ ...userDetails, token });
       }
       return res.status(400).send({ password: 'Incorrect Password' });
@@ -81,9 +77,9 @@ exports.UsersController = {
           expiresIn: '2h',
         }
       );
-
+      const userDetails = (({ password, _id, ...o }) => o)(newuser);
       // return new user
-      res.status(201).json({ ...newuser.toObject(), token });
+      res.status(201).json({ ...userDetails.toObject(), token });
     } catch (err) {
       console.log(err);
     }
@@ -92,26 +88,31 @@ exports.UsersController = {
   async getUsers(req, res) {
     try {
       const users = await Users.find({}).lean();
-
-      res.json(users);
+      res.status(201).json({ ...users });
     } catch (error) {
       res.send(`Error Getting user from db:${err}`);
     }
   },
 
-  deleteUser(req, res) {
-    Users.deleteOne({ id: req.params.id })
-      .then((result) => {
-        if (result.deletedCount > 0) {
-          res.status(200).res.send(`user--${req.params.id}--deleted`);
-        } else {
-          res.status(400).res.send(`user--${req.params.id}--not in the data`);
-        }
-      })
-      .catch(() =>
-        res.status(400).send(`Error user ${req.params.id} not deleted`)
-      );
+  async deleteUser(req, res) {
+    try {
+      Users.deleteOne({ id: req.params.id })
+        .then((result) => {
+          if (result.deletedCount > 0) {
+            res.status(200).res.send(`user--${req.params.id}--deleted`);
+          } else {
+            res.status(400).res.send(`user--${req.params.id}--not in the data`);
+          }
+        })
+        .catch(() =>
+          res.status(400).send(`Error user ${req.params.id} not deleted`)
+        );
+    } catch (error) {
+      res.send(`Error Getting user from db:${err}`);
+    }
   },
+
+
 
   getUser(req, res) {
     Users.findOne({ id: req.params.id })

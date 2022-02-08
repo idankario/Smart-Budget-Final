@@ -12,7 +12,7 @@ const LoginPage = () => {
     password: '',
   });
 
-  const onSubmitForm = async () => {
+  const onLoginForm = async () => {
     try {
       let res = await axios({
         method: 'post',
@@ -41,8 +41,8 @@ const LoginPage = () => {
     <>
       <section className="flexRow">
         <Login
-          onSubmitForm={onSubmitForm}
-          formData={formData}
+          onLoginSubmit={onLoginForm}
+          dataForm={formData}
           onChangeField={onFieldChange}
         />
       </section>

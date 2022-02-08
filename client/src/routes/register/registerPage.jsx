@@ -44,8 +44,8 @@ const RegisterPage = () => {
     <>
       <section className="flexRow">
         <Register
-          onSubmitForm={onSubmitForm}
-          registerData={registerData}
+          onFormSubmit={onSubmitForm}
+          dataRegister={registerData}
           onChangeField={onFieldChange}
         />
       </section>

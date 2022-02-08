@@ -6,6 +6,8 @@ export const PrivateRoute = ({ children }) => {
   const authed =
     localStorage.getItem('user') &&
     JSON.parse(localStorage.getItem('user')).token;
-
+    window.onbeforeunload = ()=> {
+      localStorage.clear();
+   }
   return authed ? children : <Navigate to="/" />;
 };
