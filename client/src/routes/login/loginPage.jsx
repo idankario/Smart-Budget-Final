@@ -23,7 +23,7 @@ const LoginPage = () => {
       if (res.data.token) {
         localStorage.setItem('user', JSON.stringify(res.data));
         localStorage.setItem('token', res.data.token);
-        navigate('/homepage')
+        return navigate('/homepage')
       }
     } catch (error) {
       return error.response.data;

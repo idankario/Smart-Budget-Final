@@ -26,7 +26,7 @@ const RegisterPage = () => {
       console.log(res.data)
       if (res.data.token) {
         localStorage.setItem('user', JSON.stringify(res.data));
-        navigate('/homepage')
+        return navigate('/homepage')
       }
     } catch (error) {
       return error.response.data;

@@ -26,7 +26,7 @@ const App = () => {
           />
           {/* ConvertCurency */}
           {/* <Route path="*" element={<ConvertCurency />} /> */}
-          {/* <Route path="*" element={<StatisticPage />} />  */}
+          <Route path="/statistic" element={<StatisticPage />} /> 
           {/* 404 rounte */}
           {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
