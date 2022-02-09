@@ -1,11 +1,9 @@
 import Statistic from '../../component/statistic';
 
-const StatisticPage=()=> {
+const StatisticPage = () => {
   return (
     <>
-
-        <Statistic/>
-
+      <Statistic />
     </>
   );
 }

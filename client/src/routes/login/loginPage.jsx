@@ -12,17 +12,18 @@ const LoginPage = () => {
     password: '',
   });
 
-  const onSubmitForm = async () => {
+  const onLoginForm = async () => {
     try {
       let res = await axios({
         method: 'post',
         url: 'http://localhost:8000/api/users/login',
         data: { ...formData },
       })
-      
+
       if (res.data.token) {
         localStorage.setItem('user', JSON.stringify(res.data));
-        navigate('/homepage')
+        localStorage.setItem('token', res.data.token);
+        return navigate('/homepage')
       }
     } catch (error) {
       return error.response.data;
@@ -40,8 +41,8 @@ const LoginPage = () => {
     <>
       <section className="flexRow">
         <Login
-          onSubmitForm={onSubmitForm}
-          formData={formData}
+          onLoginSubmit={onLoginForm}
+          dataForm={formData}
           onChangeField={onFieldChange}
         />
       </section>

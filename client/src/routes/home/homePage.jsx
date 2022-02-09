@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Paper, Grid, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { sidebarConfig } from './SidebarConfig';
 import { ButtonOrange } from '../../component/util/buttonOrange';
 import imageFamily from '../../images/family.svg';
 import { Link } from 'react-router-dom';
 
+
 const HomePage = () => {
   const [value, setValue] = useState(0);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       axios.get('http://localhost:8000/api/users', { headers: { 'x-access-token': localStorage.getItem('token') } }) 
+  //       .then((res) => {
+  //         console.log(res.data);
+  //       })
+  //       .catch(function (error) {
+  //         console.log("Error while fetching market updates");
+  //       });  
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
   return (
     <>
       <section style={{ maxWidth: "400px", padding: "20px", margin: "auto", backgroundColor: 'rgba(0, 0, 0, 0.5)' }}  >

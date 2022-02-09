@@ -3,17 +3,17 @@ import { TextField } from '@mui/material';
 import { ButtonOrange, Form, StyledLink } from './util/buttonOrange';
 import '../routes/login/loginPage.css';
 
-const Login = ({ onSubmitForm, formData, onChangeField }) => {
+const Login = ({ onLoginSubmit, dataForm, onChangeField }) => {
   const [errors, setErrors] = useState({});
   const checkIfNotEmty = (data) => data === "undefined" || data.trim().length === 0
   const validateForm = async () => {
     let errorsmassage = {};
-    if (checkIfNotEmty(formData.email)) errorsmassage.email = "*Email is require";
-    if (checkIfNotEmty(formData.password)) errorsmassage.password = "*Password is require";
-    if (checkIfNotEmty(formData.userName)) errorsmassage.userName = "*User name is require";
+    if (checkIfNotEmty(dataForm.email)) errorsmassage.email = "*Email is require";
+    if (checkIfNotEmty(dataForm.password)) errorsmassage.password = "*Password is require";
+    if (checkIfNotEmty(dataForm.userName)) errorsmassage.userName = "*User name is require";
     if (Object.keys(errorsmassage).length === 0) {
       setErrors({});
-      let error = await onSubmitForm();
+      let error = await onLoginSubmit();
       setErrors(error);
     }
     else {
@@ -35,7 +35,7 @@ const Login = ({ onSubmitForm, formData, onChangeField }) => {
           label="User Name"
           variant="outlined"
           type="text"
-          value={formData.userName}
+          value={dataForm.userName}
           onChange={(e) => {
             onChangeField("userName", e.target.value)
           }}
@@ -47,7 +47,7 @@ const Login = ({ onSubmitForm, formData, onChangeField }) => {
           label="Email"
           type="email"
           variant="outlined"
-          value={formData.email}
+          value={dataForm.email}
           onChange={(e) => {
             onChangeField("email", e.target.value)
           }}
@@ -60,7 +60,7 @@ const Login = ({ onSubmitForm, formData, onChangeField }) => {
           label="Password"
           type="password"
           variant="outlined"
-          value={formData.password}
+          value={dataForm.password}
           onChange={(e) => {
             onChangeField("password", e.target.value)
           }}

@@ -39,7 +39,7 @@ export default function Statistic() {
     } = props;
     return (
       <g>
-        <text  x={cx} y={cy}  textAnchor="middle">
+        <text x={cx} y={cy} textAnchor="middle">
           {(percent * 100).toFixed(0)}%
         </text>
         <text x={cx} y={cy} dy={25} textAnchor="middle" fill="#7F5FC3">
