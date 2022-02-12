@@ -1,0 +1,122 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header,nav,main,section,footer,aside,article,div{
+    display: block;
+}
+nav li{
+    display: inline;
+}
+body{
+    width: 100%;
+    height: 100%;
+}
+
+#wrapper{
+    width: 390px;
+    height: 844px;
+    background-color: #351336;
+}
+
+#circle{
+
+width: 360px;
+height: 271.02px;
+left: 652.83px;
+top: 7.79px;
+background: #4A154C;
+transform: rotate(165deg);
+}
+
+
+.loginlabel{
+    position: absolute;
+    top: 130px;
+    left: 36px;
+    width: 302px;
+    height: 58px;
+}
+.familyimg{
+    position: absolute;
+    top: 310px;
+    left:15px;
+}
+.loginlabel h1{
+    padding-left: 60px;
+    font-family:  'Squada One', cursive;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 42px;
+    color:#FFFFFF;
+}
+.loginlabel span{
+    color:#ECB22F;
+}
+.loginlabel p{
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #FFFFFF;
+}
+.whiteboard{
+    position: absolute;
+    top: 500px;
+    width: 390px;
+    height: 350px;
+    background: #FFFFFF;
+    border-radius: 20px 20px 0px 0px;
+}
+
+#siginbutton{
+    margin-left: 30px;
+    margin-top: 30px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #FFFFFF;
+    width: 335px;
+    height: 60px;
+    background: #28D38A;
+    border-radius: 10px;
+}
+#loginbutton{
+    margin-top: 30px;
+    margin-left: 30px;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    width: 335px;
+    height: 60px;
+    background: #7790F6;
+    border-radius: 10px;
+}
+#nava{
+position: absolute;
+display: flex;
+align-items:center;
+justify-content: space-evenly;
+top: 780px;
+left: 30px;
+width:335px;
+height: 60px;
+background: #ECB22F;
+border-radius: 20px;
+}
+
+.home {
+    width:40px;
+    height: 40px;
+
+  }
+#nava img{
+      width: 50px;
+      height: 50px;
+  }
