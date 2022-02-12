@@ -7,6 +7,7 @@ import RegisterPage from './routes/register/registerPage';
 import { PrivateRoute } from './component/routing';
 import NotFoundPage from './routes/page404';
 import StatisticPage from './routes/statistic/statisticPage';
+import AddExpenses from './routes/addexpense/addexpensePage';
 import ConvertCurency from './component/convertCurency';
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           {/* ConvertCurency */}
           {/* <Route path="*" element={<ConvertCurency />} /> */}
           <Route path="/statistic" element={<StatisticPage />} /> 
+          <Route path="/addExpenses" element={<AddExpenses />} /> 
           {/* 404 rounte */}
           {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>

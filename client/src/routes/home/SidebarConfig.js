@@ -19,7 +19,7 @@ export const sidebarConfig = [
   },
   {
     title: 'Add Expenses',
-    path: "/homepagefff",
+    path: "/addExpenses",
     icon: <AddBusiness sx={styleIcon} />
   }
 ];
