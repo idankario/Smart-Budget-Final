@@ -3,16 +3,14 @@ import { Title, Main, WhiteBoard, FamilyImage, Button, StyledLink } from '../com
 import Form from '../components/from';
 import {isRequire} from '../components/util/validations';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
-    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
         userName: '',
         email: '',
         password: '',
     });
-
+    
     const dataType = [
         { type: 'text', label: 'User Name' },
         { type: 'email', label: 'Email' },
@@ -37,7 +35,7 @@ const LoginPage = () => {
           if (res.data.token) {
             localStorage.setItem('user', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
-            navigate('/menu')
+            window.location='../menu'
           }
         } catch (error) {
           return error.response.data;

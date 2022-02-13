@@ -3,7 +3,7 @@ const styleIcon = { fontSize: "40px" };
 export const sidebarConfig = [
   {
     title: 'Home',
-    path: "../",
+    path: "/menu",
     icon: <Home sx={styleIcon} />
   },
   {
@@ -13,12 +13,12 @@ export const sidebarConfig = [
   },
   {
     title: 'Family',
-    path: "/homepageft",
+    path: "/family",
     icon: <FamilyRestroom sx={styleIcon} />
   },
   {
     title: 'Add Expenses',
-    path: "/homepagefff",
+    path: "/expenses",
     icon: <AddBusiness sx={styleIcon} />
   }
 ];

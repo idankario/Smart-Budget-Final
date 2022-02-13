@@ -5,10 +5,8 @@ import { isRequire } from '../components/util/validations';
 import Terms from '../components/terms';
 import { Select, MenuItem } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 const RegisterPage = () => {
     const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
     const [dataForm, setDataForm] = useState({
         userName: '',
         role: 'Parent',
@@ -17,6 +15,7 @@ const RegisterPage = () => {
         email: '',
         password: '',
     });
+
     const dataType = [
         { type: 'text', label: 'User Name' },
         { type: 'number', label: 'Budget Limit' },
@@ -42,10 +41,13 @@ const RegisterPage = () => {
           if (res.data.token) {
             localStorage.setItem('user', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
-            return navigate('/menu');
+            window.location='../menu';
           }
         } catch (error) {
-          return error.response.data;
+            if(error)
+                return error.response.data;
+            else
+                window.location='../*';
         }
       };
 

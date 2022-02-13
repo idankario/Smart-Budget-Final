@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import button from '@mui/material/Button';
-import familyImage from './images/familyform.png';
+import familyImage from './/images/familyform.png';
 import { Link } from 'react-router-dom';
 
 export const Title = styled('header')({
@@ -24,22 +24,21 @@ export const Title = styled('header')({
         },
     }
 });
-export const Main = styled('main')({
 
+export const Main = styled('main')({
     width: '100%',
     display: 'flex',
     textAlign: 'center',
     justifyContent: 'center',
-
 })
+
 export const WhiteBoard = styled('section')({
     width: '390px',
     minHeight: "350px",
     background: "#fff",
     padding: "20px",
-    borderRadius: "20px 20px 0px 0px",
+    borderRadius: "20px 20px 20px 20px",
 });
-
 
 export const Button = styled(button)(({ theme }) => ({
     fontSize: '14px',
@@ -63,6 +62,7 @@ export const FamilyImage = styled('div')({
     marginTop: '40px',
     marginLeft: '50PX'
 });
+
 export const StyledLink = styled(Link)({
     textDecoration: 'none',
     color: 'orange',
@@ -72,3 +72,18 @@ export const StyledLink = styled(Link)({
     }
 }
 );
+export const SqButton = styled(button)(({ theme }) => ({
+    flexDirection: "column",
+      fontSize: '12px',
+      boxShadow: '0 0 6px hsl(210 14% 90%)',
+      width: "80px",
+      height: "80px",
+      margin: "20px",
+      fontFamily: 'Segoe UI',
+      color: '#fff',
+      background: theme.color ? theme.color : '#28D38A',
+      borderRadius: '10px',
+      ':hover': {
+          backgroundColor: theme.hover ? theme.hover : '#ECB22F',
+      },
+  }));
