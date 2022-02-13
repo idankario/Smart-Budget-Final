@@ -79,7 +79,7 @@ exports.UsersController = {
       );
       const userDetails = (({ password, _id, ...o }) => o)(newuser);
       // return new user
-      res.status(201).json({ ...userDetails.toObject(), token });
+      res.status(201).json({ ...userDetails, token });
     } catch (err) {
       console.log(err);
     }
@@ -114,16 +114,19 @@ exports.UsersController = {
 
 
 
-  getUser(req, res) {
-    Users.findOne({ id: req.params.id })
-      .then((user) => {
-        if (user) {
-          res.json(user);
-        } else {
-          res.status(400).json('Wrong user id please enter correct id');
-        }
-      })
-      .catch((err) => res.send(`Error Getting user from db:${err}`));
+  async getUser(req, res) {
+    try {
+      Users.findOne({ id: req.params.id })
+        .then((user) => {
+          if (user) {
+            res.json(user);
+          } else {
+            res.status(400).json('Wrong user id please enter correct id');
+          }
+        })
+    } catch (error) {
+      res.send(`Error Getting user from db:${err}`);
+    }
   },
 
   getFamily(req, res) {

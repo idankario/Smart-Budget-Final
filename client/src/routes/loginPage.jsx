@@ -1,21 +1,58 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
-import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/util/board';
-import Divider from '@mui/material/Divider';
-import { TextField } from '@mui/material';
+import { Title, Main, WhiteBoard, FamilyImage, Button, StyledLink } from '../components/board';
+import Form from '../components/from';
+import {isRequire} from '../components/util/validations';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
-    const [data, setForm] = useState({
+    const [dataForm, setDataForm] = useState({
         userName: '',
         email: '',
         password: '',
-      });
-      const onChangeField = (key, value) => {
-        setForm({
-          ...data,
-          [key]: value,
+    });
+
+    const dataType = [
+        { type: 'text', label: 'User Name' },
+        { type: 'email', label: 'Email' },
+        { type: 'password', label: 'Password' }
+    ];
+
+    const onChangeField = (key, value) => {
+        setDataForm({
+            ...dataForm,
+            [key]: value,
         });
+    };
+
+    const onLogin = async () => {
+        try {
+          let res = await axios({
+            method: 'post',
+            url: 'http://localhost:8000/api/users/login',
+            data: { ...dataForm },
+          })
+    
+          if (res.data.token) {
+            localStorage.setItem('user', JSON.stringify(res.data));
+            localStorage.setItem('token', res.data.token);
+            navigate('/menu')
+          }
+        } catch (error) {
+          return error.response.data;
+        }
       };
+
+    const onSubmit = async(e) => {
+        e.preventDefault();
+        setErrors(isRequire(dataForm,dataType))
+        if (Object.keys(errors).length === 0) {
+            let error = await onLogin();
+            setErrors(error);
+          };
+    }
+
     return (
         <>
             <Main>
@@ -26,60 +63,20 @@ const LoginPage = () => {
                     </Title>
                     <FamilyImage></FamilyImage>
                     <WhiteBoard>
-                        <form >
-                            <label>User Name</label>
-                            <TextField
-                                name="userName"
-                                label="User Name"
-                                variant="outlined"
-                                type="text"
-                                value={data.userName}
-                                onChange={(e) => {
-                                    onChangeField("userName", e.target.value)
-                                }}
-                            />
-                            <h5 style={{ color: "red", margin: "0px" }}>{errors.userName}</h5>
-                            <label>Email</label>
-                            <TextField
-                                name="email"
-                                label="Email"
-                                type="email"
-                                variant="outlined"
-                                value={data.email}
-                                onChange={(e) => {
-                                    onChangeField("email", e.target.value)
-                                }}
-                            />
-                            <h5 style={{ color: "red", margin: "0px" }}>{errors.email}</h5>
-                            <label>Password</label>
-                            <TextField
-                                className='text'
-                                name="password"
-                                label="Password"
-                                type="password"
-                                variant="outlined"
-                                value={data.password}
-                                onChange={(e) => {
-                                    onChangeField("password", e.target.value)
-                                }}
-                            />
-                            <h5 style={{ color: "red", margin: "0px" }}>{errors.password}</h5>
-                            {/* <StyledLink
-                                to="/register"
-                            >
+                        <Form 
+                        formData={dataForm} 
+                        typeData={dataType} 
+                        onFieldChange={onChangeField} 
+                        errorsForm={errors} 
+                        onSubmit={onSubmit}
+                        >
+                            <Button type="submit">
+                                Login
+                            </Button>
+                            <StyledLink to="/register">
                                 New user? Register Now
-                            </StyledLink> */}
-            
-
-                                <Button
-                                    type="submit"    
-                                >
-                                    Login
-                                </Button>
-                       
-                        </form>
-
-
+                            </StyledLink>
+                        </Form>
                     </WhiteBoard>
                 </section>
             </Main>
@@ -87,3 +84,5 @@ const LoginPage = () => {
     );
 };
 export default LoginPage;
+
+
