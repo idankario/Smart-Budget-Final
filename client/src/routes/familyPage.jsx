@@ -5,7 +5,7 @@ import BottomNav from '../components/navigation/bottomNav';
 import AddIcon from '@mui/icons-material/Add';
 import icon from '../components/images/1.png';
 import axios from 'axios';
-const AddFamily = () => {
+const FamilyPage = () => {
   const [users, setUsers] = useState({});
   useEffect(() => {
      const fetchMyAPI = async() => {
@@ -18,8 +18,8 @@ const AddFamily = () => {
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
           setUsers(res.data)
-          
-          console.log(res.data)
+          console.log(JSON.stringify(res.data));
+
         }
       } catch (error) {
         return error.response.data;
@@ -27,7 +27,6 @@ const AddFamily = () => {
 
     }
     fetchMyAPI()
-    console.log(users)
   }, []);
 
   return (
@@ -59,4 +58,4 @@ const AddFamily = () => {
     </>
   );
 };
-export default AddFamily;
+export default FamilyPage;
