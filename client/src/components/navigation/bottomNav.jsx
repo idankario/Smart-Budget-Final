@@ -1,10 +1,7 @@
 import React, {  useState } from 'react';
-
 import { Paper,  BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { sidebarConfig } from './sidebarConfig';
-
 import { Link } from 'react-router-dom';
-
 
 const BottomNav = () => {
   const [value, setValue] = useState(0);

@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
+import { SelectDroupDown, Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Form from '../components/from';
 import { isRequire } from '../components/util/validations';
 import { MenuItem, TextField, Grid } from '@mui/material';
-import Selectmui from '@mui/material/Select';
-import Select from 'react-select';
+import Select from '@mui/material/Select';
 import axios from 'axios';
 const ExpensesPage = () => {
   const [errors, setErrors] = useState({});
   const [dataForm, setDataForm] = useState({
     descritpion: '',
-    value: '',
+    cost: '',
     methodsPayment: 'Cash',
     category: 'Home',
   });
-  const [to, setTo] = useState('ils');
+  const dataType = [
+    { type: 'text', label: 'Descritpion' },
+    { type: 'number', label: 'Cost' },
+  ];
   const [currencies, setCurrencies] = useState([]);
-  const [from, setFrom] = useState('usd');
+  const [from, setFrom] = useState('ils');
   // Calling the api whenever the dependency changes
   useEffect(() => {
     axios.get(
@@ -27,28 +29,53 @@ const ExpensesPage = () => {
       setCurrencies(currency);
     });
   }, [from]);
+    useEffect(() => {
+    async function fetchData() {
+      try {
+        axios.get('http://localhost:8000/api/users/', { headers: { 'x-access-token': localStorage.getItem('token') } }) 
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch(function (error) {
+          console.log("Error while fetching market updates");
+        });  
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData();
+  }, []);
 
-
-
-  const dataType = [
-    { type: 'text', label: 'Descritpion' },
-    { type: 'number', label: 'Value' },
-  ];
   const onChangeField = (key, value) => {
     setDataForm({
       ...dataForm,
       [key]: value,
     });
   };
+
+  const onAddExpenses = async () => {
+    try {
+      axios.get('http://localhost:8000/api/users/', { headers: { 'x-access-token': localStorage.getItem('token') } }) 
+      .then((res) => {
+        console.log("res.data");
+      })
+      .catch( (error)=> {
+        console.log("Error while fetching market updates");
+      });  
+    } catch (error) {
+      console.log(error)
+    }
+
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(Object.entries(dataForm)[0])
-
-    // setErrors(isRequire((({ role, ...o }) => o)(dataForm.descritpion), dataType));
-    // if (Object.keys(errors).length === 0) {
-    //   // let error = await onRegister();
-    //   // setErrors(error);
-    // };
+    const errorsList=await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
+    setErrors(errorsList);
+    if (Object.keys(errorsList).length === 0) {
+      let error = await onAddExpenses();
+      setErrors(error);
+    };
   }
   return (
     <>
@@ -66,8 +93,6 @@ const ExpensesPage = () => {
               onFieldChange={onChangeField}
               errorsForm={errors}
               onSubmit={onSubmit}>
-
-
               <label>Descritpion</label>
               <TextField
                 name="descritpion"
@@ -79,31 +104,29 @@ const ExpensesPage = () => {
                   onChangeField("descritpion", e.target.value)
                 }}
               />
-              <h5>{errors[`descritpion`]}</h5>
-              <label>Value</label>
+              <h5>{errors?errors[`descritpion`]:''}</h5>
+              <label>Cost</label>
               <Grid container>
-                <Grid item xs={8}>
+                <Grid item xs={9}>
                   <TextField
-                    name="value"
-                    label="Value"
+                    name="cost"
+                    label="Cost"
                     variant="outlined"
                     type={"Number"}
-                    value={dataForm.value}
+                    value={dataForm.cost}
                     onChange={(e) => {
-                      onChangeField("value", e.target.value)
+                      onChangeField("cost", e.target.value)
                     }}
                   />
-                  <h5>{errors[`value`]}</h5>
+                  <h5>{errors?errors[`cost`]:''}</h5>
                 </Grid>
-
                 <Grid item xs={3} >
-                  <Select options={currencies}
-                    placeholder={from} />
+                  <SelectDroupDown options={currencies}
+                    placeholder={'ils'} />
                 </Grid>
               </Grid>
               <label>Methods of Payment</label>
-
-              <Selectmui
+              <Select
                 value={dataForm.methodsPayment}
                 label="Methods of Payment"
                 onChange={(e) => {
@@ -112,10 +135,10 @@ const ExpensesPage = () => {
               >
                 <MenuItem value="Cash">Cash</MenuItem>
                 <MenuItem value="CreditCard">Credit Card</MenuItem>
-              </Selectmui>
+              </Select>
 
               <label>Category</label>
-              <Selectmui
+              <Select
                 value={dataForm.category}
                 label="Category"
                 onChange={(e) => {
@@ -126,12 +149,10 @@ const ExpensesPage = () => {
                 <MenuItem value="Home">Home</MenuItem>
                 <MenuItem value="Vecation">Vecation</MenuItem>
                 <MenuItem value="Other">Other</MenuItem>
-              </Selectmui>
-
+              </Select>
               <Button type="submit">
                 Add expenses
               </Button>
-
             </Form>
           </WhiteBoard>
         </section>

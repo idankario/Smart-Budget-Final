@@ -44,7 +44,7 @@ const Form = ({ formData, typeData, onFieldChange,errorsForm,onSubmit,children }
             onFieldChange(data[0], e.target.value)
           }}
         />
-        <h5>{errorsForm[`${data[0]}`]}</h5>
+        <h5>{errorsForm?errorsForm[`${data[0]}`]:''}</h5>
         </Fragment>
       );
   }

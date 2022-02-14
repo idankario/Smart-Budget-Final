@@ -15,12 +15,9 @@ const MenuPage = () => {
           </Title>
           <FamilyImage></FamilyImage>
           <WhiteBoard>
-
             <Button component={Link} to="/statistic" >
             STATISTIC
             </Button>
-           
-
             <Button component={Link} to="/family" theme={{color:'#7790F6'}} >
             FAMILY
             </Button>

@@ -6,7 +6,8 @@ import RegisterPage from './routes/registerPage';
 import MenuPage from './routes/menuPage';
 import StatisticPage from './routes/statisticPage';
 import { PrivateRoute } from './routes/privateRouter/routing';
-import AddFamily from './routes/addFamily';
+import Family from './routes/familyPage';
+import AddMember from './routes/addMember';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
 // import StatisticPage from './routes/statistic/statisticPage';
@@ -51,7 +52,16 @@ const App = () => {
             path="/family"
             element={
               <PrivateRoute>
-                <AddFamily />
+                <Family />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
+            path="/addMember"
+            element={
+              <PrivateRoute>
+                <AddMember />
               </PrivateRoute>
             }
           />

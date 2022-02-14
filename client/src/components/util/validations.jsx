@@ -1,7 +1,9 @@
 
 
-export const isRequire= (dataForm,dataType)=>{
+
+export const isRequire= async(dataForm,dataType)=>{
     const errorsList={};
+
     const isempty=(data, i) => {
         const { label } = dataType[i];
         if (data[1] === "undefined" || data[1].trim().length === 0) {

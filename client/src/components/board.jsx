@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import button from '@mui/material/Button';
 import familyImage from './/images/familyform.png';
 import { Link } from 'react-router-dom';
-
+import Select from 'react-select';
 export const Title = styled('header')({
     '& div': {
         position: 'absolute',
@@ -74,16 +74,24 @@ export const StyledLink = styled(Link)({
 );
 export const SqButton = styled(button)(({ theme }) => ({
     flexDirection: "column",
-      fontSize: '12px',
-      boxShadow: '0 0 6px hsl(210 14% 90%)',
-      width: "80px",
-      height: "80px",
-      margin: "20px",
-      fontFamily: 'Segoe UI',
-      color: '#fff',
-      background: theme.color ? theme.color : '#28D38A',
-      borderRadius: '10px',
-      ':hover': {
-          backgroundColor: theme.hover ? theme.hover : '#ECB22F',
-      },
-  }));
+    fontSize: '12px',
+    boxShadow: '0 0 6px hsl(210 14% 90%)',
+    width: "80px",
+    height: "80px",
+    margin: "20px",
+    fontFamily: 'Segoe UI',
+    color: '#fff',
+    background: theme.color ? theme.color : '#28D38A',
+    borderRadius: '10px',
+    ':hover': {
+        backgroundColor: theme.hover ? theme.hover : '#ECB22F',
+    },
+}));
+export const SelectDroupDown = styled(Select)({
+    '& .css-6j8wv5-Input': {
+        padding: "14px",
+    },
+    '& .css-1s2u09g-control': {
+        margin: "7px",
+    }
+});
