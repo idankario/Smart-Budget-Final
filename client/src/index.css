@@ -1,14 +1,16 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Quicksand&display=swap");
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  padding: 0px 20px 0px 40px;
-  background-color: #385a8d;
-  background-image: url("./routes/image/backgroundlogin.jpeg");
-  background-attachment: fixed;
-  background-size: cover;
+  padding: 0;
 }
-body img {
+header,nav,main,section,footer,aside,article,div{
+  display: block;
+}
+
+body{
+  font-size: 20px;
   max-width: 100%;
+  background-color: #351336;
+  min-width: 100%;
+  min-height: 100%;
 }
