@@ -7,23 +7,28 @@ import icon from '../components/images/1.png';
 import axios from 'axios';
 const AddFamily = () => {
   const [users, setUsers] = useState({});
-  useEffect(async() => {
-    try {
-      let res = await axios({
-        method: 'get',
-        headers: { 'x-access-token': localStorage.getItem('token') },
-        url: 'http://localhost:8000/api/users/',
-      });
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        setUsers(res.data)
-        console.log(users)
-        console.log("users")
+  useEffect(() => {
+     const fetchMyAPI = async() => {
+      try {
+        let res = await axios({
+          method: 'get',
+          headers: { 'x-access-token': localStorage.getItem('token') },
+          url: 'http://localhost:8000/api/users/',
+        });
+        if (res.data.token) {
+          localStorage.setItem('token', res.data.token);
+          setUsers(res.data)
+          
+          console.log(res.data)
+        }
+      } catch (error) {
+        return error.response.data;
       }
-    } catch (error) {
-      return error.response.data;
+
     }
-  });
+    fetchMyAPI()
+    console.log(users)
+  }, []);
 
   return (
     <>
