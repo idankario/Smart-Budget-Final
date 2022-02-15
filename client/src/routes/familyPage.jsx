@@ -28,7 +28,7 @@ const FamilyPage = () => {
   }, []);
   const eachButtonFamily = (user, index) => {
     return (
-      <SqButton key={index} theme={{ color: '#7790F6' }}>
+      <SqButton component={Link} to="/askleon" key={index} theme={{ color: '#7790F6' }}>
         <img src={iconsUsers(index)} alt={user.fullName} title={user.fullName} />
         <p>{user[1].fullName}</p>
       </SqButton>
