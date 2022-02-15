@@ -67,7 +67,6 @@ exports.UsersController = {
         role: role,
         income: income,
         idFamily: family.idFamily + 1,
-        idExpenses: 0,
       });
       // Create token
       const token = jwt.sign(
@@ -169,7 +168,6 @@ exports.UsersController = {
         role: role,
         income: income,
         idFamily: user.idFamily,
-        idExpenses: 0,
       });
 
       // Create token
@@ -187,12 +185,12 @@ exports.UsersController = {
       return res.status(400).send('Problem with server');
     }
   },
+
   async getUsers(req, res) {
     try {
       const user = req.user;
-
-      let users = await (Users.find({ idFamily: user.idFamily }).select("-password").select("-_id").select("-id").select("-idFamily"));
-      users = (({ user, ...o }) => o)(users);
+      
+      let users = await Users.find({ _id: { $ne: user._id } ,idFamily: user.idFamily}).select("-password").select("-_id").select("-id").select("-idFamily");
       // Create token
       const token = jwt.sign(
         { user_id: user._id, email: user.email },
@@ -206,25 +204,5 @@ exports.UsersController = {
       res.send(`Error Getting user from db:${err}`);
     }
   },
-  // async getUsers(req, res) {
-  //   try {
-  //     const users = await Users.find({}).lean();
-  //     res.status(201).json({ ...users });
-  //   } catch (error) {
-  //     res.send(`Error Getting user from db:${err}`);
-  //   }
-
-  // try {
-  //   const user = req.user;
-  //   // const users = await (({ user, ...o }) => o)(Users.find({ idFamily: user.idFamily }).populate("-password").lean());
-  //   const users = await (({ user, ...o }) => o)(Users.find({ idFamily: user.idFamily }).lean());
-  //   console.log(Users.find({ idFamily: user.idFamily }).lean());
-
-  //   res.status(201).json({...user, token });
-  // } catch (error) {
-  //   res.send(`Error Getting user from db:${err}`);
-  // }
-  // },
-
 };
 

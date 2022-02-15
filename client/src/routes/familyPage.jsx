@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import { Title, Main, WhiteBoard, FamilyImage, Button, SqButton } from '../components/board';
 import BottomNav from '../components/navigation/bottomNav';
 import AddIcon from '@mui/icons-material/Add';
-import icon from '../components/images/1.png';
+import iconsUsers from '../components/util/iconsUser';
 import axios from 'axios';
 const FamilyPage = () => {
   const [users, setUsers] = useState({});
   useEffect(() => {
-     const fetchMyAPI = async() => {
+    const fetchData = async () => {
       try {
         let res = await axios({
           method: 'get',
@@ -17,18 +17,28 @@ const FamilyPage = () => {
         });
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
-          setUsers(res.data)
-          console.log(JSON.stringify(res.data));
-
+          setUsers((({ token, ...o }) => o)(res.data));
         }
       } catch (error) {
         return error.response.data;
       }
-
     }
-    fetchMyAPI()
+    fetchData()
   }, []);
-
+  const eachButtonFamily = (user, index) => {
+    return (
+      <SqButton key={index} theme={{ color: '#7790F6' }}>
+        <img src={iconsUsers(index)} alt={user.fullName} title={user.fullName} />
+        <p>{user[1].fullName}</p>
+      </SqButton>
+    );
+  }
+  const Results = () => (
+    <SqButton component={Link} to="/addMember" >
+          <AddIcon />
+        </SqButton>
+  )
+ 
   return (
     <>
       <Main>
@@ -41,13 +51,9 @@ const FamilyPage = () => {
           <WhiteBoard>
             <h2>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
             <h5>Ask For Loan:</h5>
-            <SqButton theme={{ color: '#7790F6' }}>
-              <img src={icon} />
-              <p>idankario</p>
-            </SqButton>
-            <SqButton component={Link} to="/addMember" >
-              <AddIcon />
-            </SqButton>
+            {Object.entries(users).map(eachButtonFamily)}
+           
+           { (JSON.parse(localStorage.getItem('user')).role === "Parent") ?  <Results /> : null }
             <Button component={Link} to="/menu" >
               BackHome!
             </Button>
@@ -58,4 +64,6 @@ const FamilyPage = () => {
     </>
   );
 };
+
+
 export default FamilyPage;

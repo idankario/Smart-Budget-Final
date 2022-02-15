@@ -7,8 +7,8 @@ const expensesSchema = new Schema(
     category: { type: String },
     idFamily: { type: Number },
     idUser: { type: Number },
-    idExpenses: { type: Number }
- 
+    id: { type: Number },
+    createdAt: {type: Date, default: Date.now}
   },
   { versionKey: false },
   { collection: 'users' }

@@ -8,8 +8,7 @@ const usersSchema = new Schema(
     email: { type: String },
     idFamily: { type: Number },
     id: { type: Number },
-    income: { type: Number },
-    idExpenses: { type: Number },
+    income: { type: Number }
   },
   { versionKey: false },
   { collection: 'users' }
