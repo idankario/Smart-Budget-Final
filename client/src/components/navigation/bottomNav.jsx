@@ -9,7 +9,6 @@ const BottomNav = () => {
     sidebarConfig.map((navigation, index) => window.location.pathname === navigation.path ? setValue(index) : '');
   }, []);
 
-
   const eachBottomNavigatio = (navigation, index) => {
     return (
       <BottomNavigationAction

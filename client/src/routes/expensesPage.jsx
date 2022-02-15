@@ -22,7 +22,7 @@ const ExpensesPage = () => {
 
   const [currencies, setCurrencies] = useState([]);
   const [from, setFrom] = useState('ils');
-  
+
   // Calling the api whenever the dependency changes
   useEffect(() => {
     axios.get(
@@ -43,20 +43,20 @@ const ExpensesPage = () => {
   };
   const onAddExpenses = async () => {
     try {
-        let res = await axios({
+      let res = await axios({
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
-        data: {...dataForm},
-        url:'http://localhost:8000/api/users/addExpenses',
-    });
-    if (res.data.token) {
-      localStorage.setItem('token', res.data.token);
-      setErrors({});
-      window.location='../expenses'
+        data: { ...dataForm },
+        url: 'http://localhost:8000/api/users/addExpenses',
+      });
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        setErrors({});
+        window.location = '../expenses'
+      }
+    } catch (error) {
+      return error.response.data;
     }
-  } catch (error) {
-    return error.response.data;
-  }
   };
 
   const onSubmit = async (e) => {

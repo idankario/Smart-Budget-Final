@@ -30,7 +30,6 @@ const RegisterPage = () => {
             [key]: value,
         });
     };
-
     const onRegister = async () => {
         try {
           let res = await axios({
@@ -41,7 +40,8 @@ const RegisterPage = () => {
           if (res.data.token) {
             localStorage.setItem('user', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
-            window.location='../menu';
+            console.log(res.data)
+            window.location='../menu'
           }
         } catch (error) {
             if(error)
@@ -50,6 +50,8 @@ const RegisterPage = () => {
                 window.location='../*';
         }
       };
+
+
 
     const onSubmit = async(e) => {
         e.preventDefault();

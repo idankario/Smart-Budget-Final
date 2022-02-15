@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Form from '../components/from';
 import { isRequire } from '../components/util/validations';
@@ -34,29 +34,29 @@ const AddMember = () => {
     const onAddMember = async () => {
         try {
             let res = await axios({
-            method: 'POST',
-            headers: { 'x-access-token': localStorage.getItem('token') },
-            data: {...dataForm},
-            url:'http://localhost:8000/api/users/family',
-        });
-    
-        if (res.data.token) {
-          localStorage.setItem('token', res.data.token);
-          setErrors({});
-          window.location='../family';
-        }
-      } catch (error) {
-        return error.response.data;
-      }
-      };
+                method: 'POST',
+                headers: { 'x-access-token': localStorage.getItem('token') },
+                data: { ...dataForm },
+                url: 'http://localhost:8000/api/users/family',
+            });
 
-      const onSubmit = async(e) => {
+            if (res.data.token) {
+                localStorage.setItem('token', res.data.token);
+                setErrors({});
+                window.location = '../family';
+            }
+        } catch (error) {
+            return error.response.data;
+        }
+    };
+
+    const onSubmit = async (e) => {
         e.preventDefault();
         setErrors(isRequire((({ role, ...o }) => o)(dataForm), dataType));
         if (Object.keys(errors).length === 0) {
             let error = await onAddMember();
             setErrors(error);
-          };
+        };
     }
     return (
         <>
@@ -91,7 +91,7 @@ const AddMember = () => {
                             <BottomNav />
                         </Form>
                     </WhiteBoard>
-            </section>
+                </section>
             </Main>
         </>
     );

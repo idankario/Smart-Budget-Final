@@ -24,6 +24,7 @@ const FamilyPage = () => {
       }
     }
     fetchData()
+
   }, []);
   const eachButtonFamily = (user, index) => {
     return (
@@ -38,7 +39,6 @@ const FamilyPage = () => {
           <AddIcon />
         </SqButton>
   )
- 
   return (
     <>
       <Main>
@@ -51,8 +51,7 @@ const FamilyPage = () => {
           <WhiteBoard>
             <h2>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
             <h5>Ask For Loan:</h5>
-            {Object.entries(users).map(eachButtonFamily)}
-           
+            {Object.entries(users).map(eachButtonFamily)}         
            { (JSON.parse(localStorage.getItem('user')).role === "Parent") ?  <Results /> : null }
             <Button component={Link} to="/menu" >
               BackHome!
@@ -64,6 +63,4 @@ const FamilyPage = () => {
     </>
   );
 };
-
-
 export default FamilyPage;

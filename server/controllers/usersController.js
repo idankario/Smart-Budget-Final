@@ -76,9 +76,10 @@ exports.UsersController = {
           expiresIn: '2h',
         }
       );
-      const userDetails = (({ password, _id, ...o }) => o)(newuser);
-      // return new user
-      res.status(201).json({ ...userDetails, token });
+  
+      let userDetails = newuser;
+      userDetails=(({ password, _id, ...o }) => o)(newuser.toObject());
+      return res.status(200).json({ ...userDetails, token });
     } catch (err) {
       console.log(err);
     }

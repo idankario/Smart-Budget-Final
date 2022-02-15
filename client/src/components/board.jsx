@@ -36,7 +36,7 @@ export const WhiteBoard = styled('section')({
     width: '390px',
     minHeight: "350px",
     background: "#fff",
-    marginBottom:"40px",
+    marginBottom: "40px",
     padding: "20px",
     borderRadius: "20px 20px 20px 20px",
 });
