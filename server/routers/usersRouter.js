@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const { UsersController } = require('../controllers/UsersController');
+const { UsersController } = require('../controllers/usersController');
 const { ExpensesController } = require('../controllers/expensesController');
 const auth = require('../middleware/auth');
 
 const UsersRouter = new Router();
-
+UsersRouter.post('/addExpenses', auth, ExpensesController.getExpenses);
 UsersRouter.post('/login', UsersController.loginUser);
 UsersRouter.post('/register', UsersController.registerUser);
 UsersRouter.get('/', auth, UsersController.getUsers);

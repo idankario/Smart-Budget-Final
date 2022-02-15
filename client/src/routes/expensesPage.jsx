@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SelectDroupDown, Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Form from '../components/from';
 import { isRequire } from '../components/util/validations';
+import BottomNav from '../components/navigation/bottomNav';
 import { MenuItem, TextField, Grid } from '@mui/material';
 import Select from '@mui/material/Select';
 import axios from 'axios';
@@ -13,12 +14,15 @@ const ExpensesPage = () => {
     methodsPayment: 'Cash',
     category: 'Home',
   });
+
   const dataType = [
     { type: 'text', label: 'Descritpion' },
     { type: 'number', label: 'Cost' },
   ];
+
   const [currencies, setCurrencies] = useState([]);
   const [from, setFrom] = useState('ils');
+
   // Calling the api whenever the dependency changes
   useEffect(() => {
     axios.get(
@@ -27,24 +31,9 @@ const ExpensesPage = () => {
       const currency = [];
       Object.entries(res.data[from]).map(([k, v]) => currency.push({ value: `${v}`, label: k }));
       setCurrencies(currency);
+      setFrom(from);
     });
   }, [from]);
-    useEffect(() => {
-    async function fetchData() {
-      try {
-        axios.get('http://localhost:8000/api/users/', { headers: { 'x-access-token': localStorage.getItem('token') } }) 
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch(function (error) {
-          console.log("Error while fetching market updates");
-        });  
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchData();
-  }, []);
 
   const onChangeField = (key, value) => {
     setDataForm({
@@ -52,25 +41,27 @@ const ExpensesPage = () => {
       [key]: value,
     });
   };
-
   const onAddExpenses = async () => {
     try {
-      axios.get('http://localhost:8000/api/users/', { headers: { 'x-access-token': localStorage.getItem('token') } }) 
-      .then((res) => {
-        console.log("res.data");
-      })
-      .catch( (error)=> {
-        console.log("Error while fetching market updates");
-      });  
+      let res = await axios({
+        method: 'POST',
+        headers: { 'x-access-token': localStorage.getItem('token') },
+        data: { ...dataForm },
+        url: 'http://localhost:8000/api/users/addExpenses',
+      });
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        setErrors({});
+        window.location = '../expenses'
+      }
     } catch (error) {
-      console.log(error)
+      return error.response.data;
     }
-
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const errorsList=await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
+    const errorsList = await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
     setErrors(errorsList);
     if (Object.keys(errorsList).length === 0) {
       let error = await onAddExpenses();
@@ -104,7 +95,7 @@ const ExpensesPage = () => {
                   onChangeField("descritpion", e.target.value)
                 }}
               />
-              <h5>{errors?errors[`descritpion`]:''}</h5>
+              <h5>{errors ? errors[`descritpion`] : ''}</h5>
               <label>Cost</label>
               <Grid container>
                 <Grid item xs={9}>
@@ -118,7 +109,7 @@ const ExpensesPage = () => {
                       onChangeField("cost", e.target.value)
                     }}
                   />
-                  <h5>{errors?errors[`cost`]:''}</h5>
+                  <h5>{errors ? errors[`cost`] : ''}</h5>
                 </Grid>
                 <Grid item xs={3} >
                   <SelectDroupDown options={currencies}
@@ -153,6 +144,7 @@ const ExpensesPage = () => {
               <Button type="submit">
                 Add expenses
               </Button>
+              <BottomNav />
             </Form>
           </WhiteBoard>
         </section>

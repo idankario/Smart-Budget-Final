@@ -18,7 +18,7 @@ const HomePage = () => {
               Sign up!
             </Button>
             <Divider>or</Divider>
-            <Button component={Link} to="/login" theme={{color:'#7790F6'}} >
+            <Button component={Link} to="/login" theme={{ color: '#7790F6' }} >
               Already have an account? Log In
             </Button>
           </WhiteBoard>

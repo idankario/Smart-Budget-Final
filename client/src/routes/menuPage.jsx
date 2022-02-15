@@ -16,15 +16,15 @@ const MenuPage = () => {
           <FamilyImage></FamilyImage>
           <WhiteBoard>
             <Button component={Link} to="/statistic" >
-            STATISTIC
+              STATISTIC
             </Button>
-            <Button component={Link} to="/family" theme={{color:'#7790F6'}} >
-            FAMILY
+            <Button component={Link} to="/family" theme={{ color: '#7790F6' }} >
+              FAMILY
             </Button>
             <Button component={Link} to="/expenses" >
-            ADD EXPENSES
+              ADD EXPENSES
             </Button>
-            <BottomNav/>
+            <BottomNav />
           </WhiteBoard>
         </section>
       </Main>

@@ -31,14 +31,16 @@ const LoginPage = () => {
             url: 'http://localhost:8000/api/users/login',
             data: { ...dataForm },
           })
-    
           if (res.data.token) {
             localStorage.setItem('user', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
             window.location='../menu'
           }
-        } catch (error) {
-          return error.response.data;
+        } catch (error)  {
+            if(error)
+                return error.response.data;
+            else
+                window.location='../*';
         }
       };
 

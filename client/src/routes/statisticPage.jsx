@@ -14,7 +14,11 @@ const StatisticPage = () => {
                     </Title>
                     <Statistic />
                     <WhiteBoard>
-
+                        
+                    <progress value="0.2"></progress>
+                    <progress value="0.6"></progress>
+                    <progress value="0.1"></progress>
+                    <progress value="0.2"></progress>
                         <BottomNav />
                     </WhiteBoard>
                 </section>
