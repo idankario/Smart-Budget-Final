@@ -40,7 +40,6 @@ const RegisterPage = () => {
           if (res.data.token) {
             localStorage.setItem('user', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
-            console.log(res.data)
             window.location='../menu'
           }
         } catch (error) {
