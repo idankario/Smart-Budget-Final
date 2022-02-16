@@ -12,6 +12,7 @@ export const Title = styled('header')({
         background: '#4A154C',
         transform: 'rotate(165deg)'
     },
+
     '& h1': {
         marginTop: "50px",
         fontFamily: "'Squada One', cursive",
