@@ -29,7 +29,7 @@ const AskPage = () => {
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
         data: { ...dataForm },
-        url: 'http://localhost:8000/api/users/addExpenses',//have to change to new table in mongo
+        url: 'https://smartbudgetf.herokuapp.com/api/users/addExpenses',//have to change to new table in mongo
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);

@@ -13,7 +13,7 @@ const FamilyPage = () => {
         let res = await axios({
           method: 'get',
           headers: { 'x-access-token': localStorage.getItem('token') },
-          url: 'http://localhost:8000/api/users/',
+          url: 'https://smartbudgetf.herokuapp.com/api/users/',
         });
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
@@ -30,7 +30,7 @@ const FamilyPage = () => {
     return (
       <SqButton component={Link} to="/askleon" key={index} theme={{ color: '#7790F6' }}>
         <img src={iconsUsers(index)} alt={user.fullName} title={user.fullName} />
-        <p>{user[1].fullName}</p>
+        <p style={{color: 'black',fontSize:'8px'}} >{user[1].fullName}</p>
       </SqButton>
     );
   }
@@ -49,7 +49,7 @@ const FamilyPage = () => {
           </Title>
           <FamilyImage></FamilyImage>
           <WhiteBoard>
-            <h2>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
+            <h2 style={{ fontFamily: "'Squada One', cursive", fontWeight: "700",fontSize: "30px",color:'#ECB22F'}}>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
             <h5>Ask For Loan:</h5>
             {Object.entries(users).map(eachButtonFamily)}         
            { (JSON.parse(localStorage.getItem('user')).role === "Parent") ?  <Results /> : null }

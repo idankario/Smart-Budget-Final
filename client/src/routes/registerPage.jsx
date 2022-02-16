@@ -34,7 +34,7 @@ const RegisterPage = () => {
         try {
           let res = await axios({
             method: 'post',
-            url: 'http://localhost:8000/api/users/register',
+            url: 'https://smartbudgetf.herokuapp.com/api/users/register',
             data: { ...dataForm },
           })
           if (res.data.token) {

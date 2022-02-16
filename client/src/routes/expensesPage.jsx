@@ -47,7 +47,7 @@ const ExpensesPage = () => {
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
         data: { ...dataForm },
-        url: 'http://localhost:8000/api/users/addExpenses',
+        url: 'https://smartbudgetf.herokuapp.com/api/users/addExpenses',
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
