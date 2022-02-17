@@ -42,12 +42,12 @@ const ExpensesPage = () => {
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
         data: { ...dataForm },
-        url: 'http://localhost:8000/api/users/addExpenses',
+        url: 'http://localhost:8000/api/users/expenses',
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
         setErrors({});
-        window.location = '../expenses'
+        window.location = '../statistic'
       }
     } catch (error) {
       return error.response.data;
@@ -79,7 +79,7 @@ const ExpensesPage = () => {
     {
       setDataForm(await{
         ...dataForm,
-        "cost":dataCost>0?(dataCost*selectedCurrency.value).toFixed(0):'',
+        "cost":dataCost>0?(dataCost/selectedCurrency.value).toFixed(0):'',
       });
     }
     else
@@ -87,12 +87,6 @@ const ExpensesPage = () => {
       const objectErrors=  await isRequire((({ methodsPayment,category, ...o }) => o)(dataForm),dataType);
       setErrors(objectErrors); 
     }
-
-    // if (Object.keys(errors).length === 0) {
-    //   let error = await onAddExpenses();
-    //   setErrors(error);
-    // };
-    //setErrors(
   }
   
   return (
@@ -166,9 +160,9 @@ const ExpensesPage = () => {
                   onChangeField("category", e.target.value)
                 }}
               >
-                <MenuItem value="Car">Car</MenuItem>
+                <MenuItem value="Public transport">Public transport</MenuItem>
+                <MenuItem value="Entertainment">Entertainment</MenuItem>
                 <MenuItem value="Home">Home</MenuItem>
-                <MenuItem value="Vecation">Vecation</MenuItem>
                 <MenuItem value="Other">Other</MenuItem>
               </Select>
               <Button type="submit">

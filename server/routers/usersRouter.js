@@ -5,7 +5,7 @@ const { LoansController } = require('../controllers/loanController');
 const auth = require('../middleware/auth');
 
 const UsersRouter = new Router();
-UsersRouter.post('/addExpenses', auth, ExpensesController.addExpenses);
+UsersRouter.post('/expenses', auth, ExpensesController.addExpenses);
 UsersRouter.post('/login', UsersController.loginUser);
 UsersRouter.post('/register', UsersController.registerUser);
 UsersRouter.get('/', auth, UsersController.getUsers);

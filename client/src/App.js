@@ -7,14 +7,13 @@ import MenuPage from './routes/menuPage';
 import StatisticPage from './routes/statisticPage';
 import { PrivateRoute } from './routes/privateRouter/routing';
 import FamilyPage from './routes/familyPage';
-import AddMember from './routes/addMember';
+import addMemberPage from './routes/addMemberPage';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
 import AskPage from './routes/askPage';
 import SuccessPage from './routes/successpage';
 import AccountPage from './routes/accountPage';
-// import StatisticPage from './routes/statistic/statisticPage';
-// import ConvertCurency from './component/convertCurency';
+
 const App = () => {
   return (
     <React.StrictMode>
@@ -64,7 +63,7 @@ const App = () => {
             path="/addMember"
             element={
               <PrivateRoute>
-                <AddMember />
+                <addMemberPage />
               </PrivateRoute>
             }
           />
@@ -97,10 +96,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          
-          {/* ConvertCurency */}
-          {/* <Route path="*" element={<ConvertCurency />} /> */}
-          {/* <Route path="/statistic" element={<StatisticPage />} />  */}
+        
           {/* 404 rounte */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

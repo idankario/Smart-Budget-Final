@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
+const user=JSON.parse(localStorage.getItem('user'));
 
 const data = [
-  { label: "Income", value: 1500 },
-  { label: "Expenses", value: 300 }
+  { label: `Income ${user.income}`, value: user.income },
+  { label: "Expenses", value: user.expenses  }
 ];
 const COLORS = [
   { start: "#7F5FC3", end: "#E1D3FF" },

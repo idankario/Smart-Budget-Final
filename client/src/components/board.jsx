@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import button from '@mui/material/Button';
-import familyImage from './images/familyform.png';
+import familyImage from './images/family.png';
 import successImg from './images/success.png';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
@@ -60,7 +60,7 @@ export const Button = styled(button)(({ theme }) => ({
     },
 }));
 
-export const FamilyImage = styled('img')({
+export const FamilyImage = styled('section')({
     backgroundImage: `url(${familyImage})`,
     backgroundRepeat: 'no-repeat',
     height: '195px',
