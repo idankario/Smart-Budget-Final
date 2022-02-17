@@ -10,6 +10,7 @@ import FamilyPage from './routes/familyPage';
 import AddMember from './routes/addMember';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
+import AskPage from './routes/askPage';
 // import StatisticPage from './routes/statistic/statisticPage';
 // import ConvertCurency from './component/convertCurency';
 const App = () => {
@@ -62,6 +63,15 @@ const App = () => {
             element={
               <PrivateRoute>
                 <AddMember />
+              </PrivateRoute>
+            }
+          />
+           <Route
+            exact
+            path="/askleon"
+            element={
+              <PrivateRoute>
+                <AskPage />
               </PrivateRoute>
             }
           />
