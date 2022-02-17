@@ -1,8 +1,11 @@
 import { styled } from '@mui/material/styles';
 import button from '@mui/material/Button';
-import familyImage from './/images/familyform.png';
+import familyImage from './images/familyform.png';
+import successImg from './images/success.png';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { height, padding } from '@mui/system';
+import { Padding } from '@mui/icons-material';
 export const Title = styled('header')({
     '& div': {
         position: 'absolute',
@@ -57,13 +60,14 @@ export const Button = styled(button)(({ theme }) => ({
     },
 }));
 
-export const FamilyImage = styled('div')({
+export const FamilyImage = styled('img')({
     backgroundImage: `url(${familyImage})`,
     backgroundRepeat: 'no-repeat',
     height: '195px',
     marginTop: '40px',
     marginLeft: '50PX'
 });
+
 
 export const StyledLink = styled(Link)({
     textDecoration: 'none',
@@ -97,3 +101,31 @@ export const SelectDroupDown = styled(Select)({
         margin: "7px",
     }
 });
+export const SuccessImg = styled('div')({
+    backgroundImage: `url(${successImg})`,
+    backgroundRepeat: 'no-repeat',
+    height: '195px'
+});
+
+export const ProgressStyle = styled('progress')({
+padding:'30px',
+});
+
+export const FlexSection = styled('section')({
+    display: 'flex',
+    flexDirection:'row',
+    justifyContent:'center',
+    justifyContent:'space-between',
+    height:'45px',
+    width:'390px',
+    paddingBottom:'30px',
+
+    });
+    export const Pstyles = styled('p')({
+        fontFamily:'Segoe UI',
+        fontSize: '20px',
+        color: '#6441a4',
+        marginTop:'20px',
+  
+        
+        });

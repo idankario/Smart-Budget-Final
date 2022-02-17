@@ -43,7 +43,7 @@ const AddMember = () => {
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token);
                 setErrors({});
-                window.location = '../family';
+                window.location = '../success';
             }
         } catch (error) {
             return error.response.data;

@@ -11,6 +11,8 @@ import AddMember from './routes/addMember';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
 import AskPage from './routes/askPage';
+import SuccessPage from './routes/successpage';
+import AccountPage from './routes/accountPage';
 // import StatisticPage from './routes/statistic/statisticPage';
 // import ConvertCurency from './component/convertCurency';
 const App = () => {
@@ -72,6 +74,25 @@ const App = () => {
             element={
               <PrivateRoute>
                 <AskPage />
+              </PrivateRoute>
+            }
+          />
+            <Route
+            exact
+            path="/success"
+            element={
+              <PrivateRoute>
+                <SuccessPage />
+              </PrivateRoute>
+            }
+          />
+
+            <Route
+            exact
+            path="/account"
+            element={
+              <PrivateRoute>
+                <AccountPage />
               </PrivateRoute>
             }
           />
