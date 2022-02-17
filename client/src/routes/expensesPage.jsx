@@ -36,6 +36,7 @@ const ExpensesPage = () => {
       setFrom(from);
     });
   }, [from]);
+  
   const onAddExpenses = async () => {
     try {
       let res = await axios({

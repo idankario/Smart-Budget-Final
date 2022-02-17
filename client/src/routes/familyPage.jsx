@@ -15,7 +15,7 @@ const FamilyPage = () => {
         let res = await axios({
           method: 'get',
           headers: { 'x-access-token': localStorage.getItem('token') },
-          url: 'https://smartbudgetf.herokuapp.com/api/users/',
+          url: 'http://localhost:8000/api/users/',
         });
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
@@ -28,7 +28,6 @@ const FamilyPage = () => {
     fetchData();
   }, []);
   const eachButtonFamily = (user, index) => {
-    console.log(user)
     return ( 
       <SqButton component={Link} to={`/askleon/${user[1].email}`} key={index} theme={{ color: '#7790F6' }}>
         <img src={iconsUsers(index)} alt={user[1].fullName} title={user[1].fullName} />

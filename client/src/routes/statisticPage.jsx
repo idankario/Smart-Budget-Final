@@ -8,25 +8,30 @@ import Home from '../components/images/Home.png';
 import Groceries from '../components/images/Groceries.png';
 import axios from 'axios';
 const StatisticPage = () => {
+    const [expensesMonth, setExpenses] = useState({});
     useEffect(() => {
-        async function fetchData() {
-            try {
-                let res = await axios({
-                  method: 'get',
-                  headers: { 'x-access-token': localStorage.getItem('token') },
-                  url: 'http://localhost:8000/api/users/expenses/',
-                });
-                if (res.data.token) {
-                  localStorage.setItem('user', JSON.stringify(res.data));
-                  localStorage.setItem('token', res.data.token);                 
-                }
-              } catch (error) {
-                return error.response.data;
-              }
+        const fetchData = async () => {
+          try {
+            let res = await axios({
+              method: 'get',
+              headers: { 'x-access-token': localStorage.getItem('token') },
+              url: 'http://localhost:8000/api/users/expenses',
+            });
+            if (res.data.token) {
+              localStorage.setItem('token', res.data.token);
+              console.log(res.data.token);
+              const expenses=res.data.expenses;
+              console.log(expenses);
+              setExpenses(expenses);
+            }
+          } catch (error) {
+            return error.response.data;
+          }
         }
-    
         fetchData();
-      })
+      }, []);
+
+
 
 
 
