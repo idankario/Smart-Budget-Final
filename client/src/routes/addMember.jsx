@@ -16,6 +16,7 @@ const AddMember = () => {
         email: '',
         password: '',
     });
+    
     const dataType = [
         { type: 'text', label: 'User Name' },
         { type: 'number', label: 'Budget Limit' },
@@ -52,8 +53,9 @@ const AddMember = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        setErrors(isRequire((({ role, ...o }) => o)(dataForm), dataType));
-        if (Object.keys(errors).length === 0) {
+        const objectErrors=await isRequire((({ role, ...o }) => o)(dataForm), dataType)
+        setErrors(objectErrors);
+        if (Object.keys(objectErrors).length === 0) {
             let error = await onAddMember();
             setErrors(error);
         };

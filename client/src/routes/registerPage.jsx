@@ -40,7 +40,6 @@ const RegisterPage = () => {
           if (res.data.token) {
             localStorage.setItem('user', JSON.stringify(res.data));
             localStorage.setItem('token', res.data.token);
-            console.log(res.data)
             window.location='../menu'
           }
         } catch (error) {
@@ -55,7 +54,8 @@ const RegisterPage = () => {
 
     const onSubmit = async(e) => {
         e.preventDefault();
-        setErrors(isRequire((({ role, ...o }) => o)(dataForm), dataType));
+        const objectErrors=await isRequire((({ role, ...o }) => o)(dataForm), dataType);
+        setErrors(objectErrors);
         if (Object.keys(errors).length === 0) {
             let error = await onRegister();
             setErrors(error);
