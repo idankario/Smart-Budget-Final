@@ -19,10 +19,11 @@ const StatisticPage = () => {
             });
             if (res.data.token) {
               localStorage.setItem('token', res.data.token);
-              console.log(res.data.token);
+           
               const expenses=res.data.expenses;
-              console.log(expenses);
+            
               setExpenses(expenses);
+
             }
           } catch (error) {
             return error.response.data;
@@ -43,7 +44,7 @@ const StatisticPage = () => {
                         <div></div>
                         <h1>SMART <span>Budget!</span></h1>
                     </Title>
-                    <Statistic />
+                    <Statistic  monthExpenses ={expensesMonth}/>
                     <WhiteBoard>
                     <FlexSection>
                     <img src={Taxi}/>
