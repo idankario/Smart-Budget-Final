@@ -68,7 +68,8 @@ const App = () => {
           />
            <Route
             exact
-            path="/askleon"
+           
+            path="/askleon/:email"
             element={
               <PrivateRoute>
                 <AskPage />

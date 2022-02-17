@@ -5,10 +5,13 @@ const jwt = require('jsonwebtoken');
 
 exports.ExpensesController = {
   
-  async getExpenses(req, res) {
+  async addExpenses(req, res) {
     try {
       const user = req.user;
       const { descritpion, cost, methodsPayment, category} = req.body;
+      if (!(descritpion && cost && methodsPayment && category)) {
+        res.status(400).send('All input are required');
+      }
       // Create token
       const token = jwt.sign(
         { user_id: user._id, email: user.email },

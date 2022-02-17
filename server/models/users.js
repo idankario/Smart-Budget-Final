@@ -13,5 +13,5 @@ const usersSchema = new Schema(
   { versionKey: false },
   { collection: 'users' }
 );
-const users = model('users', usersSchema);
-module.exports = users;
+const Users = model('users', usersSchema);
+module.exports = Users;

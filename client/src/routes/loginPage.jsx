@@ -28,7 +28,7 @@ const LoginPage = () => {
         try {
           let res = await axios({
             method: 'post',
-            url: 'https://smartbudgetf.herokuapp.com/api/users/login',
+            url: 'http://localhost:8000/api/users/login',
             data: { ...dataForm },
           })
           if (res.data.token) {
@@ -46,8 +46,9 @@ const LoginPage = () => {
 
     const onSubmit = async(e) => {
         e.preventDefault();
-        setErrors(isRequire(dataForm,dataType))
-        if (Object.keys(errors).length === 0) {
+        const objectErrors=await isRequire(dataForm,dataType);
+        setErrors(objectErrors);
+        if (Object.keys(objectErrors).length === 0) {
             let error = await onLogin();
             setErrors(error);
           };

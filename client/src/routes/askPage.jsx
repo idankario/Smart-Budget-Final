@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Form from '../components/from';
 import { isRequire } from '../components/util/validations';
@@ -29,7 +29,7 @@ const AskPage = () => {
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
         data: { ...dataForm },
-        url: 'https://smartbudgetf.herokuapp.com/api/users/addExpenses',//have to change to new table in mongo
+        url: 'https://smartbudgetf.herokuapp.com/api/users/loan',
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);

@@ -6,22 +6,24 @@ import BottomNav from '../components/navigation/bottomNav';
 import { MenuItem, TextField, Grid } from '@mui/material';
 import Select from '@mui/material/Select';
 import axios from 'axios';
+
 const ExpensesPage = () => {
   const [errors, setErrors] = useState({});
+  const [currencies, setCurrencies] = useState([]);
+  const [from, setFrom] = useState('ils');
+  const [selectedCurrency, setSelectCurrency] = useState({value: '1', label: 'ils'});
+  const[ dataCost, setDataCost] = useState('');
   const [dataForm, setDataForm] = useState({
     descritpion: '',
     cost: '',
     methodsPayment: 'Cash',
     category: 'Home',
   });
-
+  
   const dataType = [
     { type: 'text', label: 'Descritpion' },
     { type: 'number', label: 'Cost' },
   ];
-
-  const [currencies, setCurrencies] = useState([]);
-  const [from, setFrom] = useState('ils');
 
   // Calling the api whenever the dependency changes
   useEffect(() => {
@@ -34,20 +36,13 @@ const ExpensesPage = () => {
       setFrom(from);
     });
   }, [from]);
-
-  const onChangeField = (key, value) => {
-    setDataForm({
-      ...dataForm,
-      [key]: value,
-    });
-  };
   const onAddExpenses = async () => {
     try {
       let res = await axios({
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
         data: { ...dataForm },
-        url: 'https://smartbudgetf.herokuapp.com/api/users/addExpenses',
+        url: 'http://localhost:8000/api/users/addExpenses',
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
@@ -58,16 +53,48 @@ const ExpensesPage = () => {
       return error.response.data;
     }
   };
+  
+  useEffect(async() => {
+    if(dataForm.cost>0)
+    {
+      const objectErrors=  await isRequire((({ methodsPayment,category, ...o }) => o)(dataForm),dataType);
+      setErrors(objectErrors);
+      if (Object.keys(errors).length === 0) {
+        let error = await onAddExpenses();
+        setErrors(error);
+      };
+    }
+  }, [dataForm.cost]);
+
+  const onChangeField = (key, value) => {
+    setDataForm({
+      ...dataForm,
+      [key]: value,
+    });
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const errorsList = await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
-    setErrors(errorsList);
-    if (Object.keys(errorsList).length === 0) {
-      let error = await onAddExpenses();
-      setErrors(error);
-    };
+    if(dataCost>0)
+    {
+      setDataForm(await{
+        ...dataForm,
+        "cost":dataCost>0?(dataCost*selectedCurrency.value).toFixed(0):'',
+      });
+    }
+    else
+    {
+      const objectErrors=  await isRequire((({ methodsPayment,category, ...o }) => o)(dataForm),dataType);
+      setErrors(objectErrors); 
+    }
+
+    // if (Object.keys(errors).length === 0) {
+    //   let error = await onAddExpenses();
+    //   setErrors(error);
+    // };
+    //setErrors(
   }
+  
   return (
     <>
       <Main>
@@ -92,7 +119,7 @@ const ExpensesPage = () => {
                 type="text"
                 value={dataForm.descritpion}
                 onChange={(e) => {
-                  onChangeField("descritpion", e.target.value)
+                  onChangeField("descritpion", e.target.value);
                 }}
               />
               <h5>{errors ? errors[`descritpion`] : ''}</h5>
@@ -104,16 +131,19 @@ const ExpensesPage = () => {
                     label="Cost"
                     variant="outlined"
                     type={"Number"}
-                    value={dataForm.cost}
+                    value={dataCost}
                     onChange={(e) => {
-                      onChangeField("cost", e.target.value)
+                      setDataCost(e.target.value);
                     }}
                   />
                   <h5>{errors ? errors[`cost`] : ''}</h5>
                 </Grid>
                 <Grid item xs={3} >
-                  <SelectDroupDown options={currencies}
-                    placeholder={'ils'} />
+                  <SelectDroupDown
+                    options={currencies}
+                    value={selectedCurrency}
+                    placeholder={selectedCurrency}
+                    onChange={setSelectCurrency} />
                 </Grid>
               </Grid>
               <label>Methods of Payment</label>
