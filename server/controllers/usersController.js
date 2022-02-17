@@ -75,7 +75,7 @@ exports.UsersController = {
         {
           expiresIn: '2h',
         }
-      );
+      ); 
   
       let userDetails = newuser;
       userDetails=(({ password, _id, ...o }) => o)(newuser.toObject());
