@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Divider from '@mui/material/Divider';
 import BottomNav from '../components/navigation/bottomNav';
+
 const AccountPage = () => {
   return (
     <>

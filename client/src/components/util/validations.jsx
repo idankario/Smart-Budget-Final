@@ -1,6 +1,4 @@
 
-
-
 export const isRequire = async (dataForm, dataType) => {
     const errorsList = {};
     const isempty = (data, i) => {
@@ -10,6 +8,7 @@ export const isRequire = async (dataForm, dataType) => {
             errorsList[`${data[0]}`] = `*${label} is require`;
         }
     };
+    
     Object.entries(dataForm).map(isempty);
     return errorsList;
 }

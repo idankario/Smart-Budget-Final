@@ -32,34 +32,34 @@ const RegisterPage = () => {
     };
     const onRegister = async () => {
         try {
-          let res = await axios({
-            method: 'post',
-            url: 'https://smartbudgetf.herokuapp.com/api/users/register',
-            data: { ...dataForm },
-          })
-          if (res.data.token) {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            localStorage.setItem('token', res.data.token);
-            window.location='../menu'
-          }
+            let res = await axios({
+                method: 'post',
+                url: 'https://smartbudgetf.herokuapp.com/api/users/register',
+                data: { ...dataForm },
+            })
+            if (res.data.token) {
+                localStorage.setItem('user', JSON.stringify(res.data));
+                localStorage.setItem('token', res.data.token);
+                window.location = '../menu'
+            }
         } catch (error) {
-            if(error)
+            if (error)
                 return error.response.data;
             else
-                window.location='../*';
+                window.location = '../*';
         }
-      };
+    };
 
 
 
-    const onSubmit = async(e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        const objectErrors=await isRequire((({ role, ...o }) => o)(dataForm), dataType);
+        const objectErrors = await isRequire((({ role, ...o }) => o)(dataForm), dataType);
         setErrors(objectErrors);
         if (Object.keys(errors).length === 0) {
             let error = await onRegister();
             setErrors(error);
-          };
+        };
     }
     return (
         <>

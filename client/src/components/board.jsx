@@ -54,7 +54,7 @@ export const Button = styled(button)(({ theme }) => ({
     background: theme.color ? theme.color : '#28D38A',
     borderRadius: '10px',
     ':hover': {
-        backgroundColor: theme.hover ? theme.hover : '#ECB22F',
+    backgroundColor: theme.hover ? theme.hover : '#ECB22F',
     },
 }));
 
@@ -71,8 +71,8 @@ export const StyledLink = styled(Link)({
     textDecoration: 'none',
     color: 'orange',
     '&:focus, &:hover': {
-        textDecoration: 'none',
-        color: '#7790F6',
+    textDecoration: 'none',
+    color: '#7790F6',
     }
 }
 );
@@ -88,7 +88,7 @@ export const SqButton = styled(button)(({ theme }) => ({
     background: theme.color ? theme.color : '#28D38A',
     borderRadius: '10px',
     ':hover': {
-        backgroundColor: theme.hover ? theme.hover : '#ECB22F',
+    backgroundColor: theme.hover ? theme.hover : '#ECB22F',
     },
 }));
 export const SelectDroupDown = styled(Select)({
@@ -119,6 +119,7 @@ export const FlexSection = styled('section')({
     width: '390px',
     paddingBottom: '30px',
 });
+
 export const H5styles = styled('h5')({
     fontFamily: 'Segoe UI',
     color: '#6441a4',

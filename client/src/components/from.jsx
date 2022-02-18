@@ -17,7 +17,6 @@ export const FormStyle = styled('form')({
       fontSize: "12px",
     },
   },
-
   '& .MuiTextField-root': {
     margin: '5px',
   },
