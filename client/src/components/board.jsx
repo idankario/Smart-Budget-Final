@@ -4,8 +4,6 @@ import familyImage from './images/family.png';
 import successImg from './images/success.png';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
-import { height, padding } from '@mui/system';
-import { Padding } from '@mui/icons-material';
 export const Title = styled('header')({
     '& div': {
         position: 'absolute',
@@ -108,24 +106,21 @@ export const SuccessImg = styled('div')({
 });
 
 export const ProgressStyle = styled('progress')({
-padding:'30px',
+    padding: '20px',
+    marginTop: '10px',
+    width: '150px'
 });
 
 export const FlexSection = styled('section')({
     display: 'flex',
-    flexDirection:'row',
-    justifyContent:'center',
-    justifyContent:'space-between',
-    height:'45px',
-    width:'390px',
-    paddingBottom:'30px',
-
-    });
-    export const Pstyles = styled('p')({
-        fontFamily:'Segoe UI',
-        fontSize: '20px',
-        color: '#6441a4',
-        marginTop:'20px',
-  
-        
-        });
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: '45px',
+    width: '390px',
+    paddingBottom: '30px',
+});
+export const H5styles = styled('h5')({
+    fontFamily: 'Segoe UI',
+    color: '#6441a4',
+    marginTop: '20px',
+});

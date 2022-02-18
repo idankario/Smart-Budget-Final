@@ -22,17 +22,17 @@ export const FormStyle = styled('form')({
     margin: '5px',
   },
   '& h5': {
-    color: "#F00", 
+    color: "#F00",
     margin: "0px",
   },
 },
 );
 
-const Form = ({ formData, typeData, onFieldChange,errorsForm,onSubmit,children }) => {
+const Form = ({ formData, typeData, onFieldChange, errorsForm, onSubmit, children }) => {
   const eachTextField = (data, i) => {
     const { type, label } = typeData[i];
     return (
-     <Fragment key={i}>
+      <Fragment key={i}>
         <label>{label}</label>
         <TextField
           name={data[0]}
@@ -44,14 +44,14 @@ const Form = ({ formData, typeData, onFieldChange,errorsForm,onSubmit,children }
             onFieldChange(data[0], e.target.value)
           }}
         />
-        <h5>{errorsForm?errorsForm[`${data[0]}`]:''}</h5>
-        </Fragment>
-      );
+        <h5>{errorsForm ? errorsForm[`${data[0]}`] : ''}</h5>
+      </Fragment>
+    );
   }
 
   return (
     <>
-      <FormStyle onSubmit={onSubmit}>   
+      <FormStyle onSubmit={onSubmit}>
         {Object.entries(formData).map(eachTextField)}
         {children}
       </FormStyle>
