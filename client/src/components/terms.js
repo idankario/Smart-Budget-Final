@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+
 const PaperComponent = (props) => {
     return (
         <Draggable
@@ -19,6 +20,7 @@ const PaperComponent = (props) => {
         </Draggable>
     );
 }
+
 const Terms = () => {
     const [open, setOpen] = useState(false);
     const [title, setTitle] = useState("");

@@ -11,15 +11,15 @@ const ExpensesPage = () => {
   const [errors, setErrors] = useState({});
   const [currencies, setCurrencies] = useState([]);
   const [from, setFrom] = useState('ils');
-  const [selectedCurrency, setSelectCurrency] = useState({value: '1', label: 'ils'});
-  const[ dataCost, setDataCost] = useState('');
+  const [selectedCurrency, setSelectCurrency] = useState({ value: '1', label: 'ils' });
+  const [dataCost, setDataCost] = useState('');
   const [dataForm, setDataForm] = useState({
     descritpion: '',
     cost: '',
     methodsPayment: 'Cash',
     category: 'Home',
   });
-  
+
   const dataType = [
     { type: 'text', label: 'Descritpion' },
     { type: 'number', label: 'Cost' },
@@ -36,7 +36,7 @@ const ExpensesPage = () => {
       setFrom(from);
     });
   }, [from]);
-  
+
   const onAddExpenses = async () => {
     try {
       let res = await axios({
@@ -54,11 +54,10 @@ const ExpensesPage = () => {
       return error.response.data;
     }
   };
-  
-  useEffect(async() => {
-    if(dataForm.cost>0)
-    {
-      const objectErrors=  await isRequire((({ methodsPayment,category, ...o }) => o)(dataForm),dataType);
+
+  useEffect(async () => {
+    if (dataForm.cost > 0) {
+      const objectErrors = await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
       setErrors(objectErrors);
       if (Object.keys(errors).length === 0) {
         let error = await onAddExpenses();
@@ -76,20 +75,18 @@ const ExpensesPage = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if(dataCost>0)
-    {
+    if (dataCost > 0) {
       setDataForm({
         ...dataForm,
-        "cost":dataCost>0?(dataCost/selectedCurrency.value).toFixed(0):'',
+        "cost": dataCost > 0 ? (dataCost / selectedCurrency.value).toFixed(0) : '',
       });
     }
-    else
-    {
-      const objectErrors=  await isRequire((({ methodsPayment,category, ...o }) => o)(dataForm),dataType);
-      setErrors(objectErrors); 
+    else {
+      const objectErrors = await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
+      setErrors(objectErrors);
     }
   }
-  
+
   return (
     <>
       <Main>

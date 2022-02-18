@@ -2,6 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Divider from '@mui/material/Divider';
+import axios from 'axios';
+const onDeleteUser = async () => {
+  try {
+    let res = await axios({
+      method: 'DELETE',
+      headers: { 'x-access-token': localStorage.getItem('token') },
+      url: 'http://localhost:8000/api/users/',
+    });
+    window.location = '../login'
+  } catch (error) {
+    return error.response.data;
+  }
+};
 
 const HomePage = () => {
   return (

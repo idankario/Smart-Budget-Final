@@ -25,22 +25,37 @@ const CategorySection = ({ monthExpenses,budgetLimit}) => {
       name: "Public transport",
       value: getTotalCost(monthExpenses, "Public transport")/budgetLimit
     },
+
     {
       src: Sport,
       name: "Entertainment",
       value:getTotalCost(monthExpenses, "Entertainment")/budgetLimit
     },
+
     {
       src: Home,
       name: "Home",
       value:getTotalCost(monthExpenses, "Home")/budgetLimit
     },
+
     {
       src: Groceries,
       name: "Other",
       value: getTotalCost(monthExpenses, "Other")/budgetLimit
     },
   ];
+<<<<<<< HEAD
+=======
+
+  function extractKeyValue(obj) {
+    let count = 0;
+    Object.keys(obj).map(function (k) {
+      count = count + obj[k].cost;
+    }
+    )
+    return count;
+  }
+>>>>>>> 5f41c16d47ec82b74e20da0727c7abe100d106d6
 
   const eachFlexSection = (data, i) => {
     const { src, name, value } = data[1];
