@@ -3,10 +3,10 @@ import { Title, Main, WhiteBoard } from '../components/board';
 import BottomNav from '../components/navigation/bottomNav';
 import StatisticGraph from '../components/statisticGraph';
 import CategorySection from '../components/util/categorySection';
-
 import axios from 'axios';
 const StatisticPage = () => {
     const [expensesMonth, setExpenses] = useState({});
+    const user = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -17,9 +17,8 @@ const StatisticPage = () => {
                 });
                 if (res.data.token) {
                     localStorage.setItem('token', res.data.token);
-                    const expenses = res.data.expenses;
+                    const expenses = await res.data.expenses;
                     setExpenses(expenses);
-
                 }
             } catch (error) {
                 return error.response.data;
@@ -27,6 +26,14 @@ const StatisticPage = () => {
         }
         fetchData();
     }, []);
+    const getTotalExpenses = (obj) => {
+        let count = 0;
+        Object.keys(obj).map(function (k) {
+            count = count + obj[k].cost;
+        }
+        )
+        return count;
+    }
 
     return (
         <>
@@ -36,9 +43,9 @@ const StatisticPage = () => {
                         <div></div>
                         <h1>SMART <span>Budget!</span></h1>
                     </Title>
-                    <StatisticGraph monthExpenses={expensesMonth} />
+                    <StatisticGraph monthExpenses={getTotalExpenses(expensesMonth)} budgetLimit={user.budgetLimit} />
                     <WhiteBoard >
-                        <CategorySection monthExpenses={expensesMonth} />
+                        <CategorySection monthExpenses={expensesMonth} budgetLimit={user.budgetLimit} />
                         <BottomNav />
                     </WhiteBoard>
                 </section>

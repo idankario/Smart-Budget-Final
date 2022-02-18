@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
-const user = JSON.parse(localStorage.getItem('user'));
-const data = [
-  { label: `Income ${user.income}`, value: user.income },
-  { label: "Expenses", value: user.expenses }
-];
-const COLORS = [
-  { start: "#7F5FC3", end: "#E1D3FF" },
-  { start: "#43277C", end: "#43277C" }
-];
-
-export default function StatisticGraph(monthExpenses) {
- // console.log(monthExpenses)
+export default function StatisticGraph({monthExpenses,budgetLimit}) {
+  const data = [
+    { label: `Budget ${budgetLimit}`, value: budgetLimit-monthExpenses},
+    { label: `Month Expenses ${monthExpenses}`, value: monthExpenses  }
+  ];
+  const COLORS = [
+    { start: "#7F5FC3", end: "#E1D3FF" },
+    { start: "#43277C", end: "#43277C" }
+  ];
   const [activeIdx, setActiveIdx] = useState(0);
   const onLegendEnter = (o) => {
     const idx = data.findIndex((v) => v.label === o.value);
@@ -37,6 +34,7 @@ export default function StatisticGraph(monthExpenses) {
       payload,
       percent
     } = props;
+
     return (
       <g>
         <text x={cx} y={cy} textAnchor="middle">

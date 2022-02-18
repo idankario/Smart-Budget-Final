@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { Title, Main, WhiteBoard, FamilyImage, Button, StyledLink } from '../components/board';
+import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Form from '../components/from';
 import { isRequire } from '../components/util/validations';
-import Terms from '../components/terms';
-import { Select, MenuItem } from '@mui/material';
+import BottomNav from '../components/navigation/bottomNav';
 import axios from 'axios';
-const RegisterPage = () => {
+const UpdateAccountPage = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
-        userName: '',
-        role: 'Parent',
-        budgetLimit: '',
-        income: '',
-        email: '',
+        userName: user.userNam|| '',
+        budgetLimit: `${user.budgetLimit}`|| '',
+        income: `${user.income}`|| '',
+        email: `${user.email}`|| '',
         password: '',
     });
 
@@ -21,7 +20,7 @@ const RegisterPage = () => {
         { type: 'number', label: 'Budget Limit' },
         { type: 'number', label: 'Income' },
         { type: 'email', label: 'Email' },
-        { type: 'password', label: 'Password' }
+        { type: 'password', label: 'Password To Approve' }
     ];
 
     const onChangeField = (key, value) => {
@@ -30,11 +29,12 @@ const RegisterPage = () => {
             [key]: value,
         });
     };
-    const onRegister = async () => {
+    const onUpdate = async () => {
+        console.log("dfas")
         try {
           let res = await axios({
-            method: 'post',
-            url: 'http://localhost:8000/api/users/register',
+            method: 'PUT',
+            url: 'http://localhost:8000/api/users/id',
             data: { ...dataForm },
           })
           if (res.data.token) {
@@ -43,21 +43,16 @@ const RegisterPage = () => {
             window.location='../menu'
           }
         } catch (error) {
-            if(error)
-                return error.response.data;
-            else
-                window.location='../*';
+            // window.location='../*';
         }
       };
 
-
-
     const onSubmit = async(e) => {
         e.preventDefault();
-        const objectErrors=await isRequire((({ role, ...o }) => o)(dataForm), dataType);
+        const objectErrors=await isRequire((dataForm), dataType);
         setErrors(objectErrors);
         if (Object.keys(errors).length === 0) {
-            let error = await onRegister();
+            let error = await onUpdate();
             setErrors(error);
           };
     }
@@ -67,37 +62,20 @@ const RegisterPage = () => {
                 <section>
                     <Title>
                         <div></div>
-                        <h1>Sign <span>Up!</span></h1>
+                        <h1>Update <span>Account!</span></h1>
                     </Title>
                     <FamilyImage></FamilyImage>
                     <WhiteBoard>
                         <Form
-                            formData={(({ role, ...o }) => o)(dataForm)}
+                            formData={(dataForm)}
                             typeData={dataType}
                             onFieldChange={onChangeField}
                             errorsForm={errors}
                             onSubmit={onSubmit}>
-                            <label>Your Role</label>
-                            <Select
-                                value={dataForm.role}
-                                label="Your Role"
-                                onChange={(e) => {
-                                    onChangeField("role", e.target.value)
-                                }}
-                            >
-                                <MenuItem value="Parent">Parent</MenuItem>
-                                <MenuItem value="Child">Child</MenuItem>
-                            </Select>
-                            <Terms />
-
                             <Button type="submit">
-                                Register
+                                Update
                             </Button>
-                            <StyledLink
-                                to="/login"
-                            >
-                                Already have an account? &nbsp;
-                            </StyledLink>
+                            <BottomNav />
                         </Form>
                     </WhiteBoard>
                 </section>
@@ -105,6 +83,6 @@ const RegisterPage = () => {
         </>
     );
 };
-export default RegisterPage;
+export default UpdateAccountPage;
 
 

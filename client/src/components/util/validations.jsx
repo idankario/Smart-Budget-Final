@@ -1,6 +1,3 @@
-
-
-
 export const isRequire = async (dataForm, dataType) => {
     const errorsList = {};
     const isempty = (data, i) => {

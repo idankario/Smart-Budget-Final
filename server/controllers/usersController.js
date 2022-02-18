@@ -59,14 +59,14 @@ exports.UsersController = {
 
       // Create user in our database
       const newuser = await Users.create({
-        id: user.id + 1,
+        id: user ? user.id + 1 : 1,
         fullName: userName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
         email: email.toLowerCase(), // sanitize: convert email to lowercase
         role: role,
         income: income,
-        idFamily: family.idFamily + 1,
+        idFamily: family ? family.idFamily + 1 : 1,
       });
       // Create token
       const token = jwt.sign(
@@ -75,48 +75,39 @@ exports.UsersController = {
         {
           expiresIn: '2h',
         }
-      ); 
-  
+      );
+
       let userDetails = newuser;
-      userDetails=(({ password, _id, ...o }) => o)(newuser.toObject());
+      userDetails = (({ password, _id, ...o }) => o)(newuser.toObject());
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
       console.log(err);
     }
   },
 
-
-
-  async deleteUser(req, res) {
-    try {
-      Users.deleteOne({ id: req.params.id })
-        .then((result) => {
-          if (result.deletedCount > 0) {
-            res.status(200).res.send(`user--${req.params.id}--deleted`);
-          } else {
-            res.status(400).res.send(`user--${req.params.id}--not in the data`);
-          }
-        })
-        .catch(() =>
-          res.status(400).send(`Error user ${req.params.id} not deleted`)
-        );
-    } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
-    }
-  },
-
   async getUser(req, res) {
     try {
-      Users.findOne({ id: req.params.id })
-        .then((user) => {
-          if (user) {
-            res.json(user);
-          } else {
-            res.status(400).json('Wrong user id please enter correct id');
-          }
-        })
-    } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+      // Validate if user exist in token
+      const user = await Users.findOne({
+        id: req.user.id,
+      }).lean();
+      if (!user)
+        return res.status(400).send({
+          email: 'Incorrect email address or userName',
+          userName: 'Incorrect email address or userName',
+        });
+      // Create token
+      const token = jwt.sign(
+        { user_id: user._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: '2h',
+        });
+      // remove password and _id
+      const userDetails = (({ password, _id, ...o }) => o)(user);
+      return res.status(200).json({ ...userDetails, token });
+    } catch (err) {
+      console.log(err);
     }
   },
 
@@ -128,16 +119,40 @@ exports.UsersController = {
       .catch((err) => res.send(`Error Getting user from db:${err}`));
   },
 
-  updateUser(req, res) {
-    Users.updateOne({ Id: req.params.id }, req.body)
-      .then((result) => {
-        if (result.matchedCount > 0) {
-          res.send(`user ${req.params.id} Updated!`);
-        } else {
-          res.status(400).send(`user ${req.params.id} Not in The DB!`);
-        }
-      })
-      .catch((err) => res.status(400).json(err));
+  async updateUser(req, res) {
+    console.log("fdsadf")
+    try {
+      console.log("fdsadf")
+      const { userName, budgetLimit, income, email } = req.body;
+      // Validate user input
+      if (!(userName && budgetLimit && income && email)) {
+        res.status(400).send({ error: 'All input are required' });
+      }
+      // Validate if user exist in our database
+      const user = await Users.findOne({
+        id: req.user.id,
+      }).lean();
+      if (!user)
+        return res.status(400).send({ error: 'Incorrect token' });
+      console.log("fdsadf")
+      if (user && (await bcrypt.compare(password, user.password))) {
+        // Create token
+        const token = jwt.sign(
+          { user_id: user._id, email },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: '2h',
+          }
+        );
+        Users.updateOne({ id: req.user.id }, userName, budgetLimit, income, email, user.password, user.role);
+        // remove password and _id
+        const userDetails = (({ password, _id, ...o }) => o)(user);
+        return res.status(200).json({ ...userDetails, token });
+      }
+      return res.status(400).send({ password: 'Incorrect Password' });
+    } catch (err) {
+      return res.status(400).send('Problem with server');
+    }
   },
 
   async addfamily(req, res) {
@@ -190,8 +205,8 @@ exports.UsersController = {
   async getUsers(req, res) {
     try {
       const user = req.user;
-      
-      let users = await Users.find({ _id: { $ne: user._id } ,idFamily: user.idFamily}).select("-password").select("-_id").select("-id").select("-idFamily");
+
+      let users = await Users.find({ _id: { $ne: user._id }, idFamily: user.idFamily }).select("-password").select("-_id").select("-id").select("-idFamily");
       // Create token
       const token = jwt.sign(
         { user_id: user._id, email: user.email },
@@ -201,6 +216,15 @@ exports.UsersController = {
         }
       );
       res.status(201).json({ ...users, token });
+    } catch (error) {
+      res.send(`Error Getting user from db:${err}`);
+    }
+  },
+
+  async deleteUser(req, res) {
+    try {
+      Users.deleteOne({ id: req.user.id })
+      res.status(200).send(`SUCCESS`);
     } catch (error) {
       res.send(`Error Getting user from db:${err}`);
     }

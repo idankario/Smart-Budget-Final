@@ -7,12 +7,13 @@ import MenuPage from './routes/menuPage';
 import StatisticPage from './routes/statisticPage';
 import { PrivateRoute } from './routes/privateRouter/routing';
 import FamilyPage from './routes/familyPage';
-import addMemberPage from './routes/addMemberPage';
+import AddMemberPage from './routes/addMemberPage';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
 import AskPage from './routes/askPage';
 import SuccessPage from './routes/successpage';
 import AccountPage from './routes/accountPage';
+import UpdateAccountPage from './routes/updateAccountPage';
 
 const App = () => {
   return (
@@ -63,7 +64,7 @@ const App = () => {
             path="/addMember"
             element={
               <PrivateRoute>
-                <addMemberPage />
+                <AddMemberPage />
               </PrivateRoute>
             }
           />
@@ -87,15 +88,25 @@ const App = () => {
             }
           />
 
-            <Route
+          <Route
+          exact
+          path="/account"
+          element={
+            <PrivateRoute>
+              <AccountPage />
+            </PrivateRoute>
+          }
+        />
+                    <Route
             exact
-            path="/account"
+            path="/update"
             element={
               <PrivateRoute>
-                <AccountPage />
+                <UpdateAccountPage />
               </PrivateRoute>
             }
           />
+          
         
           {/* 404 rounte */}
           <Route path="*" element={<NotFoundPage />} />

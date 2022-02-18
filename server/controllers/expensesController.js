@@ -50,13 +50,12 @@ exports.ExpensesController = {
       );
       const d = new Date();
       const expenses = await Expenses.find({idUser: user.id,
-        
         from: {
           $regex: new RegExp(`${d.getFullYear()}-${d.getMonth()}-`, ''),
        },
-       
-      }).lean();
-      res.status(201).json({ token,expenses:expenses });
+      }).select("-descritpion").select("-_id").select("-idUser").select("-createdAt").lean();
+      
+      res.status(201).json({ token,expenses:(expenses) });
     } catch (error) {
       res.send(`Error Getting user from db:${err}`);
     }

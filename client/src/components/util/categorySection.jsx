@@ -4,58 +4,49 @@ import Home from '../images/Home.png';
 import Groceries from '../images/Groceries.png';
 import { ProgressStyle, FlexSection, H5styles } from '../board';
 
+const CategorySection = ({ monthExpenses,budgetLimit}) => {
+  const getTotalCost =  (obj, value) => {
+    let count = 0;
+    const newobj = [];
+    Object.keys(obj).map( (k)=> {
+      if (obj[k].category === value) {
+        newobj.push(obj[k]);
+      }
+    })
+    Object.keys(newobj).map( (s) =>{
+      count = count + newobj[s].cost;
+    })
+    return count;
+  }
 
-const CategorySection = ({ monthExpenses }) => {
   const CategoryList = [
     {
       src: Taxi,
-      name: "Public Transport",
-      value: "0.4"
+      name: "Public transport",
+      value: getTotalCost(monthExpenses, "Public transport")/budgetLimit
     },
     {
       src: Sport,
       name: "Entertainment",
-      value: "0.2"
+      value:getTotalCost(monthExpenses, "Entertainment")/budgetLimit
     },
     {
       src: Home,
       name: "Home",
-      value: "0.3"
+      value:getTotalCost(monthExpenses, "Home")/budgetLimit
     },
     {
       src: Groceries,
       name: "Other",
-      value: "0.5"
+      value: getTotalCost(monthExpenses, "Other")/budgetLimit
     },
   ];
-  var objects = [{category: "Bars", amount: 31231},
-{category: "Transport", cost: 1297},
-{category: "Utilities", cost: 12300},
-{category: "Bars", cost: 2000},
-{category: "Transport", cost: 2500},
-{category: "Education", cost: 21321}];
-
-var newObjectsMerged = objects.reduce((object, item) => {
-  var category = item.category;
-  var cost = item.cost;
-  if (!object.hasOwnProperty(category)) {
-    object[category] = 0;
-  }
-  
-  object[category] += cost;
-  return object;
-}, {});
-
-console.log("newObjectsMerged", newObjectsMerged);
-console.log(typeof objects)
-// console.log(typeof monthExpenses)
-  console.log( monthExpenses)
 
   const eachFlexSection = (data, i) => {
     const { src, name, value } = data[1];
     return (
       <FlexSection key={i}>
-        <img src={src} alt={name} titile={name}/>
+        <img src={src} alt={name} titile={name} />
         <H5styles>{name}</H5styles>
         <ProgressStyle value={value}></ProgressStyle>
       </FlexSection>

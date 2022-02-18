@@ -78,7 +78,7 @@ const ExpensesPage = () => {
     e.preventDefault();
     if(dataCost>0)
     {
-      setDataForm(await{
+      setDataForm({
         ...dataForm,
         "cost":dataCost>0?(dataCost/selectedCurrency.value).toFixed(0):'',
       });

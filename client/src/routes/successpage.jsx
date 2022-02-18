@@ -7,14 +7,9 @@ const SucssesPage = () => {
     <>
       <Main>
         <section>
-         
-       
-
           <Title style={{marginTop:'150px'}}>
           <h1>ADD<span>SUCCESS!</span></h1>
             <div></div>
-            
-          
           </Title>
           <SuccessImg style={{marginLeft:'100px',marginTop:'80px'}}></SuccessImg>
             <Button component={Link} to="/family" >
