@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
 export default function StatisticGraph(monthExpenses,budgetLimit) {
   const [activeIdx, setActiveIdx] = useState(0);
   const data = [
-    { label: `Income ${budgetLimit}`, value: budgetLimit },
+    { label: `Income ${budgetLimit}`, value: budgetLimit-monthExpenses},
     { label: `Expenses ${monthExpenses}`, value: monthExpenses }
   ];
   
