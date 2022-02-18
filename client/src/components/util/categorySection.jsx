@@ -45,15 +45,6 @@ const CategorySection = ({ monthExpenses, budgetLimit }) => {
     },
   ];
 
-  function extractKeyValue(obj) {
-    let count = 0;
-    Object.keys(obj).map(function (k) {
-      count = count + obj[k].cost;
-    }
-    )
-    return count;
-  }
-
   const eachFlexSection = (data, i) => {
     const { src, name, value } = data[1];
     return (
