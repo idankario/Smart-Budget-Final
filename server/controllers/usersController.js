@@ -1,8 +1,7 @@
 const Users = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require("nodemailer")
-
+const { Mail } = require('./mail');
 exports.UsersController = {
   async loginUser(req, res) {
     try {
@@ -81,38 +80,6 @@ exports.UsersController = {
     }
   },
 
-  async getUser(req, res) {
-    try {
-      const user = await Users.findOne({
-        id: req.user.id,
-      }).lean();
-      if (!user)
-        return res.status(400).send({
-          email: 'Incorrect email address or userName',
-          fullName: 'Incorrect email address or userName',
-        });
-
-      const token = jwt.sign(
-        { user_id: user._id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: '2h',
-        });
-
-      const userDetails = (({ password, _id, ...o }) => o)(user);
-      return res.status(200).json({ ...userDetails, token });
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
-  getFamily(req, res) {
-    Users.find({})
-      .then((Users) => {
-        res.json(Users.filter((users) => users.IdFamily == req.params.id));
-      })
-      .catch((err) => res.send(`Error Getting user from db:${err}`));
-  },
   async updateUser(req, res) {
     try {
       const { password, fullName, budgetLimit, income, email } = req.body;
@@ -178,38 +145,23 @@ exports.UsersController = {
           expiresIn: '2h',
         }
       );
-
       const userDetails = (({ password, _id, ...o }) => o)(user);
-
-      let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        requireTLS: true,
-        auth: {
-          user: 'smartthebudget@gmail.com',
-          pass: 'idansmartthebudget'
-        }
-      });
-      
-      var mailOptions = {
+      let mail = {
         from: 'smartthebudget@gmail.com',
         to: `${email}`,
         subject: 'Smart Budget Email Details',
-        text: `Your user name is:${fullName}
-              Your password name is:${password}`
+        text: `We have sent you this email in response to your request of family membet to give your password on SmartBudget. 
+
+      Your password for is:${password}, 
+      Your user name for is:${fullName},
+        
+        We recommend that you keep your password secure and not share it with anyone. If you feel your password has been compromised, you can change it by going to your My Account Page and clicking on the "Change Email Address or Password" link.
+        
+      If you need help, or you have any other questions, feel free to this email customer-service-email.
+        
+      Customer Service`
       };
-
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-
-
+      Mail.sendMailToCoustomer(mail);
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
       return res.status(400).send({ "error": `Error Getting user from db` });
