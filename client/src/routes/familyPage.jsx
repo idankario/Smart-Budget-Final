@@ -8,7 +8,6 @@ import axios from 'axios';
 const FamilyPage = () => {
   const [users, setUsers] = useState({});
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,28 +41,27 @@ const FamilyPage = () => {
       <AddIcon />
     </SqButton>
   )
+
   return (
-    <>
-      <Main>
-        <section>
-          <Title>
-            <div></div>
-            <h1>MY <span>FAMILY!</span></h1>
-          </Title>
-          <FamilyImage></FamilyImage>
-          <WhiteBoard>
-            <h2 style={{ fontFamily: "'Squada One', cursive", fontWeight: "700", fontSize: "30px", color: '#ECB22F' }}>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
-            <h5>Ask For Loan:</h5>
-            {Object.entries(users).map(eachButtonFamily)}
-            {(JSON.parse(localStorage.getItem('user')).role === "Parent") ? <Results /> : null}
-            <Button component={Link} to="/menu" >
-              BackHome!
-            </Button>
-            <BottomNav />
-          </WhiteBoard>
-        </section>
-      </Main>
-    </>
+    <Main>
+      <section>
+        <Title>
+          <div></div>
+          <h1>MY <span>FAMILY!</span></h1>
+        </Title>
+        <FamilyImage></FamilyImage>
+        <WhiteBoard>
+          <h2 style={{ fontFamily: "'Squada One', cursive", fontWeight: "700", fontSize: "30px", color: '#ECB22F' }}>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
+          <h5>Ask For Loan:</h5>
+          {Object.entries(users).map(eachButtonFamily)}
+          {(JSON.parse(localStorage.getItem('user')).role === "Parent") ? <Results /> : null}
+          <Button component={Link} to="/menu" >
+            BackHome!
+          </Button>
+          <BottomNav />
+        </WhiteBoard>
+      </section>
+    </Main>
   );
 };
 export default FamilyPage;

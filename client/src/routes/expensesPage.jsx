@@ -55,15 +55,19 @@ const ExpensesPage = () => {
     }
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (dataForm.cost > 0) {
-      const objectErrors = await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
-      setErrors(objectErrors);
-      if (Object.keys(errors).length === 0) {
-        let error = await onAddExpenses();
-        setErrors(error);
-      };
+      const fetchData = async () => {
+        const objectErrors = await isRequire((({ methodsPayment, category, ...o }) => o)(dataForm), dataType);
+        setErrors(objectErrors);
+        if (Object.keys(errors).length === 0) {
+          let error = await onAddExpenses();
+          setErrors(error);
+        };
+      }
+      fetchData();
     }
+    // eslint-disable-next-line
   }, [dataForm.cost]);
 
   const onChangeField = (key, value) => {
@@ -88,90 +92,88 @@ const ExpensesPage = () => {
   }
 
   return (
-    <>
-      <Main>
-        <section>
-          <Title>
-            <div></div>
-            <h1>ADD <span>EXPENSES!</span></h1>
-          </Title>
-          <FamilyImage></FamilyImage>
-          <WhiteBoard>
-            <Form
-              formData={''}
-              typeData={''}
-              onFieldChange={onChangeField}
-              errorsForm={errors}
-              onSubmit={onSubmit}>
-              <label>Descritpion</label>
-              <TextField
-                name="descritpion"
-                label="Descritpion"
-                variant="outlined"
-                type="text"
-                value={dataForm.descritpion}
-                onChange={(e) => {
-                  onChangeField("descritpion", e.target.value);
-                }}
-              />
-              <h5>{errors ? errors[`descritpion`] : ''}</h5>
-              <label>Cost</label>
-              <Grid container>
-                <Grid item xs={9}>
-                  <TextField
-                    name="cost"
-                    label="Cost"
-                    variant="outlined"
-                    type={"Number"}
-                    value={dataCost}
-                    onChange={(e) => {
-                      setDataCost(e.target.value);
-                    }}
-                  />
-                  <h5>{errors ? errors[`cost`] : ''}</h5>
-                </Grid>
-                <Grid item xs={3} >
-                  <SelectDroupDown
-                    options={currencies}
-                    value={selectedCurrency}
-                    placeholder={selectedCurrency}
-                    onChange={setSelectCurrency} />
-                </Grid>
+    <Main>
+      <section>
+        <Title>
+          <div></div>
+          <h1>ADD <span>EXPENSES!</span></h1>
+        </Title>
+        <FamilyImage></FamilyImage>
+        <WhiteBoard>
+          <Form
+            formData={''}
+            typeData={''}
+            onFieldChange={onChangeField}
+            errorsForm={errors}
+            onSubmit={onSubmit}>
+            <label>Descritpion</label>
+            <TextField
+              name="descritpion"
+              label="Descritpion"
+              variant="outlined"
+              type="text"
+              value={dataForm.descritpion}
+              onChange={(e) => {
+                onChangeField("descritpion", e.target.value);
+              }}
+            />
+            <h5>{errors ? errors[`descritpion`] : ''}</h5>
+            <label>Cost</label>
+            <Grid container>
+              <Grid item xs={9}>
+                <TextField
+                  name="cost"
+                  label="Cost"
+                  variant="outlined"
+                  type={"Number"}
+                  value={dataCost}
+                  onChange={(e) => {
+                    setDataCost(e.target.value);
+                  }}
+                />
+                <h5>{errors ? errors[`cost`] : ''}</h5>
               </Grid>
-              <label>Methods of Payment</label>
-              <Select
-                value={dataForm.methodsPayment}
-                label="Methods of Payment"
-                onChange={(e) => {
-                  onChangeField("methodsPayment", e.target.value)
-                }}
-              >
-                <MenuItem value="Cash">Cash</MenuItem>
-                <MenuItem value="CreditCard">Credit Card</MenuItem>
-              </Select>
+              <Grid item xs={3} >
+                <SelectDroupDown
+                  options={currencies}
+                  value={selectedCurrency}
+                  placeholder={selectedCurrency}
+                  onChange={setSelectCurrency} />
+              </Grid>
+            </Grid>
+            <label>Methods of Payment</label>
+            <Select
+              value={dataForm.methodsPayment}
+              label="Methods of Payment"
+              onChange={(e) => {
+                onChangeField("methodsPayment", e.target.value)
+              }}
+            >
+              <MenuItem value="Cash">Cash</MenuItem>
+              <MenuItem value="CreditCard">Credit Card</MenuItem>
+            </Select>
 
-              <label>Category</label>
-              <Select
-                value={dataForm.category}
-                label="Category"
-                onChange={(e) => {
-                  onChangeField("category", e.target.value)
-                }}
-              >
-                <MenuItem value="Public transport">Public transport</MenuItem>
-                <MenuItem value="Entertainment">Entertainment</MenuItem>
-                <MenuItem value="Home">Home</MenuItem>
-                <MenuItem value="Other">Other</MenuItem>
-              </Select>
-              <Button type="submit">
-                Add expenses
-              </Button>
-              <BottomNav />
-            </Form>
-          </WhiteBoard>
-        </section>
-      </Main>
-    </>
+            <label>Category</label>
+            <Select
+              value={dataForm.category}
+              label="Category"
+              onChange={(e) => {
+                onChangeField("category", e.target.value)
+              }}
+            >
+              <MenuItem value="Public transport">Public transport</MenuItem>
+              <MenuItem value="Entertainment">Entertainment</MenuItem>
+              <MenuItem value="Home">Home</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </Select>
+            <Button type="submit">
+              Add expenses
+            </Button>
+            <BottomNav />
+          </Form>
+        </WhiteBoard>
+      </section>
+    </Main>
   );
 };
 export default ExpensesPage;

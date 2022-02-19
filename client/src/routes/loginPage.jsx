@@ -55,33 +55,31 @@ const LoginPage = () => {
     }
 
     return (
-        <>
-            <Main>
-                <section>
-                    <Title>
-                        <div></div>
-                        <h1>LOG <span>IN!</span></h1>
-                    </Title>
-                    <FamilyImage></FamilyImage>
-                    <WhiteBoard>
-                        <Form
-                            formData={dataForm}
-                            typeData={dataType}
-                            onFieldChange={onChangeField}
-                            errorsForm={errors}
-                            onSubmit={onSubmit}
-                        >
-                            <Button type="submit">
-                                Login
-                            </Button>
-                            <StyledLink to="/register">
-                                New user? Register Now
-                            </StyledLink>
-                        </Form>
-                    </WhiteBoard>
-                </section>
-            </Main>
-        </>
+        <Main>
+            <section>
+                <Title>
+                    <div></div>
+                    <h1>LOG <span>IN!</span></h1>
+                </Title>
+                <FamilyImage></FamilyImage>
+                <WhiteBoard>
+                    <Form
+                        formData={dataForm}
+                        typeData={dataType}
+                        onFieldChange={onChangeField}
+                        errorsForm={errors}
+                        onSubmit={onSubmit}
+                    >
+                        <Button type="submit">
+                            Login
+                        </Button>
+                        <StyledLink to="/register">
+                            New user? Register Now
+                        </StyledLink>
+                    </Form>
+                </WhiteBoard>
+            </section>
+        </Main>
     );
 };
 export default LoginPage;

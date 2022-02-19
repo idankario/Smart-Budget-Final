@@ -24,8 +24,7 @@ export const FormStyle = styled('form')({
     color: "#F00",
     margin: "0px",
   },
-},
-);
+});
 
 const Form = ({ formData, typeData, onFieldChange, errorsForm, onSubmit, children }) => {
   const eachTextField = (data, i) => {
@@ -49,12 +48,11 @@ const Form = ({ formData, typeData, onFieldChange, errorsForm, onSubmit, childre
   }
 
   return (
-    <>
-      <FormStyle onSubmit={onSubmit}>
-        {Object.entries(formData).map(eachTextField)}
-        {children}
-      </FormStyle>
-    </>
+    <FormStyle onSubmit={onSubmit}>
+      {Object.entries(formData).map(eachTextField)}
+      {children}
+      <h5>{errorsForm ? errorsForm[`error`] : ''}</h5>
+    </FormStyle>
   );
 };
 export default Form;

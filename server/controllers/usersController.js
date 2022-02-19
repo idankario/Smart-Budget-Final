@@ -9,11 +9,13 @@ exports.UsersController = {
       if (!(email && password && userName)) {
         res.status(400).send('All input is required');
       }
+
       // Validate if user exist in our database
       const user = await Users.findOne({
         email: email,
         fullName: userName,
       }).lean();
+
       if (!user)
         return res.status(400).send({
           email: 'Incorrect email address or userName',
@@ -46,12 +48,14 @@ exports.UsersController = {
       if (!(userName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
+
       const oldUser = await Users.findOne({ email: email });
       if (oldUser) {
         return res
           .status(409)
           .send({ email: 'Email Already Exist. Please Login' });
       }
+
       const user = await Users.findOne().sort('-id');
       const family = await Users.findOne().sort('-idFamily');
       //Encrypt user password
@@ -68,6 +72,7 @@ exports.UsersController = {
         income: income,
         idFamily: family ? family.idFamily + 1 : 1,
       });
+
       // Create token
       const token = jwt.sign(
         { user_id: newuser._id, email },
@@ -77,8 +82,7 @@ exports.UsersController = {
         }
       );
 
-      let userDetails = newuser;
-      userDetails = (({ password, _id, ...o }) => o)(newuser.toObject());
+      const userDetails = (({ password, _id, ...o }) => o)(newuser.toObject());
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
       console.log(err);
@@ -118,14 +122,11 @@ exports.UsersController = {
       })
       .catch((err) => res.send(`Error Getting user from db:${err}`));
   },
-
   async updateUser(req, res) {
-    console.log("fdsadf")
     try {
-      console.log("fdsadf")
-      const { userName, budgetLimit, income, email } = req.body;
+      const { password, fullName, budgetLimit, income, email } = req.body;
       // Validate user input
-      if (!(userName && budgetLimit && income && email)) {
+      if (!(fullName && budgetLimit && income && email)) {
         res.status(400).send({ error: 'All input are required' });
       }
       // Validate if user exist in our database
@@ -134,7 +135,6 @@ exports.UsersController = {
       }).lean();
       if (!user)
         return res.status(400).send({ error: 'Incorrect token' });
-      console.log("fdsadf")
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
         const token = jwt.sign(
@@ -144,15 +144,23 @@ exports.UsersController = {
             expiresIn: '2h',
           }
         );
-        Users.updateOne({ id: req.user.id }, userName, budgetLimit, income, email, user.password, user.role);
+        let newUser = ({ ...user, fullName, budgetLimit, income, email, });
+
+        await Users.findOneAndUpdate({ id: req.user.id }, newUser);
         // remove password and _id
-        const userDetails = (({ password, _id, ...o }) => o)(user);
+        const userDetails = (({ password, _id, ...o }) => o)((newUser));
+        console.log(newUser)
         return res.status(200).json({ ...userDetails, token });
+
       }
-      return res.status(400).send({ password: 'Incorrect Password' });
+      else
+        return res.status(400).send({ password: 'Incorrect Password' });
+
     } catch (err) {
+
       return res.status(400).send('Problem with server');
     }
+
   },
 
   async addfamily(req, res) {
