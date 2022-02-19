@@ -18,32 +18,10 @@ exports.ExpensesController = {
           expiresIn: '2h',
         }
       );
-      const expenseId = await Expenses.findOne().sort('-id');
-      const total= Expenses.aggregate([
-        {
-          "$match": {
-            $expr: {
-              "$eq": [
-                "$id",
-                2
-              ]
-            }
-          }
-        },
-        {
-          "$group": {
-            "id": "$id",
-            "total": {
-              "$sum": "$cost"
-            }
-          }
-        }
-      ])
-      console.log(total);
       //if()
       // Create user in database
       Expenses.create({
-        id: expenseId?expenseId + 1:1,
+        id: 0,
         descritpion: descritpion,
         cost: cost,
         methodsPayment: methodsPayment,
@@ -51,7 +29,6 @@ exports.ExpensesController = {
         idFamily: user.idFamily,
         idUser: user.id,
       });
-
       res.status(201).json({ token });
     } catch (error) {
       res.send(`Error Getting user from db:${err}`);
