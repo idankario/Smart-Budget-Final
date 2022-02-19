@@ -3,14 +3,13 @@ import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
 export default function StatisticGraph({ monthExpenses, budgetLimit }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const data = [
-    { label: `Budget ${budgetLimit}`, value: budgetLimit },
+    { label: `Budget ${budgetLimit}`, value: budgetLimit-monthExpenses  },
     { label: `Expenses ${monthExpenses}`, value: monthExpenses }
   ];
 
   const COLORS = [
-    { start: "#43277C", end: "#43277C" },
-    { start: "#7F5FC3", end: "#E1D3FF" }
-    
+    { start: "#7F5FC3", end: "#E1D3FF" },
+    { start: "#43277C", end: "#43277C" }
   ];
 
   const onLegendEnter = (o) => {

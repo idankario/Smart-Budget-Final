@@ -31,6 +31,7 @@ exports.UsersController = {
             expiresIn: '2h',
           }
         );
+        
         // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)(user);
         return res.status(200).json({ ...userDetails, token });
@@ -100,6 +101,7 @@ exports.UsersController = {
           email: 'Incorrect email address or userName',
           userName: 'Incorrect email address or userName',
         });
+
       // Create token
       const token = jwt.sign(
         { user_id: user._id, email },
@@ -107,6 +109,7 @@ exports.UsersController = {
         {
           expiresIn: '2h',
         });
+
       // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
       return res.status(200).json({ ...userDetails, token });
