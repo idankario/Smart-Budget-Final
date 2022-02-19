@@ -39,7 +39,7 @@ const AccountPage = () => {
           </Button>
           <Divider>or</Divider>
           <Button component={Link} to="/family"  >
-            Back To Your Family!
+            Back To Family Page
           </Button>
           <BottomNav />
         </WhiteBoard>

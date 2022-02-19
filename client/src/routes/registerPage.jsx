@@ -8,7 +8,7 @@ import axios from 'axios';
 const RegisterPage = () => {
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
-        userName: '',
+        fullName: '',
         role: 'Parent',
         budgetLimit: '',
         income: '',

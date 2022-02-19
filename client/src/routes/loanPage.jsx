@@ -5,7 +5,7 @@ import { isRequire } from '../components/util/validations';
 import BottomNav from '../components/navigation/bottomNav';
 import { TextField, Grid } from '@mui/material';
 import axios from 'axios';
-const AskPage = () => {
+const LoanPage = () => {
   const [errors, setErrors] = useState({});
   const [dataForm, setDataForm] = useState({
     descritpion: '',
@@ -106,4 +106,4 @@ const AskPage = () => {
     </Main>
   );
 };
-export default AskPage;
+export default LoanPage;

@@ -6,7 +6,7 @@ import axios from 'axios';
 const LoginPage = () => {
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
-        userName: '',
+        fullName: '',
         email: '',
         password: '',
     });

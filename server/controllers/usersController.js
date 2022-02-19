@@ -5,21 +5,21 @@ const nodemailer = require("nodemailer")
 exports.UsersController = {
   async loginUser(req, res) {
     try {
-      const { email, password, userName } = req.body;
-      if (!(email && password && userName)) {
+      const { email, password, fullName } = req.body;
+      if (!(email && password && fullName)) {
         res.status(400).send('All input is required');
       }
 
       // Validate if user exist in our database
       const user = await Users.findOne({
         email: email,
-        fullName: userName,
+        fullName: fullName,
       }).lean();
 
       if (!user)
         return res.status(400).send({
           email: 'Incorrect email address or userName',
-          userName: 'Incorrect email address or userName',
+          fullName: 'Incorrect email address or userName',
         });
 
       if (user && (await bcrypt.compare(password, user.password))) {
@@ -44,9 +44,9 @@ exports.UsersController = {
 
   async registerUser(req, res) {
     try {
-      const { userName, role, budgetLimit, income, email, password } = req.body;
+      const { fullName, role, budgetLimit, income, email, password } = req.body;
       // Validate user input
-      if (!(userName && role && budgetLimit && income && email && password)) {
+      if (!(fullName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
 
@@ -65,7 +65,7 @@ exports.UsersController = {
       // Create user in our database
       const newuser = await Users.create({
         id: user ? user.id + 1 : 1,
-        fullName: userName,
+        fullName: fullName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
         email: email.toLowerCase(), // sanitize: convert email to lowercase
@@ -99,7 +99,7 @@ exports.UsersController = {
       if (!user)
         return res.status(400).send({
           email: 'Incorrect email address or userName',
-          userName: 'Incorrect email address or userName',
+          fullName: 'Incorrect email address or userName',
         });
 
       // Create token
@@ -164,9 +164,9 @@ exports.UsersController = {
 
   async addfamily(req, res) {
     try {
-      const { userName, role, budgetLimit, income, email, password } = req.body;
+      const { fullName, role, budgetLimit, income, email, password } = req.body;
       // Validate user input
-      if (!(userName && role && budgetLimit && income && email && password)) {
+      if (!(fullName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
       const user = req.user;
@@ -184,7 +184,7 @@ exports.UsersController = {
       // Create user in our database
       const newuser = await Users.create({
         id: userLast.id + 1,
-        fullName: userName,
+        fullName: fullName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
         email: email.toLowerCase(), // sanitize: convert email to lowercase
@@ -218,7 +218,7 @@ exports.UsersController = {
         from: 'smartthebudget@gmail.com',
         to: `${email}`,
         subject: 'Smart Budget Email Details',
-        text: `Your user name is:${userName}
+        text: `Your user name is:${fullName}
               Your password name is:${password}`
       };
 

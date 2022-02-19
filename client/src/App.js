@@ -10,7 +10,7 @@ import FamilyPage from './routes/familyPage';
 import AddMemberPage from './routes/addMemberPage';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
-import AskPage from './routes/askPage';
+import LoanPage from './routes/loanPage';
 import SuccessPage from './routes/successpage';
 import AccountPage from './routes/accountPage';
 import UpdateAccountPage from './routes/updateAccountPage';
@@ -71,10 +71,10 @@ const App = () => {
           />
           <Route
             exact
-            path="/askleon/:email"
+            path="/leon/:email"
             element={
               <PrivateRoute>
-                <AskPage />
+                <LoanPage />
               </PrivateRoute>
             }
           />
@@ -105,8 +105,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
-            <Route
+          <Route
             exact
             path="/asklist"
             element={
