@@ -8,7 +8,7 @@ const UpdateAccountPage = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
-        userName: user.userNam|| '',
+        userName: `${user.userName}`|| '',
         budgetLimit: `${user.budgetLimit}`|| '',
         income: `${user.income}`|| '',
         email: `${user.email}`|| '',

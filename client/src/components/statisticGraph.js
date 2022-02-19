@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
-export default function StatisticGraph(monthExpenses,budgetLimit) {
+export default function StatisticGraph({monthExpenses,budgetLimit}) {
   const [activeIdx, setActiveIdx] = useState(0);
   const data = [
-    { label: `Income ${budgetLimit}`, value: budgetLimit-monthExpenses},
+    { label: `Income ${budgetLimit}`, value: budgetLimit },
     { label: `Expenses ${monthExpenses}`, value: monthExpenses }
   ];
   
