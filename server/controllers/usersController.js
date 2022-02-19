@@ -157,7 +157,7 @@ exports.UsersController = {
         return res.status(400).send({ password: 'Incorrect Password' });
 
     } catch (err) {
-      return res.status(400).send({"error":`Error Getting user from db`});
+      return res.status(400).send({ "error": `Error Getting user from db` });
     }
 
   },
@@ -203,38 +203,38 @@ exports.UsersController = {
       );
       // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
-      
+
       let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
         secure: false,
         requireTLS: true,
         auth: {
-            user: 'smartthebudget@gmail.com',
-            pass: 'idansmartthebudget'
+          user: 'smartthebudget@gmail.com',
+          pass: 'idansmartthebudget'
         }
-    });
-    var mailOptions = {
-      from: 'smartthebudget@gmail.com',
-      to: `${email}`,
-      subject: 'Smart Budget Email Details',
-      text: `Your user name is:${userName}
+      });
+      var mailOptions = {
+        from: 'smartthebudget@gmail.com',
+        to: `${email}`,
+        subject: 'Smart Budget Email Details',
+        text: `Your user name is:${userName}
               Your password name is:${password}`
-    }; 
+      };
 
 
-      transporter.sendMail(mailOptions, function(error, info){
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
           console.log('Email sent: ' + info.response);
         }
       });
-   
-     
+
+
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
-      return res.status(400).send({"error":`Error Getting user from db`});
+      return res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 
@@ -252,7 +252,7 @@ exports.UsersController = {
       );
       res.status(201).json({ ...users, token });
     } catch (error) {
-      res.status(400).send({"error":`Error Getting user from db`});
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 
@@ -261,7 +261,7 @@ exports.UsersController = {
       await Users.deleteOne({ id: req.user.id });
       res.status(200).send(`SUCCESS`);
     } catch (error) {
-      res.status(400).send({"error":`Error Getting user from db`});
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 };

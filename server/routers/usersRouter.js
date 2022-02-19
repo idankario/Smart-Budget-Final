@@ -20,5 +20,5 @@ UsersRouter.get('/family/:id', auth, UsersController.getFamily);
 UsersRouter.post('/family',cors(), auth, UsersController.addfamily);
 UsersRouter.post('/expenses', auth, ExpensesController.addExpenses);
 UsersRouter.get('/expenses', auth, ExpensesController.getExpenses);
-UsersRouter.post('/loan/:id', auth, LoansController.askLoan);
+UsersRouter.post('/loan', auth, LoansController.askLoan);
 module.exports = { UsersRouter };

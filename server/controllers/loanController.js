@@ -7,7 +7,7 @@ exports.LoansController = {
     async askLoan(req, res) {
         try {
             const user = req.user;
-            const { descritpion, loan } = req.body;
+            const { descritpion, loan,email } = req.body;
             if (!(descritpion && loan)) {
                 res.status(400).send('All input are required');
             }
@@ -15,10 +15,12 @@ exports.LoansController = {
             const userLoan = await Users.findOne({
                 email: email,
             }).lean();
+            console.log(userLoan)
             if (!userLoan)
                 return res.status(400).send({
                     email: 'Incorrect user for take loan',
                 });
+                console.log(userLoan)
             // Create token
             const token = jwt.sign(
                 { user_id: user._id, email: user.email },
@@ -27,13 +29,14 @@ exports.LoansController = {
                     expiresIn: '2h',
                 }
             );
+            const loanId = await Loans.findOne().sort('-id');
             //Crate loan to approve
             const newLoans = await Loans.create({
-                id: 0,
+                id: loanId ? loanId.id + 1 : 1,
                 descritpion: descritpion,
                 loan: loan,
                 idUser: user.id,
-                fromIdUser: category,
+                fromIdUser: userLoan.id,
             });
             res.status(201).json({ token });
         } catch (error) {
