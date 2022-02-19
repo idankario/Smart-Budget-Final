@@ -3,6 +3,7 @@ const { UsersController } = require('../controllers/usersController');
 const { ExpensesController } = require('../controllers/expensesController');
 const { LoansController } = require('../controllers/loanController');
 const auth = require('../middleware/auth');
+
 const UsersRouter = new Router();
 // UsersRouter.put('/id', auth, UsersController.updateUser);
 UsersRouter.post('/login', UsersController.loginUser);

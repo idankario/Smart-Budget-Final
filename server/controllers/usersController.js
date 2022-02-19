@@ -169,6 +169,7 @@ exports.UsersController = {
       if (!(userName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
+      
       const user = req.user;
       const oldUser = await Users.findOne({ email: email });
       if (oldUser) {
@@ -201,31 +202,12 @@ exports.UsersController = {
           expiresIn: '2h',
         }
       );
+     
+      
       // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
-
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'budgetsmart6@gmail.com',
-          pass: 'MHMDHILAL12345'
-        }
-      });
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
-      var mailOptions = {
-        from: 'budgetsmart6@gmail.com',
-        to: `${email}`,
-        subject: 'Smart Budget Email Details',
-        text: `Your user name is:${userName}
-                Your password name is:${password}`
-      };
-     
+ 
+    
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
       return res.status(400).send({"error":`Error Getting user from db`});
