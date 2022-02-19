@@ -61,41 +61,39 @@ const AddMember = () => {
         };
     }
     return (
-        <>
-            <Main>
-                <section>
-                    <Title>
-                        <div></div>
-                        <h1>ADD <span>MEMBER!</span></h1>
-                    </Title>
-                    <FamilyImage></FamilyImage>
-                    <WhiteBoard>
-                        <Form
-                            formData={(({ role, ...o }) => o)(dataForm)}
-                            typeData={dataType}
-                            onFieldChange={onChangeField}
-                            errorsForm={errors}
-                            onSubmit={onSubmit}>
-                            <label>Your Role</label>
-                            <Select
-                                value={dataForm.role}
-                                label="Your Role"
-                                onChange={(e) => {
-                                    onChangeField("role", e.target.value)
-                                }}
-                            >
-                                <MenuItem value="Parent">Parent</MenuItem>
-                                <MenuItem value="Child">Child</MenuItem>
-                            </Select>
-                            <Button type="submit">
-                                Add Family Member
-                            </Button>
-                            <BottomNav />
-                        </Form>
-                    </WhiteBoard>
-                </section>
-            </Main>
-        </>
+        <Main>
+            <section>
+                <Title>
+                    <div></div>
+                    <h1>ADD <span>MEMBER!</span></h1>
+                </Title>
+                <FamilyImage></FamilyImage>
+                <WhiteBoard>
+                    <Form
+                        formData={(({ role, ...o }) => o)(dataForm)}
+                        typeData={dataType}
+                        onFieldChange={onChangeField}
+                        errorsForm={errors}
+                        onSubmit={onSubmit}>
+                        <label>Your Role</label>
+                        <Select
+                            value={dataForm.role}
+                            label="Your Role"
+                            onChange={(e) => {
+                                onChangeField("role", e.target.value)
+                            }}
+                        >
+                            <MenuItem value="Parent">Parent</MenuItem>
+                            <MenuItem value="Child">Child</MenuItem>
+                        </Select>
+                        <Button type="submit">
+                            Add Family Member
+                        </Button>
+                        <BottomNav />
+                    </Form>
+                </WhiteBoard>
+            </section>
+        </Main>
     );
 };
 export default AddMember;

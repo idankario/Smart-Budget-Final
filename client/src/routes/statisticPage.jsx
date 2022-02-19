@@ -7,6 +7,7 @@ import axios from 'axios';
 const StatisticPage = () => {
     const [expensesMonth, setExpenses] = useState({});
     const user = JSON.parse(localStorage.getItem('user'));
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -26,31 +27,29 @@ const StatisticPage = () => {
         }
         fetchData();
     }, []);
+
     const getTotalExpenses = (obj) => {
         let count = 0;
-        Object.keys(obj).map(function (k) {
+        Object.keys(obj).forEach((k) => {
             count = count + obj[k].cost;
-        }
-        )
+        })
         return count;
     }
 
     return (
-        <>
-            <Main>
-                <section>
-                    <Title>
-                        <div></div>
-                        <h1>SMART <span>Budget!</span></h1>
-                    </Title>
-                    <StatisticGraph monthExpenses={getTotalExpenses(expensesMonth)} budgetLimit={user.budgetLimit} />
-                    <WhiteBoard >
-                        <CategorySection monthExpenses={expensesMonth} budgetLimit={user.budgetLimit} />
-                        <BottomNav />
-                    </WhiteBoard>
-                </section>
-            </Main>
-        </>
+        <Main>
+            <section>
+                <Title>
+                    <div></div>
+                    <h1>SMART <span>Budget!</span></h1>
+                </Title>
+                <StatisticGraph monthExpenses={getTotalExpenses(expensesMonth)} budgetLimit={user.budgetLimit} />
+                <WhiteBoard >
+                    <CategorySection monthExpenses={expensesMonth} budgetLimit={user.budgetLimit} />
+                    <BottomNav />
+                </WhiteBoard>
+            </section>
+        </Main>
     );
 };
 export default StatisticPage;

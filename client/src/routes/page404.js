@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Button} from '../components/board';
-
 export default function Page404() {
   return (
     <>

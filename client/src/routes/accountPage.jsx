@@ -22,30 +22,28 @@ const AccountPage = () => {
   };
 
   return (
-    <>
-      <Main>
-        <section>
-          <Title>
-            <div></div>
-            <h1>EDIT <span>ACCOUNT!</span></h1>
-          </Title>
-          <FamilyImage></FamilyImage>
-          <WhiteBoard>
-            <Button component={Link} to="/update" >
-              Update Account!
-            </Button>
-            <Button onClick={deleteAcount} theme={{ color: '#7790F6' }} >
-              Delete Account!
-            </Button>
-            <Divider>or</Divider>
-            <Button component={Link} to="/family"  >
-              Back To Your Family!
-            </Button>
-            <BottomNav />
-          </WhiteBoard>
-        </section>
-      </Main>
-    </>
+    <Main>
+      <section>
+        <Title>
+          <div></div>
+          <h1>EDIT <span>ACCOUNT!</span></h1>
+        </Title>
+        <FamilyImage></FamilyImage>
+        <WhiteBoard>
+          <Button component={Link} to="/update" >
+            Update Account!
+          </Button>
+          <Button onClick={deleteAcount} theme={{ color: '#7790F6' }} >
+            Delete Account!
+          </Button>
+          <Divider>or</Divider>
+          <Button component={Link} to="/family"  >
+            Back To Your Family!
+          </Button>
+          <BottomNav />
+        </WhiteBoard>
+      </section>
+    </Main>
   );
 };
 export default AccountPage;

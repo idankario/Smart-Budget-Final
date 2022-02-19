@@ -91,6 +91,7 @@ export const SqButton = styled(button)(({ theme }) => ({
     backgroundColor: theme.hover ? theme.hover : '#ECB22F',
     },
 }));
+
 export const SelectDroupDown = styled(Select)({
     '& .css-6j8wv5-Input': {
         padding: "14px",
@@ -99,6 +100,7 @@ export const SelectDroupDown = styled(Select)({
         margin: "7px",
     }
 });
+
 export const SuccessImg = styled('div')({
     backgroundImage: `url(${successImg})`,
     backgroundRepeat: 'no-repeat',

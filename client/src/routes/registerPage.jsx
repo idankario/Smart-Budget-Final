@@ -15,7 +15,6 @@ const RegisterPage = () => {
         email: '',
         password: '',
     });
-
     const dataType = [
         { type: 'text', label: 'User Name' },
         { type: 'number', label: 'Budget Limit' },
@@ -30,6 +29,7 @@ const RegisterPage = () => {
             [key]: value,
         });
     };
+
     const onRegister = async () => {
         try {
             let res = await axios({
@@ -50,8 +50,6 @@ const RegisterPage = () => {
         }
     };
 
-
-
     const onSubmit = async (e) => {
         e.preventDefault();
         const objectErrors = await isRequire((({ role, ...o }) => o)(dataForm), dataType);
@@ -61,50 +59,47 @@ const RegisterPage = () => {
             setErrors(error);
         };
     }
-    return (
-        <>
-            <Main>
-                <section>
-                    <Title>
-                        <div></div>
-                        <h1>Sign <span>Up!</span></h1>
-                    </Title>
-                    <FamilyImage></FamilyImage>
-                    <WhiteBoard>
-                        <Form
-                            formData={(({ role, ...o }) => o)(dataForm)}
-                            typeData={dataType}
-                            onFieldChange={onChangeField}
-                            errorsForm={errors}
-                            onSubmit={onSubmit}>
-                            <label>Your Role</label>
-                            <Select
-                                value={dataForm.role}
-                                label="Your Role"
-                                onChange={(e) => {
-                                    onChangeField("role", e.target.value)
-                                }}
-                            >
-                                <MenuItem value="Parent">Parent</MenuItem>
-                                <MenuItem value="Child">Child</MenuItem>
-                            </Select>
-                            <Terms />
 
-                            <Button type="submit">
-                                Register
-                            </Button>
-                            <StyledLink
-                                to="/login"
-                            >
-                                Already have an account? &nbsp;
-                            </StyledLink>
-                        </Form>
-                    </WhiteBoard>
-                </section>
-            </Main>
-        </>
+    return (
+        <Main>
+            <section>
+                <Title>
+                    <div></div>
+                    <h1>Sign <span>Up!</span></h1>
+                </Title>
+                <FamilyImage></FamilyImage>
+                <WhiteBoard>
+                    <Form
+                        formData={(({ role, ...o }) => o)(dataForm)}
+                        typeData={dataType}
+                        onFieldChange={onChangeField}
+                        errorsForm={errors}
+                        onSubmit={onSubmit}>
+                        <label>Your Role</label>
+                        <Select
+                            value={dataForm.role}
+                            label="Your Role"
+                            onChange={(e) => {
+                                onChangeField("role", e.target.value)
+                            }}
+                        >
+                            <MenuItem value="Parent">Parent</MenuItem>
+                            <MenuItem value="Child">Child</MenuItem>
+                        </Select>
+                        <Terms />
+
+                        <Button type="submit">
+                            Register
+                        </Button>
+                        <StyledLink
+                            to="/login"
+                        >
+                            Already have an account? &nbsp;
+                        </StyledLink>
+                    </Form>
+                </WhiteBoard>
+            </section>
+        </Main>
     );
 };
 export default RegisterPage;
-
-

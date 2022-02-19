@@ -23,6 +23,7 @@ const AskPage = () => {
       [key]: value,
     });
   };
+
   const onAskloan = async () => {
     try {
       let res = await axios({
@@ -50,59 +51,58 @@ const AskPage = () => {
       setErrors(error);
     };
   }
+
   return (
-    <>
-      <Main>
-        <section>
-          <Title>
-            <div></div>
-            <h1>Ask <span>Loan!</span></h1>
-          </Title>
-          <FamilyImage></FamilyImage>
-          <WhiteBoard>
-            <Form
-              formData={''}
-              typeData={''}
-              onFieldChange={onChangeField}
-              errorsForm={errors}
-              onSubmit={onSubmit}>
-              <label>Descritpion</label>
-              <TextField
-                name="descritpion"
-                label="Descritpion"
-                variant="outlined"
-                type="text"
-                value={dataForm.descritpion}
-                onChange={(e) => {
-                  onChangeField("descritpion", e.target.value)
-                }}
-              />
-              <h5>{errors ? errors[`descritpion`] : ''}</h5>
-              <label>Loan</label>
-              <Grid container>
-                <Grid item xs={9}>
-                  <TextField
-                    name="loan"
-                    label="Loan"
-                    variant="outlined"
-                    type={"Number"}
-                    value={dataForm.loan}
-                    onChange={(e) => {
-                      onChangeField("loan", e.target.value)
-                    }}
-                  />
-                  <h5>{errors ? errors[`loan`] : ''}</h5>
-                </Grid>
+    <Main>
+      <section>
+        <Title>
+          <div></div>
+          <h1>Ask <span>Loan!</span></h1>
+        </Title>
+        <FamilyImage></FamilyImage>
+        <WhiteBoard>
+          <Form
+            formData={''}
+            typeData={''}
+            onFieldChange={onChangeField}
+            errorsForm={errors}
+            onSubmit={onSubmit}>
+            <label>Descritpion</label>
+            <TextField
+              name="descritpion"
+              label="Descritpion"
+              variant="outlined"
+              type="text"
+              value={dataForm.descritpion}
+              onChange={(e) => {
+                onChangeField("descritpion", e.target.value)
+              }}
+            />
+            <h5>{errors ? errors[`descritpion`] : ''}</h5>
+            <label>Loan</label>
+            <Grid container>
+              <Grid item xs={9}>
+                <TextField
+                  name="loan"
+                  label="Loan"
+                  variant="outlined"
+                  type={"Number"}
+                  value={dataForm.loan}
+                  onChange={(e) => {
+                    onChangeField("loan", e.target.value)
+                  }}
+                />
+                <h5>{errors ? errors[`loan`] : ''}</h5>
               </Grid>
-              <Button type="submit">
-                Send appliction!
-              </Button>
-              <BottomNav />
-            </Form>
-          </WhiteBoard>
-        </section>
-      </Main>
-    </>
+            </Grid>
+            <Button type="submit">
+              Send appliction!
+            </Button>
+            <BottomNav />
+          </Form>
+        </WhiteBoard>
+      </section>
+    </Main>
   );
 };
 export default AskPage;

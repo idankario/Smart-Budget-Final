@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
-export default function StatisticGraph(monthExpenses,budgetLimit) {
+export default function StatisticGraph({ monthExpenses, budgetLimit }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const data = [
-    { label: `Income ${budgetLimit}`, value: budgetLimit },
+    { label: `Budget ${budgetLimit}`, value: budgetLimit },
     { label: `Expenses ${monthExpenses}`, value: monthExpenses }
   ];
-  
+
   const COLORS = [
-    { start: "#7F5FC3", end: "#E1D3FF" },
-    { start: "#43277C", end: "#43277C" }
+    { start: "#43277C", end: "#43277C" },
+    { start: "#7F5FC3", end: "#E1D3FF" }
+    
   ];
+
   const onLegendEnter = (o) => {
     const idx = data.findIndex((v) => v.label === o.value);
     setActiveIdx(idx);
   };
+
   const onPieEnter = (_, index) => {
     setActiveIdx(index);
   };

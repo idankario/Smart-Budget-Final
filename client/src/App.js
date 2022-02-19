@@ -23,7 +23,6 @@ const App = () => {
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
-
           <Route
             exact
             path="/menu"
@@ -33,7 +32,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             exact
             path="/statistic"
@@ -43,7 +41,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             exact
             path="/expenses"
@@ -53,7 +50,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             exact
             path="/family"
@@ -63,7 +59,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             exact
             path="/addMember"
@@ -73,10 +68,8 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             exact
-
             path="/askleon/:email"
             element={
               <PrivateRoute>
@@ -84,7 +77,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          
           <Route
             exact
             path="/success"
@@ -94,17 +86,16 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
           <Route
-          exact
-          path="/account"
-          element={
-            <PrivateRoute>
-              <AccountPage />
-            </PrivateRoute>
-          }
-        />
-                    <Route
+            exact
+            path="/account"
+            element={
+              <PrivateRoute>
+                <AccountPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             exact
             path="/update"
             element={
@@ -113,7 +104,6 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          
           {/* 404 rounte */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

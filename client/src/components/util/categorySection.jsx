@@ -8,12 +8,12 @@ const CategorySection = ({ monthExpenses,budgetLimit}) => {
   const getTotalCost =  (obj, value) => {
     let count = 0;
     const newobj = [];
-    Object.keys(obj).map( (k)=> {
+    Object.keys(obj).forEach( (k)=> {
       if (obj[k].category === value) {
         newobj.push(obj[k]);
       }
     })
-    Object.keys(newobj).map( (s) =>{
+    Object.keys(newobj).forEach( (s) =>{
       count = count + newobj[s].cost;
     })
     return count;
