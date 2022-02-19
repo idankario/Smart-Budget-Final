@@ -18,20 +18,35 @@ exports.ExpensesController = {
           expiresIn: '2h',
         }
       );
-      //if()
-      // Create user in database
-      Expenses.create({
-        id: 0,
-        descritpion: descritpion,
-        cost: cost,
-        methodsPayment: methodsPayment,
-        category: category,
-        idFamily: user.idFamily,
+      const d = new Date();
+      const expenses = await Expenses.find({
         idUser: user.id,
-      });
-      res.status(201).json({ token });
+        from: {
+          $regex: new RegExp(`${d.getFullYear()}-${d.getMonth()}-`, ''),
+        },
+      }).select("-descritpion").select("-_id").select("-idUser").select("-createdAt").lean();
+      let count = parseInt(cost);
+      expenses.forEach(element => {
+        count = count + element.cost
+      })
+      if (user.budgetLimit - count>0) {
+        // Create user in database
+        Expenses.create({
+          id: 0,
+          descritpion: descritpion,
+          cost: cost,
+          methodsPayment: methodsPayment,
+          category: category,
+          idFamily: user.idFamily,
+          idUser: user.id,
+        });
+        res.status(201).json({ token });
+      }
+      else{
+        res.status(400).send({"error":`Budget is too low`});
+      }
     } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+      res.status(400).send({"error":`Error Getting user from db`});
     }
   },
 
@@ -55,7 +70,7 @@ exports.ExpensesController = {
       }).select("-descritpion").select("-_id").select("-idUser").select("-createdAt").lean();
       res.status(201).json({ token, expenses: (expenses) });
     } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+      res.status(400).send({"error":`Error Getting user from db`});
     }
   }
 };

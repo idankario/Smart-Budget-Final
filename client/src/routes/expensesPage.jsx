@@ -6,7 +6,6 @@ import BottomNav from '../components/navigation/bottomNav';
 import { MenuItem, TextField, Grid } from '@mui/material';
 import Select from '@mui/material/Select';
 import axios from 'axios';
-
 const ExpensesPage = () => {
   const [errors, setErrors] = useState({});
   const [currencies, setCurrencies] = useState([]);
@@ -80,6 +79,7 @@ const ExpensesPage = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (dataCost > 0) {
+      setErrors({});
       setDataForm({
         ...dataForm,
         "cost": dataCost > 0 ? (dataCost / selectedCurrency.value).toFixed(0) : '',

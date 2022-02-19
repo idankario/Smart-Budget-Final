@@ -31,7 +31,7 @@ exports.UsersController = {
             expiresIn: '2h',
           }
         );
-        
+
         // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)(user);
         return res.status(200).json({ ...userDetails, token });
@@ -148,20 +148,16 @@ exports.UsersController = {
           }
         );
         let newUser = ({ ...user, fullName, budgetLimit, income, email, });
-
         await Users.findOneAndUpdate({ id: req.user.id }, newUser);
         // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)((newUser));
-        console.log(newUser)
         return res.status(200).json({ ...userDetails, token });
-
       }
       else
         return res.status(400).send({ password: 'Incorrect Password' });
 
     } catch (err) {
-
-      return res.status(400).send('Problem with server');
+      return res.status(400).send({"error":`Error Getting user from db`});
     }
 
   },
@@ -207,16 +203,38 @@ exports.UsersController = {
       );
       // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
+
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'smartthebudget@gmail.com',
+          pass: 'idanMhmd'
+        }
+      });
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      var mailOptions = {
+        from: 'smartthebudget@gmail.com',
+        to: `${email}`,
+        subject: 'Smart Budget Email Details',
+        text: `Your yoser name is:${userName}
+                Your password name is:${password}`
+      };
+     
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
-      return res.status(400).send('Problem with server');
+      return res.status(400).send({"error":`Error Getting user from db`});
     }
   },
 
   async getUsers(req, res) {
     try {
       const user = req.user;
-
       let users = await Users.find({ _id: { $ne: user._id }, idFamily: user.idFamily }).select("-password").select("-_id").select("-id").select("-idFamily");
       // Create token
       const token = jwt.sign(
@@ -228,16 +246,16 @@ exports.UsersController = {
       );
       res.status(201).json({ ...users, token });
     } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+      res.status(400).send({"error":`Error Getting user from db`});
     }
   },
 
   async deleteUser(req, res) {
     try {
-      Users.deleteOne({ id: req.user.id })
+      await Users.deleteOne({ id: req.user.id });
       res.status(200).send(`SUCCESS`);
     } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+      res.status(400).send({"error":`Error Getting user from db`});
     }
   },
 };

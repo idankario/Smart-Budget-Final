@@ -3,7 +3,6 @@ import Sport from '../images/Sport.png';
 import Home from '../images/Home.png';
 import Groceries from '../images/Groceries.png';
 import { ProgressStyle, FlexSection, H5styles } from '../board';
-
 const CategorySection = ({ monthExpenses,budgetLimit}) => {
   const getTotalCost =  (obj, value) => {
     let count = 0;

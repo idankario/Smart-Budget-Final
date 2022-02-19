@@ -13,6 +13,7 @@ const AccountPage = () => {
         url: 'http://localhost:8000/api/users/',
       });
       if (res.data) {
+        console.log(res.data)
         window.localStorage.clear();
         window.location = '../'
       }
