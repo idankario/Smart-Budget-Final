@@ -6,8 +6,8 @@ const loansSchema = new Schema(
     id: { type: Number },
     idUser: { type: Number },
     fromIdUser: { type: Number },
-    isAprove: { type: Boolean,default: false },
-    createdAt: {type: Date, default: Date.now}
+    isAprove: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now }
   },
   { versionKey: false },
   { collection: 'loans' }

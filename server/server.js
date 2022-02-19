@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));
 app.use(cors());
-
 app.use('/api/users', UsersRouter);
 
 app.use((req, res) => {
