@@ -43,7 +43,10 @@ const UpdateAccountPage = () => {
                 window.location = '../menu'
             }
         } catch (error) {
-            window.location = '../*';
+            if (error)
+                return error.response.data;
+            else
+                window.location = '../*';
         }
     };
 

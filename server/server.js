@@ -1,9 +1,15 @@
 const express = require('express');
 const logger = require('morgan');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
+const express = require("express")
+const app = express()
+require("dotenv").config()
+const bodyParser = require("body-parser")
+const cors = require("cors")
+const nodemailer = require("nodemailer")
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(cors())
+
 const app = express();
 const port = process.env.PORT || 8000;
 const { UsersRouter } = require('./routers/usersRouter');
