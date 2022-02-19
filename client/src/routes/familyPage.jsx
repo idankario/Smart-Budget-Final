@@ -29,7 +29,7 @@ const FamilyPage = () => {
 
   const eachButtonFamily = (user, index) => {
     return (
-      <SqButton component={Link} to={`/askleon/${user[1].email}`} key={index} theme={{ color: '#7790F6' }}>
+      <SqButton component={Link} to={`/leon/${user[1].email}`} key={index} theme={{ color: '#7790F6' }}>
         <img src={iconsUsers(index)} alt={user[1].fullName} title={user[1].fullName} />
         <p style={{ color: 'black', fontSize: '8px' }} >{user[1].fullName}</p>
       </SqButton>

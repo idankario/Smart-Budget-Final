@@ -14,7 +14,7 @@ import LoanPage from './routes/loanPage';
 import SuccessPage from './routes/successpage';
 import AccountPage from './routes/accountPage';
 import UpdateAccountPage from './routes/updateAccountPage';
-import Asklist from './routes/askList';
+import LoanListPage from './routes/loanListPage';
 
 const App = () => {
   return (
@@ -80,6 +80,15 @@ const App = () => {
           />
           <Route
             exact
+            path="/loanList"
+            element={
+              <PrivateRoute>
+                <LoanListPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            exact
             path="/success"
             element={
               <PrivateRoute>
@@ -105,15 +114,9 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
-            exact
-            path="/asklist"
-            element={
-              <PrivateRoute>
-                <Asklist />
-              </PrivateRoute>
-            }
-          />
+
+
+
           {/* 404 rounte */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

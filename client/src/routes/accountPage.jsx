@@ -38,8 +38,8 @@ const AccountPage = () => {
             Delete Account!
           </Button>
           <Divider>or</Divider>
-          <Button component={Link} to="/family"  >
-            Back To Family Page
+          <Button component={Link} to="/loanList"  >
+            Loan list from family
           </Button>
           <BottomNav />
         </WhiteBoard>
