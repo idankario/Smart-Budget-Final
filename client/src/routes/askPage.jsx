@@ -23,14 +23,15 @@ const AskPage = () => {
       [key]: value,
     });
   };
-
   const onAskloan = async () => {
+   
+    const email=window.location.pathname.split('/').pop();
     try {
       let res = await axios({
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
-        data: { ...dataForm },
-        url: 'https://smartbudgetf.herokuapp.com/api/users/loan',
+        data: { ...dataForm,email:email },
+        url: 'http://localhost:8000/api/users/loan',
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
