@@ -3,8 +3,10 @@ const { UsersController } = require('../controllers/usersController');
 const { ExpensesController } = require('../controllers/expensesController');
 const { LoansController } = require('../controllers/loanController');
 const auth = require('../middleware/auth');
+const cors = require("cors")
+
+
 const UsersRouter = new Router();
-// UsersRouter.put('/id', auth, UsersController.updateUser);
 UsersRouter.post('/login', UsersController.loginUser);
 UsersRouter.post('/register', UsersController.registerUser);
 UsersRouter.get('/', auth, UsersController.getUsers);
@@ -15,7 +17,7 @@ UsersRouter.put('/', auth, UsersController.updateUser);
 
 
 UsersRouter.get('/family/:id', auth, UsersController.getFamily);
-UsersRouter.post('/family', auth, UsersController.addfamily);
+UsersRouter.post('/family',cors(), auth, UsersController.addfamily);
 UsersRouter.post('/expenses', auth, ExpensesController.addExpenses);
 UsersRouter.get('/expenses', auth, ExpensesController.getExpenses);
 UsersRouter.post('/loan/:id', auth, LoansController.askLoan);

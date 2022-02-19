@@ -1,7 +1,7 @@
 const Users = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const nodemailer = require("nodemailer")
 exports.UsersController = {
   async loginUser(req, res) {
     try {
@@ -203,14 +203,26 @@ exports.UsersController = {
       );
       // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
-
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
+      
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        requireTLS: true,
         auth: {
-          user: 'budgetsmart6@gmail.com',
-          pass: 'MHMDHILAL12345'
+            user: 'smartthebudget@gmail.com',
+            pass: 'idansmartthebudget'
         }
-      });
+    });
+    var mailOptions = {
+      from: 'smartthebudget@gmail.com',
+      to: `${email}`,
+      subject: 'Smart Budget Email Details',
+      text: `Your user name is:${userName}
+              Your password name is:${password}`
+    }; 
+
+
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
@@ -218,13 +230,7 @@ exports.UsersController = {
           console.log('Email sent: ' + info.response);
         }
       });
-      var mailOptions = {
-        from: 'budgetsmart6@gmail.com',
-        to: `${email}`,
-        subject: 'Smart Budget Email Details',
-        text: `Your user name is:${userName}
-                Your password name is:${password}`
-      };
+   
      
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {

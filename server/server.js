@@ -5,14 +5,11 @@ const app = express()
 require("dotenv").config()
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const nodemailer = require("nodemailer")
+const port = process.env.PORT || 8000;
+const { UsersRouter } = require('./routers/usersRouter');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
-
-
-const port = process.env.PORT || 8000;
-const { UsersRouter } = require('./routers/usersRouter');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'));

@@ -32,7 +32,7 @@ exports.LoansController = {
                 id: 0,
                 descritpion: descritpion,
                 loan: loan,
-                idUser: methodsPayment,
+                idUser: user.id,
                 fromIdUser: category,
             });
             res.status(201).json({ token });
