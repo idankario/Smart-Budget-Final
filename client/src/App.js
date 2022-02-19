@@ -14,6 +14,7 @@ import AskPage from './routes/askPage';
 import SuccessPage from './routes/successpage';
 import AccountPage from './routes/accountPage';
 import UpdateAccountPage from './routes/updateAccountPage';
+import Asklist from './routes/askList';
 
 const App = () => {
   return (
@@ -101,6 +102,16 @@ const App = () => {
             element={
               <PrivateRoute>
                 <UpdateAccountPage />
+              </PrivateRoute>
+            }
+          />
+
+            <Route
+            exact
+            path="/asklist"
+            element={
+              <PrivateRoute>
+                <Asklist />
               </PrivateRoute>
             }
           />
