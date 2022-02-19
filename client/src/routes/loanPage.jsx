@@ -31,7 +31,7 @@ const LoanPage = () => {
         method: 'POST',
         headers: { 'x-access-token': localStorage.getItem('token') },
         data: { ...dataForm,email:email },
-        url: 'http://localhost:8000/api/users/loan',
+        url: 'https://smartbudgetf.herokuapp.com/api/users/loan',
       });
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);

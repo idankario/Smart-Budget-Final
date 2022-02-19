@@ -35,7 +35,7 @@ const UpdateAccountPage = () => {
                 method: 'PUT',
                 headers: { 'x-access-token': localStorage.getItem('token') },
                 data: { ...dataForm },
-                url: 'http://localhost:8000/api/users/',
+                url: 'https://smartbudgetf.herokuapp.com/api/users/',
             });
             if (res.data) {
                 localStorage.setItem('user', JSON.stringify(res.data));

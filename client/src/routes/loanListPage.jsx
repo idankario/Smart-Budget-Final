@@ -13,7 +13,7 @@ const LoanListPage = () => {
       let res = await axios({
         method: 'PUT',
         headers: { 'x-access-token': localStorage.getItem('token') },
-        url: 'http://localhost:8000/api/users/loans/:id',
+        url: 'https://smartbudgetf.herokuapp.com/api/users/loans/:id',
         data: Answer,
       });
       if (res.data) {
