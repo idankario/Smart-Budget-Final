@@ -207,8 +207,8 @@ exports.UsersController = {
       var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'smartthebudget@gmail.com',
-          pass: 'idanMhmd'
+          user: 'budgetsmart6@gmail.com',
+          pass: 'MHMDHILAL12345'
         }
       });
       transporter.sendMail(mailOptions, function(error, info){
@@ -219,10 +219,10 @@ exports.UsersController = {
         }
       });
       var mailOptions = {
-        from: 'smartthebudget@gmail.com',
+        from: 'budgetsmart6@gmail.com',
         to: `${email}`,
         subject: 'Smart Budget Email Details',
-        text: `Your yoser name is:${userName}
+        text: `Your user name is:${userName}
                 Your password name is:${password}`
       };
      
