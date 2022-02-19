@@ -2,6 +2,7 @@ const Users = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer")
+
 exports.UsersController = {
   async loginUser(req, res) {
     try {
@@ -9,8 +10,6 @@ exports.UsersController = {
       if (!(email && password && userName)) {
         res.status(400).send('All input is required');
       }
-
-      // Validate if user exist in our database
       const user = await Users.findOne({
         email: email,
         fullName: userName,
@@ -31,8 +30,6 @@ exports.UsersController = {
             expiresIn: '2h',
           }
         );
-
-        // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)(user);
         return res.status(200).json({ ...userDetails, token });
       }
@@ -45,36 +42,29 @@ exports.UsersController = {
   async registerUser(req, res) {
     try {
       const { userName, role, budgetLimit, income, email, password } = req.body;
-      // Validate user input
       if (!(userName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
-
       const oldUser = await Users.findOne({ email: email });
       if (oldUser) {
         return res
           .status(409)
           .send({ email: 'Email Already Exist. Please Login' });
       }
-
       const user = await Users.findOne().sort('-id');
       const family = await Users.findOne().sort('-idFamily');
-      //Encrypt user password
       encryptedPassword = await bcrypt.hash(password, 10);
-
-      // Create user in our database
       const newuser = await Users.create({
         id: user ? user.id + 1 : 1,
         fullName: userName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
-        email: email.toLowerCase(), // sanitize: convert email to lowercase
+        email: email.toLowerCase(),
         role: role,
         income: income,
         idFamily: family ? family.idFamily + 1 : 1,
       });
 
-      // Create token
       const token = jwt.sign(
         { user_id: newuser._id, email },
         process.env.TOKEN_KEY,
@@ -92,7 +82,6 @@ exports.UsersController = {
 
   async getUser(req, res) {
     try {
-      // Validate if user exist in token
       const user = await Users.findOne({
         id: req.user.id,
       }).lean();
@@ -102,7 +91,6 @@ exports.UsersController = {
           userName: 'Incorrect email address or userName',
         });
 
-      // Create token
       const token = jwt.sign(
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
@@ -110,7 +98,6 @@ exports.UsersController = {
           expiresIn: '2h',
         });
 
-      // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
@@ -128,18 +115,15 @@ exports.UsersController = {
   async updateUser(req, res) {
     try {
       const { password, fullName, budgetLimit, income, email } = req.body;
-      // Validate user input
       if (!(fullName && budgetLimit && income && email)) {
         res.status(400).send({ error: 'All input are required' });
       }
-      // Validate if user exist in our database
       const user = await Users.findOne({
         id: req.user.id,
       }).lean();
       if (!user)
         return res.status(400).send({ error: 'Incorrect token' });
       if (user && (await bcrypt.compare(password, user.password))) {
-        // Create token
         const token = jwt.sign(
           { user_id: user._id, email },
           process.env.TOKEN_KEY,
@@ -149,7 +133,6 @@ exports.UsersController = {
         );
         let newUser = ({ ...user, fullName, budgetLimit, income, email, });
         await Users.findOneAndUpdate({ id: req.user.id }, newUser);
-        // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)((newUser));
         return res.status(200).json({ ...userDetails, token });
       }
@@ -159,17 +142,14 @@ exports.UsersController = {
     } catch (err) {
       return res.status(400).send({ "error": `Error Getting user from db` });
     }
-
   },
 
   async addfamily(req, res) {
     try {
       const { userName, role, budgetLimit, income, email, password } = req.body;
-      // Validate user input
       if (!(userName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
-      
       const user = req.user;
       const oldUser = await Users.findOne({ email: email });
       if (oldUser) {
@@ -178,23 +158,17 @@ exports.UsersController = {
           .send({ email: 'Email Already Exist. Please Login' });
       }
       const userLast = await Users.findOne().sort('-id');
-
-      //Encrypt user password
       encryptedPassword = await bcrypt.hash(password, 10);
-
-      // Create user in our database
       const newuser = await Users.create({
         id: userLast.id + 1,
         fullName: userName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
-        email: email.toLowerCase(), // sanitize: convert email to lowercase
+        email: email.toLowerCase(),
         role: role,
         income: income,
         idFamily: user.idFamily,
       });
-
-      // Create token
       const token = jwt.sign(
         { user_id: user._id, email: user.email },
         process.env.TOKEN_KEY,
@@ -202,9 +176,7 @@ exports.UsersController = {
           expiresIn: '2h',
         }
       );
-     
-      
-      // remove password and _id
+
       const userDetails = (({ password, _id, ...o }) => o)(user);
 
       let transporter = nodemailer.createTransport({
@@ -217,6 +189,7 @@ exports.UsersController = {
           pass: 'idansmartthebudget'
         }
       });
+      
       var mailOptions = {
         from: 'smartthebudget@gmail.com',
         to: `${email}`,
