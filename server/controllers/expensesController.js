@@ -45,7 +45,7 @@ exports.ExpensesController = {
       }
       else {
         // api/users/loans
-        Users.find({idFamily:user.idFamily,role:"Parent" });
+        const Parents=Users.find({idFamily:user.idFamily,role:"Parent" });
         let mail = {
           from: 'smartthebudget@gmail.com',
           to: `${user.email}`,
