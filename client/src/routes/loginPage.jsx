@@ -28,7 +28,7 @@ const LoginPage = () => {
         try {
             let res = await axios({
                 method: 'post',
-                url: 'http://localhost:8000/api/users/login',
+                url: 'https://thesmartbudget.herokuapp.com/api/users/login',
                 data: { ...dataForm },
             })
             if (res.data.token) {

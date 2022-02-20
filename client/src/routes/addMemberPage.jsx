@@ -38,7 +38,7 @@ const AddMember = () => {
                 method: 'POST',
                 headers: { 'x-access-token': localStorage.getItem('token') },
                 data: { ...dataForm },
-                url: 'http://localhost:8000/api/users/family',
+                url: 'https://thesmartbudget.herokuapp.com/api/users/family',
             });
 
             if (res.data.token) {
