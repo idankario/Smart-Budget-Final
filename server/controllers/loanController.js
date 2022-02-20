@@ -18,7 +18,6 @@ exports.LoansController = {
                 return res.status(400).send({
                     email: 'Incorrect user for take loan',
                 });
-            console.log(userLoan)
             // Create token
             const token = jwt.sign(
                 { user_id: user._id, email: user.email },
@@ -38,7 +37,18 @@ exports.LoansController = {
             });
             res.status(201).json({ token });
         } catch (error) {
-            res.send(`Error Getting user from db:${err}`);
+            res.status(400).send({ "error": `Error Getting user from db` });
         }
     },
+    async getLoans(req, res) {
+        try {
+          const user = req.user;
+          const usersAsk = await Loans.find({idUser:user.id}).lean();
+          const askUsers = await Loans.find({fromIdUser:user.id}).lean();
+          res.status(201).json({ usersAsk:usersAsk,askUsers:askUsers });
+        } catch (error) {
+            res.status(400).send({ "error": `Error Getting user from db` });
+        }
+      },
+
 };

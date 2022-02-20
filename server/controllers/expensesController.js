@@ -44,17 +44,18 @@ exports.ExpensesController = {
         res.status(201).json({ token });
       }
       else {
-        // api/users/loans
-        const Parents=Users.find({idFamily:user.idFamily,role:"Parent" });
-        let mail = {
-          from: 'smartthebudget@gmail.com',
-          to: `${user.email}`,
-          subject: 'Smart Budget Declined payment',
-          text: `Hi ${user.fullName},
-          Unfortunately, your child recent invoice payment for ${cost} and was declined becouse of the budget limit of this month.
-          But don't worry: your data is safe and sound! Please get in touch with your child to have a SmartBudget this week.`
-        };
-        Mail.sendMailToCoustomer(mail);
+        const Parents=Users.find({idFamily:user.idFamily,role:"Parent" }).lean();
+        Parents.forEach(element => {
+          let mail = {
+            from: 'smartthebudget@gmail.com',
+            to: `${element.email}`,
+            subject: 'Smart Budget Declined payment',
+            text: `Hi ${element.fullName},
+            Unfortunately, your child recent invoice payment for ${cost} and was declined becouse of the budget limit of this month.
+            But don't worry: your data is safe and sound! Please get in touch with your child to have a SmartBudget this week.`
+          };
+          Mail.sendMailToCoustomer(mail);
+        });
         res.status(400).send({ "error": `Budget is too low` });
       }
     } catch (error) {
