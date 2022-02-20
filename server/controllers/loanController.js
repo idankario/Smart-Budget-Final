@@ -42,13 +42,21 @@ exports.LoansController = {
     },
     async getLoans(req, res) {
         try {
-          const user = req.user;
-          const usersAsk = await Loans.find({idUser:user.id}).lean();
-          const askUsers = await Loans.find({fromIdUser:user.id}).lean();
-          res.status(201).json({ usersAsk:usersAsk,askUsers:askUsers });
+            const user = req.user;
+            const usersAsk = await Loans.find({ idUser: user.id }).lean();
+            const askUsers = await Loans.find({ fromIdUser: user.id }).lean();
+            // Create token
+            const token = jwt.sign(
+                { user_id: user._id, email: user.email },
+                process.env.TOKEN_KEY,
+                {
+                    expiresIn: '2h',
+                }
+            );
+            res.status(201).json({ token, askUsers, usersAsk });
         } catch (error) {
             res.status(400).send({ "error": `Error Getting user from db` });
         }
-      },
+    },
 
 };

@@ -20,4 +20,6 @@ app.use((req, res) => {
   res.status(404).send('Route not found!');
 });
 
-app.listen();
+app.listen(port, () =>
+  console.log(`Express server is running on port ${port}`)
+);

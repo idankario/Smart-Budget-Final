@@ -14,9 +14,9 @@ exports.Mail = {
         });
         transporter.sendMail(mail, (error, info) => {
             if (error) {
-                return (error);
+                //console.log (error);
             } else {
-                return ('Email sent');
+                console.log ('Email sent');
             }
         });
     }

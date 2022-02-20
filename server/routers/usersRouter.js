@@ -10,10 +10,11 @@ UsersRouter.post('/login', UsersController.loginUser);
 UsersRouter.post('/register', UsersController.registerUser);
 UsersRouter.get('/', auth, UsersController.getUsers);
 UsersRouter.delete('/', auth, UsersController.deleteUser);
+    // api/users/loans
 UsersRouter.put('/', auth, UsersController.updateUser);
 UsersRouter.post('/family', cors(), auth, UsersController.addfamily);
 UsersRouter.post('/expenses', cors(), auth, ExpensesController.addExpenses);
 UsersRouter.get('/expenses', auth, ExpensesController.getExpenses);
-UsersRouter.post('/loan', auth, LoansController.askLoan);
-
+UsersRouter.post('/loans', auth, LoansController.askLoan);
+UsersRouter.get('/loans', auth, LoansController.getLoans);
 module.exports = { UsersRouter };

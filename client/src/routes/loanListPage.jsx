@@ -8,6 +8,7 @@ import BottomNav from '../components/navigation/bottomNav';
 import axios from 'axios';
 const LoanListPage = () => {
   const [askLoans, setAskLoans] = useState({});
+  const [usersAsk, setUsersAsk] = useState({});
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -20,8 +21,11 @@ const LoanListPage = () => {
               });
               if (res.data.token) {
                   localStorage.setItem('token', res.data.token);
-                  const loans = await res.data.loans;
-                  setAskLoans(loans);
+                  const askUsers = await res.data.askUsers;
+                  const usersAsk = await res.data.usersAsk;
+                  console.log(usersAsk)
+                  setAskLoans(askUsers);
+                  setUsersAsk(usersAsk);
               }
           } catch (error) {
               return error.response.data;

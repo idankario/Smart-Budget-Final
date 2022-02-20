@@ -10,7 +10,7 @@ const AccountPage = () => {
       let res = await axios({
         method: 'DELETE',
         headers: { 'x-access-token': localStorage.getItem('token') },
-        url: 'https://smartbudgetf.herokuapp.com/api/users/',
+        url: 'http://localhost:8000/api/api/users/',
       });
       if (res.data) {
         window.localStorage.clear();
