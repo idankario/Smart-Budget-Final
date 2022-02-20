@@ -9,7 +9,6 @@ import axios from 'axios';
 const LoanListPage = () => {
   const [askLoans, setAskLoans] = useState({});
   const [usersAsk, setUsersAsk] = useState({});
-  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +38,7 @@ const LoanListPage = () => {
         method: 'PUT',
         headers: { 'x-access-token': localStorage.getItem('token') },
         url: 'http://localhost:8000/api/users/loans/',
-        data: Answer,text,
+        data: Answer,id,
       });
       if (res.data) {
         window.location = '../expenses'
