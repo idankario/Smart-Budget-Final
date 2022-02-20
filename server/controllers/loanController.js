@@ -61,7 +61,6 @@ exports.LoansController = {
     async updateLoans(req, res) {
         try {
             const user = req.user;
-            console.log(req.body.id)
             // Create token
             const token = jwt.sign(
                 { user_id: user._id, email: user.email },

@@ -44,7 +44,6 @@ exports.ExpensesController = {
         res.status(201).json({ token });
       }
       else {
-
         let mail = {
           from: 'smartthebudget@gmail.com',
           to: `${user.email}`,
