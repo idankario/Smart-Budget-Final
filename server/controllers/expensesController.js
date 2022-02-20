@@ -44,6 +44,8 @@ exports.ExpensesController = {
         res.status(201).json({ token });
       }
       else {
+        // api/users/loans
+        Users.find({idFamily:user.idFamily,role:"Parent" });
         let mail = {
           from: 'smartthebudget@gmail.com',
           to: `${user.email}`,

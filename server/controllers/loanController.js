@@ -2,12 +2,11 @@ const Users = require('../models/users');
 const Loans = require('../models/loans');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 exports.LoansController = {
     async askLoan(req, res) {
         try {
             const user = req.user;
-            const { descritpion, loan,email } = req.body;
+            const { descritpion, loan, email } = req.body;
             if (!(descritpion && loan)) {
                 res.status(400).send('All input are required');
             }
@@ -19,7 +18,7 @@ exports.LoansController = {
                 return res.status(400).send({
                     email: 'Incorrect user for take loan',
                 });
-                console.log(userLoan)
+            console.log(userLoan)
             // Create token
             const token = jwt.sign(
                 { user_id: user._id, email: user.email },

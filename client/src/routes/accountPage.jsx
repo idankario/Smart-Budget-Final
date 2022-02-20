@@ -4,7 +4,7 @@ import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/boar
 import Divider from '@mui/material/Divider';
 import BottomNav from '../components/navigation/bottomNav';
 import axios from 'axios';
-const AccountPage = () => {
+const AccountPage = () => {  
   const deleteAcount = async () => {
     try {
       let res = await axios({
@@ -13,7 +13,6 @@ const AccountPage = () => {
         url: 'https://smartbudgetf.herokuapp.com/api/users/',
       });
       if (res.data) {
-        console.log(res.data)
         window.localStorage.clear();
         window.location = '../'
       }

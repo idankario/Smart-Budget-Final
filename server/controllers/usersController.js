@@ -34,7 +34,7 @@ exports.UsersController = {
       }
       return res.status(400).send({ password: 'Incorrect Password' });
     } catch (err) {
-      return res.status(400).send('Problem with server');
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 
@@ -76,7 +76,7 @@ exports.UsersController = {
       const userDetails = (({ password, _id, ...o }) => o)(newuser.toObject());
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
-      console.log(err);
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 

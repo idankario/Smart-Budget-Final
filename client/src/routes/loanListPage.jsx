@@ -1,31 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
-import { Card, Typography, CardContent } from '@mui/material';
+import { Title, Main, WhiteBoard, FamilyImage, Button, CardStyle } from '../components/board';
+import { Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import BottomNav from '../components/navigation/bottomNav';
 import axios from 'axios';
-
 const LoanListPage = () => {
+  const [askLoans, setAskLoans] = useState({});
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              let res = await axios({
+                  method: 'get',
+                  headers: { 'x-access-token': localStorage.getItem('token') },
+                  url: 'http://localhost:8000/api/users/loans',
+              });
+              if (res.data.token) {
+                  localStorage.setItem('token', res.data.token);
+                  const loans = await res.data.loans;
+                  setAskLoans(loans);
+              }
+          } catch (error) {
+              return error.response.data;
+          }
+      }
+      fetchData();
+  }, []);
+
   const sendAnswer = async (Answer) => {
     try {
       let res = await axios({
         method: 'PUT',
         headers: { 'x-access-token': localStorage.getItem('token') },
-        url: 'https://smartbudgetf.herokuapp.com/api/users/loans/:id',
+        url: 'http://localhost:8000/api/users/loans/:id',
         data: Answer,
       });
       if (res.data) {
-        console.log(res.data)
-        window.localStorage.clear();
-        window.location = '../'
+        // console.log(res.data)
+        // window.localStorage.clear();
+        // window.location = '../'
       }
     } catch (error) {
-      console.log("Error")
+      // console.log("Error")
     }
   };
-  
+
   return (
     <Main>
       <section>
@@ -35,29 +57,24 @@ const LoanListPage = () => {
         </Title>
         <FamilyImage></FamilyImage>
         <WhiteBoard>
-        <div style={{ paddingBottom: "30px" }}>
-        <Card sx={{ width: 400, height: 130, borderRadius: "21px", backgroundColor: '#884EA0' }}>
-          <CardContent>
-            <Typography align='left' sx={{ paddingLeft: "30px", paddingBottom: "10px", fontWeight: 700, fontSize: "38px", lineHeight: "20px", color: "#ECB22F", fontFamily: "cursive" }}>
+          <CardStyle >
+            <Typography >
               jlljl
             </Typography>
-            <Typography align='left' sx={{ paddingLeft: "140px", fontWeight: 700, fontSize: "20px", lineHeight: "127.7%", color: "#ECB22F", opacity: 0.8, fontFamily: "cursive" }}>
+            <Typography >
               Ask for 400$
             </Typography>
-            <span>
-              <Button onClick={sendAnswer("true")}sx={{ width: "1px", height: "30px" }}><CheckIcon /></Button>
-              <Button onClick={sendAnswer("false")}theme={{ color: '#ff0000' }}  sx={{ width: "10px", height: "30px" }} ><DeleteForeverIcon /></Button>
-            </span>
-          </CardContent>
-        </Card>
-      </div>
-
-      
+            <Button onClick={() => sendAnswer("true")} >
+              <CheckIcon />
+            </Button>
+            <Button onClick={() => sendAnswer("false")} theme={{ color: '#ff0000' }} >
+              <DeleteForeverIcon />
+            </Button>
+          </CardStyle>
           <Button component={Link} to="/family" >
             Back home!
           </Button>
         </WhiteBoard>
-
         <BottomNav />
       </section>
     </Main>

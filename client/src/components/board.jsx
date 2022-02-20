@@ -4,6 +4,7 @@ import familyImage from './images/family.png';
 import successImg from './images/success.png';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import { Card } from '@mui/material';
 export const Title = styled('header')({
     '& div': {
         position: 'absolute',
@@ -126,4 +127,30 @@ export const H5styles = styled('h5')({
     fontFamily: 'Segoe UI',
     color: '#6441a4',
     marginTop: '20px',
+});
+
+export const CardStyle = styled(Card)({
+    width: 320, 
+    margin:'auto',
+    height: 170, 
+    textAlign:'center',
+    borderRadius: "21px", 
+    backgroundColor: '#884EA0',
+    padding: "5px",
+    '& p:nth-of-type(1)': {
+    color: "#ECB22F",
+    fontSize: "38px"
+    },
+    '& p:nth-of-type(2)': {
+        fontSize: "20px",
+        opacity: 0.8
+        },
+    '& p': {
+         fontFamily: "cursive",
+         fontWeight: "700", 
+    },
+    '& button': {
+        width:"10px",
+    }
+    
 });
