@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import { Title, Main, WhiteBoard, FamilyImage, Button, StyledLink } from '../components/board';
+import { Title, Main, WhiteBoard, FamilyImage, Button } from '../components/board';
 import Form from '../components/from';
 import { isRequire } from '../components/util/validations';
+import BottomNav from '../components/navigation/bottomNav';
 import axios from 'axios';
-const LoginPage = () => {
+const UpdateAccountPage = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
-        fullName: '',
-        email: '',
+        fullName: `${user.fullName}` || '',
+        budgetLimit: `${user.budgetLimit}` || '',
+        income: `${user.income}` || '',
+        email: `${user.email}` || '',
         password: '',
     });
-
     const dataType = [
         { type: 'text', label: 'User Name' },
+        { type: 'number', label: 'Budget Limit' },
+        { type: 'number', label: 'Income' },
         { type: 'email', label: 'Email' },
-        { type: 'password', label: 'Password' }
+        { type: 'password', label: 'Password To Approve' }
     ];
 
     const onChangeField = (key, value) => {
@@ -24,14 +29,15 @@ const LoginPage = () => {
         });
     };
 
-    const onLogin = async () => {
+    const onUpdate = async () => {
         try {
             let res = await axios({
-                method: 'post',
-                url: 'http://localhost:8000/api/users/login',
+                method: 'PUT',
+                headers: { 'x-access-token': localStorage.getItem('token') },
                 data: { ...dataForm },
-            })
-            if (res.data.token) {
+                url: 'https://smartbudgetf.herokuapp.com/api/users/',
+            });
+            if (res.data) {
                 localStorage.setItem('user', JSON.stringify(res.data));
                 localStorage.setItem('token', res.data.token);
                 window.location = '../menu'
@@ -46,10 +52,10 @@ const LoginPage = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const objectErrors = await isRequire(dataForm, dataType);
+        const objectErrors = await isRequire((dataForm), dataType);
         setErrors(objectErrors);
-        if (Object.keys(objectErrors).length === 0) {
-            let error = await onLogin();
+        if (Object.keys(errors).length === 0) {
+            let error = await onUpdate();
             setErrors(error);
         };
     }
@@ -59,29 +65,26 @@ const LoginPage = () => {
             <section>
                 <Title>
                     <div></div>
-                    <h1>LOG <span>IN!</span></h1>
+                    <h1>Update <span>Account!</span></h1>
                 </Title>
                 <FamilyImage></FamilyImage>
                 <WhiteBoard>
                     <Form
-                        formData={dataForm}
+                        formData={(dataForm)}
                         typeData={dataType}
                         onFieldChange={onChangeField}
                         errorsForm={errors}
-                        onSubmit={onSubmit}
-                    >
+                        onSubmit={onSubmit}>
                         <Button type="submit">
-                            Login
+                            Update
                         </Button>
-                        <StyledLink to="/register">
-                            New user? Register Now
-                        </StyledLink>
+                        <BottomNav />
                     </Form>
                 </WhiteBoard>
             </section>
         </Main>
     );
 };
-export default LoginPage;
+export default UpdateAccountPage;
 
 

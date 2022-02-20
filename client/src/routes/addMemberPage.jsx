@@ -9,14 +9,14 @@ import BottomNav from '../components/navigation/bottomNav';
 const AddMember = () => {
     const [errors, setErrors] = useState({});
     const [dataForm, setDataForm] = useState({
-        userName: '',
+        fullName: '',
         role: 'Parent',
         budgetLimit: '',
         income: '',
         email: '',
         password: '',
     });
-    
+
     const dataType = [
         { type: 'text', label: 'User Name' },
         { type: 'number', label: 'Budget Limit' },
@@ -38,7 +38,7 @@ const AddMember = () => {
                 method: 'POST',
                 headers: { 'x-access-token': localStorage.getItem('token') },
                 data: { ...dataForm },
-                url: 'https://smartbudgetf.herokuapp.com/api/users/family',
+                url: 'http://localhost:8000/api/users/family',
             });
 
             if (res.data.token) {
@@ -53,7 +53,7 @@ const AddMember = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const objectErrors=await isRequire((({ role, ...o }) => o)(dataForm), dataType)
+        const objectErrors = await isRequire((({ role, ...o }) => o)(dataForm), dataType)
         setErrors(objectErrors);
         if (Object.keys(objectErrors).length === 0) {
             let error = await onAddMember();
@@ -61,7 +61,6 @@ const AddMember = () => {
         };
     }
     return (
-        <>
             <Main>
                 <section>
                     <Title>
@@ -95,7 +94,6 @@ const AddMember = () => {
                     </WhiteBoard>
                 </section>
             </Main>
-        </>
     );
 };
 export default AddMember;

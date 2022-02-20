@@ -17,22 +17,20 @@ export const FormStyle = styled('form')({
       fontSize: "12px",
     },
   },
-
   '& .MuiTextField-root': {
     margin: '5px',
   },
   '& h5': {
-    color: "#F00", 
+    color: "#F00",
     margin: "0px",
   },
-},
-);
+});
 
-const Form = ({ formData, typeData, onFieldChange,errorsForm,onSubmit,children }) => {
+const Form = ({ formData, typeData, onFieldChange, errorsForm, onSubmit, children }) => {
   const eachTextField = (data, i) => {
     const { type, label } = typeData[i];
     return (
-     <Fragment key={i}>
+      <Fragment key={i}>
         <label>{label}</label>
         <TextField
           name={data[0]}
@@ -44,18 +42,17 @@ const Form = ({ formData, typeData, onFieldChange,errorsForm,onSubmit,children }
             onFieldChange(data[0], e.target.value)
           }}
         />
-        <h5>{errorsForm?errorsForm[`${data[0]}`]:''}</h5>
-        </Fragment>
-      );
+        <h5>{errorsForm ? errorsForm[`${data[0]}`] : ''}</h5>
+      </Fragment>
+    );
   }
 
   return (
-    <>
-      <FormStyle onSubmit={onSubmit}>   
-        {Object.entries(formData).map(eachTextField)}
-        {children}
-      </FormStyle>
-    </>
+    <FormStyle onSubmit={onSubmit}>
+      {Object.entries(formData).map(eachTextField)}
+      {children}
+      <h5>{errorsForm ? errorsForm[`error`] : ''}</h5>
+    </FormStyle>
   );
 };
 export default Form;

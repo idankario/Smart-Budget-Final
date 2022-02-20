@@ -21,14 +21,14 @@ const BottomNav = () => {
       </BottomNavigationAction>
     );
   }
+
   return (
     <>
       <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} >
         <BottomNavigation
           sx={{ backgroundColor: '#331A3F' }}
           showLabels
-          value={value}
-        >
+          value={value}>
           {sidebarConfig.map(eachBottomNavigatio)}
         </BottomNavigation>
       </Paper>

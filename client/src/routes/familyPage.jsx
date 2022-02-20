@@ -8,14 +8,13 @@ import axios from 'axios';
 const FamilyPage = () => {
   const [users, setUsers] = useState({});
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
         let res = await axios({
           method: 'get',
           headers: { 'x-access-token': localStorage.getItem('token') },
-          url: 'https://smartbudgetf.herokuapp.com/api/users/',
+          url: 'http://localhost:8000/api/users/',
         });
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
@@ -27,42 +26,42 @@ const FamilyPage = () => {
     }
     fetchData();
   }, []);
+
   const eachButtonFamily = (user, index) => {
-    console.log(user)
-    return ( 
-      <SqButton component={Link} to={`/askleon/${user[1].email}`} key={index} theme={{ color: '#7790F6' }}>
+    return (
+      <SqButton component={Link} to={`/leon/${user[1].email}`} key={index} theme={{ color: '#7790F6' }}>
         <img src={iconsUsers(index)} alt={user[1].fullName} title={user[1].fullName} />
-        <p style={{color: 'black',fontSize:'8px'}} >{user[1].fullName}</p>
+        <p style={{ color: 'black', fontSize: '8px' }} >{user[1].fullName}</p>
       </SqButton>
     );
   }
+
   const Results = () => (
     <SqButton component={Link} to="/addMember" >
-          <AddIcon />
-        </SqButton>
+      <AddIcon />
+    </SqButton>
   )
+
   return (
-    <>
-      <Main>
-        <section>
-          <Title>
-            <div></div>
-            <h1>MY <span>FAMILY!</span></h1>
-          </Title>
-          <FamilyImage></FamilyImage>
-          <WhiteBoard>
-            <h2 style={{ fontFamily: "'Squada One', cursive", fontWeight: "700",fontSize: "30px",color:'#ECB22F'}}>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
-            <h5>Ask For Loan:</h5>
-            {Object.entries(users).map(eachButtonFamily)}         
-           { (JSON.parse(localStorage.getItem('user')).role === "Parent") ?  <Results /> : null }
-            <Button component={Link} to="/menu" >
-              BackHome!
-            </Button>
-            <BottomNav />
-          </WhiteBoard>
-        </section>
-      </Main>
-    </>
+    <Main>
+      <section>
+        <Title>
+          <div></div>
+          <h1>MY <span>FAMILY!</span></h1>
+        </Title>
+        <FamilyImage></FamilyImage>
+        <WhiteBoard>
+          <h2 style={{ fontFamily: "'Squada One', cursive", fontWeight: "700", fontSize: "30px", color: '#ECB22F' }}>{JSON.parse(localStorage.getItem('user')).fullName} Family</h2>
+          <h5>Ask For Loan:</h5>
+          {Object.entries(users).map(eachButtonFamily)}
+          {(JSON.parse(localStorage.getItem('user')).role === "Parent") ? <Results /> : null}
+          <Button component={Link} to="/menu" >
+            BackHome!
+          </Button>
+          <BottomNav />
+        </WhiteBoard>
+      </section>
+    </Main>
   );
 };
 export default FamilyPage;

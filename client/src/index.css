@@ -1,13 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Quicksand&display=swap");
-*{
+* {
   margin: 0;
   padding: 0;
 }
-header,nav,main,section,footer,aside,article,div{
+header,
+nav,
+main,
+section,
+footer,
+aside,
+article,
+div {
   display: block;
 }
 
-body{
+body {
   font-size: 20px;
   max-width: 100%;
   background-color: #351336;

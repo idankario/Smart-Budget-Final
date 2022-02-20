@@ -1,23 +1,23 @@
 const Users = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const { Mail } = require('./mail');
 exports.UsersController = {
   async loginUser(req, res) {
     try {
-      const { email, password, userName } = req.body;
-      if (!(email && password && userName)) {
+      const { email, password, fullName } = req.body;
+      if (!(email && password && fullName)) {
         res.status(400).send('All input is required');
       }
-      // Validate if user exist in our database
       const user = await Users.findOne({
         email: email,
-        fullName: userName,
+        fullName: fullName,
       }).lean();
+
       if (!user)
         return res.status(400).send({
           email: 'Incorrect email address or userName',
-          userName: 'Incorrect email address or userName',
+          fullName: 'Incorrect email address or userName',
         });
 
       if (user && (await bcrypt.compare(password, user.password))) {
@@ -29,21 +29,20 @@ exports.UsersController = {
             expiresIn: '2h',
           }
         );
-        // remove password and _id
         const userDetails = (({ password, _id, ...o }) => o)(user);
         return res.status(200).json({ ...userDetails, token });
       }
       return res.status(400).send({ password: 'Incorrect Password' });
     } catch (err) {
-      return res.status(400).send('Problem with server');
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 
   async registerUser(req, res) {
     try {
-      const { userName, role, budgetLimit, income, email, password } = req.body;
+      const { fullName, role, budgetLimit, income, email, password } = req.body;
       // Validate user input
-      if (!(userName && role && budgetLimit && income && email && password)) {
+      if (!(fullName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
       const oldUser = await Users.findOne({ email: email });
@@ -54,97 +53,70 @@ exports.UsersController = {
       }
       const user = await Users.findOne().sort('-id');
       const family = await Users.findOne().sort('-idFamily');
-      //Encrypt user password
       encryptedPassword = await bcrypt.hash(password, 10);
-
-      // Create user in our database
       const newuser = await Users.create({
-        id: user.id + 1,
-        fullName: userName,
+        id: user ? user.id + 1 : 1,
+        fullName: fullName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
-        email: email.toLowerCase(), // sanitize: convert email to lowercase
+        email: email.toLowerCase(),
         role: role,
         income: income,
-        idFamily: family.idFamily + 1,
+        idFamily: family ? family.idFamily + 1 : 1,
       });
-      // Create token
+
       const token = jwt.sign(
         { user_id: newuser._id, email },
         process.env.TOKEN_KEY,
         {
           expiresIn: '2h',
         }
-      ); 
-  
-      let userDetails = newuser;
-      userDetails=(({ password, _id, ...o }) => o)(newuser.toObject());
+      );
+
+      const userDetails = (({ password, _id, ...o }) => o)(newuser.toObject());
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
-      console.log(err);
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 
-
-
-  async deleteUser(req, res) {
+  async updateUser(req, res) {
     try {
-      Users.deleteOne({ id: req.params.id })
-        .then((result) => {
-          if (result.deletedCount > 0) {
-            res.status(200).res.send(`user--${req.params.id}--deleted`);
-          } else {
-            res.status(400).res.send(`user--${req.params.id}--not in the data`);
+      const { password, fullName, budgetLimit, income, email } = req.body;
+      if (!(fullName && budgetLimit && income && email)) {
+        res.status(400).send({ error: 'All input are required' });
+      }
+      const user = await Users.findOne({
+        id: req.user.id,
+      }).lean();
+      if (!user)
+        return res.status(400).send({ error: 'Incorrect token' });
+      if (user && (await bcrypt.compare(password, user.password))) {
+        const token = jwt.sign(
+          { user_id: user._id, email },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: '2h',
           }
-        })
-        .catch(() =>
-          res.status(400).send(`Error user ${req.params.id} not deleted`)
         );
-    } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+        let newUser = ({ ...user, fullName, budgetLimit, income, email, });
+        await Users.findOneAndUpdate({ id: req.user.id }, newUser);
+        const userDetails = (({ password, _id, ...o }) => o)((newUser));
+        return res.status(200).json({ ...userDetails, token });
+      }
+      else
+        return res.status(400).send({ password: 'Incorrect Password' });
+
+    } catch (err) {
+      return res.status(400).send({ "error": `Error Getting user from db` });
     }
-  },
-
-  async getUser(req, res) {
-    try {
-      Users.findOne({ id: req.params.id })
-        .then((user) => {
-          if (user) {
-            res.json(user);
-          } else {
-            res.status(400).json('Wrong user id please enter correct id');
-          }
-        })
-    } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
-    }
-  },
-
-  getFamily(req, res) {
-    Users.find({})
-      .then((Users) => {
-        res.json(Users.filter((users) => users.IdFamily == req.params.id));
-      })
-      .catch((err) => res.send(`Error Getting user from db:${err}`));
-  },
-
-  updateUser(req, res) {
-    Users.updateOne({ Id: req.params.id }, req.body)
-      .then((result) => {
-        if (result.matchedCount > 0) {
-          res.send(`user ${req.params.id} Updated!`);
-        } else {
-          res.status(400).send(`user ${req.params.id} Not in The DB!`);
-        }
-      })
-      .catch((err) => res.status(400).json(err));
   },
 
   async addfamily(req, res) {
     try {
-      const { userName, role, budgetLimit, income, email, password } = req.body;
+      const { fullName, role, budgetLimit, income, email, password } = req.body;
       // Validate user input
-      if (!(userName && role && budgetLimit && income && email && password)) {
+      if (!(fullName && role && budgetLimit && income && email && password)) {
         res.status(400).send('All input are required');
       }
       const user = req.user;
@@ -155,23 +127,17 @@ exports.UsersController = {
           .send({ email: 'Email Already Exist. Please Login' });
       }
       const userLast = await Users.findOne().sort('-id');
-
-      //Encrypt user password
       encryptedPassword = await bcrypt.hash(password, 10);
-
-      // Create user in our database
       const newuser = await Users.create({
         id: userLast.id + 1,
-        fullName: userName,
+        fullName: fullName,
         password: encryptedPassword,
         budgetLimit: budgetLimit,
-        email: email.toLowerCase(), // sanitize: convert email to lowercase
+        email: email.toLowerCase(),
         role: role,
         income: income,
         idFamily: user.idFamily,
       });
-
-      // Create token
       const token = jwt.sign(
         { user_id: user._id, email: user.email },
         process.env.TOKEN_KEY,
@@ -179,19 +145,33 @@ exports.UsersController = {
           expiresIn: '2h',
         }
       );
-      // remove password and _id
       const userDetails = (({ password, _id, ...o }) => o)(user);
+      let mail = {
+        from: 'smartthebudget@gmail.com',
+        to: `${email}`,
+        subject: 'Smart Budget Email Details',
+        text: `We have sent you this email in response to your request of family membet to give your password on SmartBudget. 
+
+      Your password for is:${password}, 
+      Your user name for is:${fullName},
+        
+        We recommend that you keep your password secure and not share it with anyone. If you feel your password has been compromised, you can change it by going to your My Account Page and clicking on the "Change Email Address or Password" link.
+        
+      If you need help, or you have any other questions, feel free to this email customer-service-email.
+        
+      Customer Service`
+      };
+      Mail.sendMailToCoustomer(mail);
       return res.status(200).json({ ...userDetails, token });
     } catch (err) {
-      return res.status(400).send('Problem with server');
+      return res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 
   async getUsers(req, res) {
     try {
       const user = req.user;
-      
-      let users = await Users.find({ _id: { $ne: user._id } ,idFamily: user.idFamily}).select("-password").select("-_id").select("-id").select("-idFamily");
+      let users = await Users.find({ _id: { $ne: user._id }, idFamily: user.idFamily }).select("-password").select("-_id").select("-id").select("-idFamily");
       // Create token
       const token = jwt.sign(
         { user_id: user._id, email: user.email },
@@ -202,7 +182,16 @@ exports.UsersController = {
       );
       res.status(201).json({ ...users, token });
     } catch (error) {
-      res.send(`Error Getting user from db:${err}`);
+      res.status(400).send({ "error": `Error Getting user from db` });
+    }
+  },
+
+  async deleteUser(req, res) {
+    try {
+      await Users.deleteOne({ id: req.user.id });
+      res.status(200).send(`SUCCESS`);
+    } catch (error) {
+      res.status(400).send({ "error": `Error Getting user from db` });
     }
   },
 };

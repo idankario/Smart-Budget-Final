@@ -3,19 +3,20 @@ const { UsersController } = require('../controllers/usersController');
 const { ExpensesController } = require('../controllers/expensesController');
 const { LoansController } = require('../controllers/loanController');
 const auth = require('../middleware/auth');
+const cors = require("cors")
 
 const UsersRouter = new Router();
-UsersRouter.post('/addExpenses', auth, ExpensesController.addExpenses);
 UsersRouter.post('/login', UsersController.loginUser);
 UsersRouter.post('/register', UsersController.registerUser);
 UsersRouter.get('/', auth, UsersController.getUsers);
-UsersRouter.get('/:id', auth, UsersController.getUser);
-UsersRouter.get('/family/:id', auth, UsersController.getFamily);
-UsersRouter.post('/family', auth, UsersController.addfamily);
-UsersRouter.put('/:id', auth, UsersController.updateUser);
-UsersRouter.delete('/:id', auth, UsersController.deleteUser);
-
-UsersRouter.post('/loan/:id', auth, LoansController.askLoan);
-
+UsersRouter.delete('/', auth, UsersController.deleteUser);
+    // api/users/loans
+UsersRouter.put('/', auth, UsersController.updateUser);
+UsersRouter.post('/family', cors(), auth, UsersController.addfamily);
+UsersRouter.post('/expenses', cors(), auth, ExpensesController.addExpenses);
+UsersRouter.get('/expenses', auth, ExpensesController.getExpenses);
+UsersRouter.post('/loans', auth, LoansController.askLoan);
+UsersRouter.get('/loans', auth, LoansController.getLoans);
+UsersRouter.put('/loans', auth, LoansController.updateLoans);
 
 module.exports = { UsersRouter };

@@ -1,47 +1,55 @@
-import React from 'react';
-import { Title, Main, WhiteBoard,ProgressStyle,FlexSection,Pstyles} from '../components/board';
+import React, { useEffect, useState } from 'react';
+import { Title, Main, WhiteBoard } from '../components/board';
 import BottomNav from '../components/navigation/bottomNav';
-import Statistic from '../components/statistic';
-import Taxi from '../components/images/Taxi.png';
-import Sport from '../components/images/Sport.png';
-import Home from '../components/images/Home.png';
-import Groceries from '../components/images/Groceries.png';
+import StatisticGraph from '../components/statisticGraph';
+import CategorySection from '../components/util/categorySection';
+import axios from 'axios';
 const StatisticPage = () => {
+    const [expensesMonth, setExpenses] = useState({});
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let res = await axios({
+                    method: 'get',
+                    headers: { 'x-access-token': localStorage.getItem('token') },
+                    url: 'http://localhost:8000/api/users/expenses',
+                });
+                if (res.data.token) {
+                    localStorage.setItem('token', res.data.token);
+                    const expenses = await res.data.expenses;
+                    setExpenses(expenses);
+                }
+            } catch (error) {
+                return error.response.data;
+            }
+        }
+        fetchData();
+    }, []);
+
+    const getTotalExpenses = (obj) => {
+        let count = 0;
+        Object.keys(obj).forEach((k) => {
+            count = count + obj[k].cost;
+        })
+        return count;
+    }
+
     return (
-        <>
-            <Main>
-                <section>
-                    <Title>
-                        <div></div>
-                        <h1>SMART <span>Budget!</span></h1>
-                    </Title>
-                    <Statistic />
-                    <WhiteBoard>
-                    <FlexSection>
-                    <img src={Taxi}/>
-                    <Pstyles>Public transport</Pstyles>
-                    <ProgressStyle value="0.2"></ProgressStyle>
-                    </FlexSection>
-                    <FlexSection>
-                    <img src={Sport}/>
-                    <Pstyles>Entertainment</Pstyles>
-                    <ProgressStyle value="0.6"></ProgressStyle>
-                    </FlexSection>
-                    <FlexSection>
-                    <img src={Home}/>
-                    <Pstyles>Home</Pstyles>
-                    <ProgressStyle value="0.9"></ProgressStyle>
-                    </FlexSection>
-                    <FlexSection>
-                    <img src={Groceries}/>
-                    <Pstyles>Food</Pstyles>
-                    <ProgressStyle value="0.4"></ProgressStyle>
-                    </FlexSection>
-                        <BottomNav />
-                    </WhiteBoard>
-                </section>
-            </Main>
-        </>
+        <Main>
+            <section>
+                <Title>
+                    <div></div>
+                    <h1>SMART <span>Budget!</span></h1>
+                </Title>
+                <StatisticGraph monthExpenses={getTotalExpenses(expensesMonth)} budgetLimit={user.budgetLimit} />
+                <WhiteBoard >
+                    <CategorySection monthExpenses={expensesMonth} budgetLimit={user.budgetLimit} />
+                    <BottomNav />
+                </WhiteBoard>
+            </section>
+        </Main>
     );
 };
 export default StatisticPage;

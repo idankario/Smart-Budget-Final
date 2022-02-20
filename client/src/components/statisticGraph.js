@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
-
-const data = [
-  { label: "Income", value: 1500 },
-  { label: "Expenses", value: 300 }
-];
-const COLORS = [
-  { start: "#7F5FC3", end: "#E1D3FF" },
-  { start: "#43277C", end: "#43277C" }
-];
-
-export default function Statistic() {
+export default function StatisticGraph({ monthExpenses, budgetLimit }) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const data = [
+    { label: `Budget ${budgetLimit}`, value: budgetLimit-monthExpenses  },
+    { label: `Expenses ${monthExpenses}`, value: monthExpenses }
+  ];
+
+  const COLORS = [
+    { start: "#7F5FC3", end: "#E1D3FF" },
+    { start: "#43277C", end: "#43277C" }
+  ];
+
   const onLegendEnter = (o) => {
     const idx = data.findIndex((v) => v.label === o.value);
     setActiveIdx(idx);
   };
+
   const onPieEnter = (_, index) => {
     setActiveIdx(index);
   };
@@ -36,6 +37,7 @@ export default function Statistic() {
       payload,
       percent
     } = props;
+
     return (
       <g>
         <text x={cx} y={cy} textAnchor="middle">
@@ -56,8 +58,9 @@ export default function Statistic() {
       </g>
     );
   };
+
   return (
-    <PieChart width={420} height={240} style={{ marginLeft:"100px",marginBottom:"30px",marginTop:"30px"}}>
+    <PieChart width={420} height={240} style={{ marginLeft: "100px", marginBottom: "30px", marginTop: "30px" }}>
       <defs>
         {data.map((entry, index) => (
           <linearGradient key={`cell-${index}`} id={`myGradient${index}`}>
@@ -96,7 +99,7 @@ export default function Statistic() {
         ))}
       </Pie>
       <Legend
-        wrapperStyle={{ color:'#fff',left: -80, bottom: -30 }}
+        wrapperStyle={{ color: '#fff', left: -80, bottom: -30 }}
         onMouseEnter={onLegendEnter}
         onMouseLeave={onPieExit}
       />

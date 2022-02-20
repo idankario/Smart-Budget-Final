@@ -7,14 +7,15 @@ import MenuPage from './routes/menuPage';
 import StatisticPage from './routes/statisticPage';
 import { PrivateRoute } from './routes/privateRouter/routing';
 import FamilyPage from './routes/familyPage';
-import AddMember from './routes/addMember';
+import AddMemberPage from './routes/addMemberPage';
 import NotFoundPage from './routes/page404';
 import ExpensesPage from './routes/expensesPage';
-import AskPage from './routes/askPage';
+import LoanPage from './routes/loanPage';
 import SuccessPage from './routes/successpage';
 import AccountPage from './routes/accountPage';
-// import StatisticPage from './routes/statistic/statisticPage';
-// import ConvertCurency from './component/convertCurency';
+import UpdateAccountPage from './routes/updateAccountPage';
+import LoanListPage from './routes/loanListPage';
+
 const App = () => {
   return (
     <React.StrictMode>
@@ -64,21 +65,29 @@ const App = () => {
             path="/addMember"
             element={
               <PrivateRoute>
-                <AddMember />
+                <AddMemberPage />
               </PrivateRoute>
             }
           />
-           <Route
+          <Route
             exact
-           
-            path="/askleon/:email"
+            path="/leon/:email"
             element={
               <PrivateRoute>
-                <AskPage />
+                <LoanPage />
               </PrivateRoute>
             }
           />
-            <Route
+          <Route
+            exact
+            path="/loanList"
+            element={
+              <PrivateRoute>
+                <LoanListPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             exact
             path="/success"
             element={
@@ -87,8 +96,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
-            <Route
+          <Route
             exact
             path="/account"
             element={
@@ -97,10 +105,18 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          
-          {/* ConvertCurency */}
-          {/* <Route path="*" element={<ConvertCurency />} /> */}
-          {/* <Route path="/statistic" element={<StatisticPage />} />  */}
+          <Route
+            exact
+            path="/update"
+            element={
+              <PrivateRoute>
+                <UpdateAccountPage />
+              </PrivateRoute>
+            }
+          />
+
+
+
           {/* 404 rounte */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
