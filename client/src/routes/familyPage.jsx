@@ -14,7 +14,7 @@ const FamilyPage = () => {
         let res = await axios({
           method: 'get',
           headers: { 'x-access-token': localStorage.getItem('token') },
-          url: 'http://localhost:8000/api/users/',
+          url: 'https://thesmartbudget.herokuapp.com/api/users/',
         });
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);

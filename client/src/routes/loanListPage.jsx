@@ -16,7 +16,7 @@ const LoanListPage = () => {
         let res = await axios({
           method: 'get',
           headers: { 'x-access-token': localStorage.getItem('token') },
-          url: 'http://localhost:8000/api/users/loans',
+          url: 'https://thesmartbudget.herokuapp.com/api/users/loans',
         });
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
@@ -37,7 +37,7 @@ const LoanListPage = () => {
       let res = await axios({
         method: 'PUT',
         headers: { 'x-access-token': localStorage.getItem('token') },
-        url: 'http://localhost:8000/api/users/loans/',
+        url: 'https://thesmartbudget.herokuapp.com/api/users/loans/',
         data: Answer,id,
       });
       if (res.data) {
