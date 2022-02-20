@@ -58,5 +58,22 @@ exports.LoansController = {
             res.status(400).send({ "error": `Error Getting user from db` });
         }
     },
+    async updateLoans(req, res) {
+        try {
+            const user = req.user;
+            console.log(req.body.id)
+            // Create token
+            const token = jwt.sign(
+                { user_id: user._id, email: user.email },
+                process.env.TOKEN_KEY,
+                {
+                    expiresIn: '2h',
+                }
+            );
+            res.status(201).json({ token});
+        } catch (error) {
+            res.status(400).send({ "error": `Error Getting user from db` });
+        }
+    },
 
 };

@@ -17,4 +17,6 @@ UsersRouter.post('/expenses', cors(), auth, ExpensesController.addExpenses);
 UsersRouter.get('/expenses', auth, ExpensesController.getExpenses);
 UsersRouter.post('/loans', auth, LoansController.askLoan);
 UsersRouter.get('/loans', auth, LoansController.getLoans);
+UsersRouter.put('/loans', auth, LoansController.updateLoans);
+
 module.exports = { UsersRouter };
