@@ -5,7 +5,7 @@ import HomePage from './routes/homePage';
 import RegisterPage from './routes/registerPage';
 import MenuPage from './routes/menuPage';
 import StatisticPage from './routes/statisticPage';
-import { PrivateRoute } from './routes/privateRouter/routing';
+import PrivateRoute from './routes/privateRouter/routing';
 import FamilyPage from './routes/familyPage';
 import AddMemberPage from './routes/addMemberPage';
 import NotFoundPage from './routes/page404';
@@ -16,11 +16,12 @@ import AccountPage from './routes/accountPage';
 import UpdateAccountPage from './routes/updateAccountPage';
 import LoanListPage from './routes/loanListPage';
 
-const App = () => {
+function App() {
   return (
     <React.StrictMode>
       <Router>
-        <Routes>LoginPage
+        <Routes>
+          LoginPage
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
@@ -114,14 +115,11 @@ const App = () => {
               </PrivateRoute>
             }
           />
-
-
-
           {/* 404 rounte */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </React.StrictMode>
   );
-};
+}
 export default App;

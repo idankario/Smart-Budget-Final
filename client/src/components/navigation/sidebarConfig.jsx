@@ -1,35 +1,44 @@
-import { Home, AddBusiness, FamilyRestroom, PieChart,AccountCircle} from '@mui/icons-material';
-const styleIcon = { fontSize: "40px" };
+import React from 'react';
 
-export const sidebarConfig = [
+import {
+  Home,
+  AddBusiness,
+  FamilyRestroom,
+  PieChart,
+  AccountCircle,
+} from '@mui/icons-material';
+
+const styleIcon = { fontSize: '40px' };
+
+const sidebarConfig = [
   {
     title: 'Home',
-    path: "/menu",
-    icon: <Home sx={styleIcon} />
+    path: '/menu',
+    icon: <Home sx={styleIcon} />,
   },
 
   {
     title: 'Statistic',
-    path: "/statistic",
-    icon: <PieChart sx={styleIcon} />
+    path: '/statistic',
+    icon: <PieChart sx={styleIcon} />,
   },
 
   {
     title: 'Family',
-    path: "/family",
-    icon: <FamilyRestroom sx={styleIcon} />
+    path: '/family',
+    icon: <FamilyRestroom sx={styleIcon} />,
   },
 
   {
     title: 'Add Expenses',
-    path: "/expenses",
-    icon: <AddBusiness sx={styleIcon} />
+    path: '/expenses',
+    icon: <AddBusiness sx={styleIcon} />,
   },
-  
+
   {
     title: 'Account',
-    path: "/account",
-    icon: <AccountCircle sx={styleIcon} />
-  }
+    path: '/account',
+    icon: <AccountCircle sx={styleIcon} />,
+  },
 ];
-
+export default sidebarConfig;

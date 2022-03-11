@@ -1,0 +1,46 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+    jest: true,
+  },
+  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: ['react', 'prettier', '@typescript-eslint'],
+  rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+    semi: 0,
+    'comma-dangle': 0,
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'array-bracket-spacing': [2, 'never'],
+    'block-scoped-var': 2,
+    'brace-style': [2, '1tbs', { allowSingleLine: true }],
+    'computed-property-spacing': [2, 'never'],
+    curly: 2,
+    'eol-last': 2,
+    eqeqeq: [2, 'smart'],
+    'new-cap': 1,
+    'no-extend-native': 2,
+    'no-mixed-spaces-and-tabs': 2,
+    'no-trailing-spaces': 2,
+    'no-undef': 2,
+    'no-unused-vars': 1,
+    'no-use-before-define': [2, 'nofunc'],
+    quotes: [2, 'single', 'avoid-escape'],
+    'keyword-spacing': 2,
+    'space-unary-ops': 2,
+  },
+};

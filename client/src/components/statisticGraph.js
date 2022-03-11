@@ -1,15 +1,17 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Legend, Sector } from "recharts";
+import { PieChart, Pie, Cell, Legend, Sector } from 'recharts';
+
 export default function StatisticGraph({ monthExpenses, budgetLimit }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const data = [
-    { label: `Budget ${budgetLimit}`, value: budgetLimit-monthExpenses  },
-    { label: `Expenses ${monthExpenses}`, value: monthExpenses }
+    { label: `Budget ${budgetLimit}`, value: budgetLimit - monthExpenses },
+    { label: `Expenses ${monthExpenses}`, value: monthExpenses },
   ];
 
   const COLORS = [
-    { start: "#7F5FC3", end: "#E1D3FF" },
-    { start: "#43277C", end: "#43277C" }
+    { start: '#7F5FC3', end: '#E1D3FF' },
+    { start: '#43277C', end: '#43277C' },
   ];
 
   const onLegendEnter = (o) => {
@@ -35,7 +37,7 @@ export default function StatisticGraph({ monthExpenses, budgetLimit }) {
       endAngle,
       fill,
       payload,
-      percent
+      percent,
     } = props;
 
     return (
@@ -60,18 +62,16 @@ export default function StatisticGraph({ monthExpenses, budgetLimit }) {
   };
 
   return (
-    <PieChart width={420} height={240} style={{ marginLeft: "100px", marginBottom: "30px", marginTop: "30px" }}>
+    <PieChart
+      width={420}
+      height={240}
+      style={{ marginLeft: '100px', marginBottom: '30px', marginTop: '30px' }}
+    >
       <defs>
-        {data.map((entry, index) => (
-          <linearGradient key={`cell-${index}`} id={`myGradient${index}`}>
-            <stop
-              offset="0%"
-              stopColor={COLORS[index].start}
-            />
-            <stop
-              offset="100%"
-              stopColor={COLORS[index].end}
-            />
+        {data.map((d, index) => (
+          <linearGradient key={d.label} id={`myGradient${index}`}>
+            <stop offset="0%" stopColor={COLORS[index].start} />
+            <stop offset="100%" stopColor={COLORS[index].end} />
           </linearGradient>
         ))}
       </defs>
@@ -91,11 +91,8 @@ export default function StatisticGraph({ monthExpenses, budgetLimit }) {
         startAngle={450}
         endAngle={90}
       >
-        {data.map((entry, index) => (
-          <Cell
-            key={`cell-${index}`}
-            fill={`url(#myGradient${index})`}
-          />
+        {data.map((d, index) => (
+          <Cell key={d.label} fill={`url(#myGradient${index})`} />
         ))}
       </Pie>
       <Legend

@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
-import { Title, Main, WhiteBoard, FamilyImage, Button, CardStyle } from '../components/board';
+import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import BottomNav from '../components/navigation/bottomNav';
 import axios from 'axios';
-const LoanListPage = () => {
-  const [askLoans, setAskLoans] = useState({});
+import BottomNav from '../components/navigation/bottomNav';
+import {
+  Title,
+  Main,
+  WhiteBoard,
+  FamilyImage,
+  Button,
+  CardStyle,
+} from '../components/board';
+
+function LoanListPage() {
+  const [loansAsk, setAskLoans] = useState({});
   const [usersAsk, setUsersAsk] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let res = await axios({
+        const res = await axios({
           method: 'get',
           headers: { 'x-access-token': localStorage.getItem('token') },
           url: 'https://thesmartbudget.herokuapp.com/api/users/loans',
@@ -21,88 +29,83 @@ const LoanListPage = () => {
         if (res.data.token) {
           localStorage.setItem('token', res.data.token);
           const askUsers = await res.data.askUsers;
-          const usersAsk = await res.data.usersAsk;
-          setAskLoans(askUsers);
-          setUsersAsk(usersAsk);
+          const askLoans = await res.data.askLoans;
+          setAskLoans(askLoans);
+          setUsersAsk(askUsers);
         }
       } catch (error) {
-        return error.response.data;
+        // empty
       }
-    }
+    };
     fetchData();
   }, []);
 
-  const sendAnswer = async (Answer,id) => {
+  const sendAnswer = async (Answer, id) => {
     try {
-      let res = await axios({
+      const res = await axios({
         method: 'PUT',
         headers: { 'x-access-token': localStorage.getItem('token') },
         url: 'https://thesmartbudget.herokuapp.com/api/users/loans/',
-        data: Answer,id,
+        data: Answer,
+        id,
       });
       if (res.data) {
-        window.location = '../expenses'
+        window.location = '../expenses';
       }
     } catch (error) {
-     
+      // empty
     }
   };
-  const eachUsersAsk = (data,i) => {
+  const eachUsersAsk = (data, i) => {
     const { descritpion, isAprove } = data[1];
     return (
-      <CardStyle key={i} >
-        <Typography >
-          {descritpion}
-        </Typography>
-        <Typography >
-          {`Status: ${isAprove}`}
-        </Typography>
+      <CardStyle key={i}>
+        <Typography>{descritpion}</Typography>
+        <Typography>{`Status: ${isAprove}`}</Typography>
       </CardStyle>
     );
-  }
- 
-  const getButton=(id)=>{
-    return (
-      <>
-      <Button onClick={() => sendAnswer("true",id)} >
-      <CheckIcon />
-    </Button>
-    <Button onClick={() => sendAnswer("false")} theme={{ color: '#ff0000' }} >
-      <DeleteForeverIcon />
-    </Button> 
-    </>
-    );
-  }
+  };
 
-  const eachAskUsers = (data,i) => {
-    const { descritpion, loan,id,isAprove } = data[1];
+  const getButton = (id) => (
+    <>
+      <Button onClick={() => sendAnswer('true', id)}>
+        <CheckIcon />
+      </Button>
+      <Button onClick={() => sendAnswer('false')} theme={{ color: '#ff0000' }}>
+        <DeleteForeverIcon />
+      </Button>
+    </>
+  );
+
+  const eachAskUsers = (data, i) => {
+    const { descritpion, loan, id, isAprove } = data[1];
     return (
       <CardStyle key={i}>
-        <Typography >
-          {descritpion}
-        </Typography>
-        <Typography >
-        {isAprove ?  isAprove:  getButton(id)}
+        <Typography>{descritpion}</Typography>
+        <Typography>
+          {isAprove || getButton(id)}
           {`Ask for ${loan}`}
         </Typography>
-        {usersAsk ? "":""}
+        {usersAsk ? '' : ''}
       </CardStyle>
     );
-  }
+  };
   return (
     <Main>
       <section>
         <Title>
-          <div></div>
-          <h1>loan<span>List!</span></h1>
+          <div />
+          <h1>
+            loan<span>List!</span>
+          </h1>
         </Title>
-        <FamilyImage></FamilyImage>
+        <FamilyImage />
         <WhiteBoard>
-        <h1>{askLoans ? "Wait for Your Approve ": ''}</h1>
+          <h1>{loansAsk ? 'Wait for Your Approve ' : ''}</h1>
           {Object.entries(usersAsk).map(eachAskUsers)}
-          <h1>{usersAsk ? "Wait for Approve ": ''}</h1>
+          <h1>{usersAsk ? 'Wait for Approve ' : ''}</h1>
           {Object.entries(usersAsk).map(eachUsersAsk)}
-          <Button component={Link} to="/family" >
+          <Button component={Link} to="/family">
             Back home!
           </Button>
         </WhiteBoard>
@@ -110,5 +113,5 @@ const LoanListPage = () => {
       </section>
     </Main>
   );
-};
+}
 export default LoanListPage;
